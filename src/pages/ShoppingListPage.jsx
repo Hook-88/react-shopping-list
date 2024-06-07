@@ -27,7 +27,9 @@ export default function ShoppingListPage() {
                 </button>
             </Header>
             <main className="px-4 flex flex-col gap-4">
+                
                 <ul className="grid gap-2">
+                    <small className="pl-4">GENERAL</small>
                     <li className="border border-white/35 rounded-lg px-4 py-2 flex justify-between">
                         Beer
                         <button className="border border-white/35 rounded-lg p-1 col-start-6">
