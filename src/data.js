@@ -1,7 +1,7 @@
 export let groceryItems = [
     { id: 1, name: "Apples", checked: false, quantity: 1 },
     { id: 2, name: "Bananas", checked: false, quantity: 1 },
-    { id: 3, name: "Carrots", checked: false, quantity: 1 },
+    { id: 3, name: "Carrots", checked: true, quantity: 1 },
     { id: 4, name: "Bread", checked: false, quantity: 1 },
     { id: 5, name: "Milk", checked: false, quantity: 3 },
     { id: 6, name: "Eggs", checked: false, quantity: 1 },

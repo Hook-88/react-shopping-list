@@ -5,6 +5,7 @@ import AddItemForm from "./AddItemForm"
 import { useState } from "react"
 import { groceryItems } from "../data"
 import List from "../components/List/List"
+import QuantitySpan from "../components/QuantitySpan"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
@@ -32,14 +33,21 @@ export default function ShoppingListPage() {
 
                 <List 
                     title="general"
-                    listArray={groceryItems}
                 >
-                    {item => {
-
-                        return (
-                            <div className="border border-white/35 rounded-lg px-4 py-2 flex justify-between cursor-pointer">
+                    {
+                        groceryItems.map(item => ( item.checked ? 
+                            
+                            <List.ItemSelected
+                                key={item.id}
+                            >
                                 {item.name}
-                                { item.quantity > 1 && ` (${item.quantity}x)`}
+                            </List.ItemSelected> :
+
+                            <List.Item
+                                key={item.id}
+                            >   
+                                {item.name}
+                                {item.quantity > 1 &&` (${item.quantity}x)`}
                                 <div>
                                     {
                                         item.quantity > 1 && 
@@ -47,39 +55,14 @@ export default function ShoppingListPage() {
                                             <FaMinus />
                                         </button>
                                     }
+                                    
                                     <button className="border border-white/35 rounded-lg p-1">
                                         <FaPlus />
                                     </button>
                                 </div>
-                            </div>
-                        )
-                    }}
-                    {/* <List.Item>
-                    <>
-                        Beer
-                        <button className="border border-white/35 rounded-lg p-1">
-                            <FaPlus />
-                        </button>
-                    </>
-                    </List.Item>
-                    <li className="border border-white/35 rounded-lg px-4 py-2 flex justify-between">
-                        2x Wine
-                        <div>
-                            <button className="border border-white/35 rounded-lg p-1 mr-2">
-                                <FaMinus />
-                            </button>
-                            <button className="border border-white/35 rounded-lg p-1">
-                                <FaPlus />
-                            </button>
-                        </div>
-                    </li>
-                    <li className="border border-white/35 rounded-lg px-4 py-2 flex justify-between bg-green-900">
-                        Arroz
-                            <span className="border border-white/0 rounded-lg p-1">
-                                <FaCheck />
-                            </span>
-
-                    </li> */}
+                            </List.Item> 
+                        ))
+                    }
 
                 </List>
 
