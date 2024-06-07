@@ -4,8 +4,9 @@ import Header from "../components/Header"
 import AddItemForm from "./AddItemForm"
 import { useState } from "react"
 import { groceryItems } from "../data"
+import { IoClose } from "react-icons/io5"
 import List from "../components/List/List"
-import QuantitySpan from "../components/QuantitySpan"
+import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
@@ -19,13 +20,27 @@ export default function ShoppingListPage() {
         setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, selected: !item.selected} : item))
     }
 
-    function addOne(itemId, num) {
+    function changeQuantity(itemId, num) {
         setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item))
     }
 
-    function handleAddOne(event, itemId) {
-        event.stopPropagation()
-        addOne(itemId)
+    function sortListOnSelected() {
+        setShoppingList([...shoppingList].sort((a, b) => a.selected - b.selected))
+    }
+
+    function deleteSelected() {
+        setShoppingList(prevList => prevList.filter(item => item.selected === false))
+    }
+
+    function AddItem(value) {
+        const newItemObj = {
+            id: nanoid(),
+            name: value,
+            selected: false,
+            quantity: 1
+        }
+
+        setShoppingList([...shoppingList, newItemObj])
 
     }
     
@@ -69,7 +84,7 @@ export default function ShoppingListPage() {
                                         className="border border-white/35 rounded-lg p-1 mr-2 ml-auto bg-red-900"
                                         onClick={(event) => {
                                             event.stopPropagation()
-                                            addOne(item.id, -1)
+                                            changeQuantity(item.id, -1)
                                         }}
                                     >
                                         <FaMinus />
@@ -79,7 +94,7 @@ export default function ShoppingListPage() {
                                     className="border border-white/35 rounded-lg p-1 bg-sky-900"
                                     onClick={(event) => {
                                         event.stopPropagation()
-                                        addOne(item.id, 1)
+                                        changeQuantity(item.id, 1)
                                     }}
                                 >
                                     <FaPlus />
@@ -90,7 +105,30 @@ export default function ShoppingListPage() {
 
                 </List>
 
-                {showAddItemForm && <AddItemForm />}
+                {
+                    shoppingList.some(item => item.selected === true) && !showAddItemForm &&
+                    <div className="grid grid-cols-6 p-4 gap-4 border border-white/35 rounded-lg">
+                        <button 
+                            className="bg-green-900 rounded-lg col-span-3 flex items-center justify-between p-2 px-4 border border-white/35"
+                            onClick={sortListOnSelected}
+                        >
+                            Sort
+                            <FaCheck />
+                        </button>
+                        <button 
+                            className="p-2 px-4 col-start-4 bg-red-900 rounded-lg col-span-3 flex items-center justify-between border border-white/35"
+                            onClick={deleteSelected}
+                        >
+                            Delete
+                            <FaCheck />
+                        </button>
+
+                    </div>
+
+                }
+
+
+                {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>}
             </main>
         </>
     )
