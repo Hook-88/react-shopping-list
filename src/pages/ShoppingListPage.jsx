@@ -10,6 +10,8 @@ export default function ShoppingListPage() {
     function toggleShowAddItemForm() {
         setShowAddItemForm(prev => !prev)
     }
+
+    // TODO make components for list
     
     return (
         <>
