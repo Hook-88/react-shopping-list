@@ -10,9 +10,9 @@ export default function ListItemSelected({children, className, ...rest}) {
     return (
         <li className={ListItemClassName} {...rest}>
             {children}
-            <span className="border border-white/0 p-1">
+            <div className="border border-white/0 p-1">
                 <FaCheck />
-            </span>
+            </div>
         </li>
     )
 }

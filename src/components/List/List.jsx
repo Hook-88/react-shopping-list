@@ -4,7 +4,7 @@ import ListItemSelected from "./ListItemSelected"
 export default function List({title, children, ...rest}) {
     
     return (
-        <div {...rest}>
+        <div className="-mt-2">
             {title && <small className="pl-4 font-thin">{title.toUpperCase()}</small>}
             
             <ul className="grid gap-2 mt-1">
