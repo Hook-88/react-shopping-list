@@ -2,19 +2,19 @@ import { FaCheck, FaMinus, FaPlus } from "react-icons/fa6"
 import Header from "../components/Header"
 import AddItemForm from "./AddItemForm"
 import { useEffect, useState } from "react"
-import { groceryItems } from "../data"
 import List from "../components/List/List"
 import { nanoid } from "nanoid"
 import Card from "../components/Card"
 import ConfirmActionModal from "../components/ConfirmActionModal"
 import { useStore } from "../store/store"
-import { doc, onSnapshot } from "firebase/firestore"
+import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
     const [shoppingList, setShoppingList] = useState(null)
     const updateConfirmModal = useStore(state => state.updateConfirmModal)
+    const generalListDocRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
     
     function showModal() {
         updateConfirmModal({
@@ -27,8 +27,12 @@ export default function ShoppingListPage() {
         setShowAddItemForm(prev => !prev)
     }
 
-    function toggleCheckItem(itemId) {
-        setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, selected: !item.selected} : item))
+    async function toggleCheckItem(itemId) {
+        // setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, selected: !item.selected} : item))
+        const list = await getDoc(generalListDocRef)
+        const newListArray = list.data().items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
+        
+        await updateDoc(generalListDocRef, {items: newListArray})
     }
 
     function changeQuantity(itemId, num) {
@@ -56,7 +60,7 @@ export default function ShoppingListPage() {
     }
 
     useEffect(() => {
-        const unsub = onSnapshot(doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS"), snapshot => {
+        const unsub = onSnapshot(generalListDocRef, snapshot => {
             //sync up with local state
             setShoppingList(snapshot.data())
         })
