@@ -28,15 +28,18 @@ export default function ShoppingListPage() {
     }
 
     async function toggleCheckItem(itemId) {
-        // setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, selected: !item.selected} : item))
         const list = await getDoc(generalListDocRef)
         const newListArray = list.data().items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
         
         await updateDoc(generalListDocRef, {items: newListArray})
     }
 
-    function changeQuantity(itemId, num) {
-        setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item))
+    async function changeQuantity(itemId, num) {
+        // setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item))
+        const list = await getDoc(generalListDocRef)
+        const newListArray = list.data().items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
+        
+        await updateDoc(generalListDocRef, {items: newListArray})
     }
 
     function sortListOnSelected() {
