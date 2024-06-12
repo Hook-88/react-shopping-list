@@ -1,18 +1,19 @@
 import { FaCheck, FaMinus, FaPlus } from "react-icons/fa6"
-
 import Header from "../components/Header"
 import AddItemForm from "./AddItemForm"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { groceryItems } from "../data"
 import List from "../components/List/List"
 import { nanoid } from "nanoid"
 import Card from "../components/Card"
 import ConfirmActionModal from "../components/ConfirmActionModal"
 import { useStore } from "../store/store"
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from "../firebase/firebase"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
-    const [shoppingList, setShoppingList] = useState(groceryItems)
+    const [shoppingList, setShoppingList] = useState(null)
     const updateConfirmModal = useStore(state => state.updateConfirmModal)
     
     function showModal() {
@@ -53,6 +54,15 @@ export default function ShoppingListPage() {
         setShoppingList([...shoppingList, newItemObj])
 
     }
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS"), snapshot => {
+            //sync up with local state
+            setShoppingList(snapshot.data())
+        })
+
+        return unsub
+    }, [])
     
     return (
         <>
@@ -67,13 +77,16 @@ export default function ShoppingListPage() {
                     }
                 </button>
             </Header>
+            
             <main className="px-4 flex flex-col gap-4 pb-40 mt-12">
 
-                <List
-                    title={"GENERAL"} 
+                {
+                    shoppingList ?
+                    <List
+                    title={shoppingList.name} 
                 >
                     {
-                        shoppingList.map(item => ( item.selected ? 
+                        shoppingList.items.map(item => ( item.selected ? 
                             
                             <List.ItemSelected
                                 key={item.id}
@@ -114,10 +127,13 @@ export default function ShoppingListPage() {
                         ))
                     }
 
-                </List>
+                </List> : null 
+                }
+
+                
 
                 {
-                    shoppingList.some(item => item.selected === true) && !showAddItemForm &&
+                    shoppingList && shoppingList.items.some(item => item.selected === true) && !showAddItemForm &&
                     <Card className="fixed inset-x-0 bottom-3 mx-4">
                         <button 
                             className="bg-green-900 rounded-lg col-span-3 flex items-center justify-between p-2 px-4 border border-white/35"
