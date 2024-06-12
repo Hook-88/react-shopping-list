@@ -28,28 +28,28 @@ export default function ShoppingListPage() {
     }
 
     async function toggleCheckItem(itemId) {
-        const list = await getDoc(generalListDocRef)
-        const newListArray = list.data().items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
+        const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
         
         await updateDoc(generalListDocRef, {items: newListArray})
     }
 
     async function changeQuantity(itemId, num) {
-        // setShoppingList(prevList => prevList.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item))
-        const list = await getDoc(generalListDocRef)
-        const newListArray = list.data().items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
+        const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
         
         await updateDoc(generalListDocRef, {items: newListArray})
     }
 
     async function sortListOnSelected() {
         const sortedList = [...shoppingList.items].sort((a, b) => a.selected - b.selected)
-        
+
         await updateDoc(generalListDocRef, {items: sortedList})
     }
 
-    function deleteSelected() {
-        setShoppingList(prevList => prevList.filter(item => item.selected === false))
+    async function deleteSelected() {
+        const newListArray = shoppingList.items.filter(item => item.selected === false)
+        
+        await updateDoc(generalListDocRef, {items: newListArray})
+
     }
 
     async function AddItem(value) {
@@ -161,7 +161,6 @@ export default function ShoppingListPage() {
                     </Card>
 
                 }
-
 
                 {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>}
             </main>
