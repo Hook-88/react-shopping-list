@@ -8,13 +8,20 @@ import { IoClose } from "react-icons/io5"
 import List from "../components/List/List"
 import { nanoid } from "nanoid"
 import Card from "../components/Card"
+import ConfirmActionModal from "../components/ConfirmActionModal"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [shoppingList, setShoppingList] = useState(groceryItems)
+
 
     function toggleShowAddItemForm() {
         setShowAddItemForm(prev => !prev)
+    }
+
+    function toggleShowConfirmModal() {
+        setShowConfirmModal(prev => !prev)
     }
 
     function toggleCheckItem(itemId) {
@@ -118,7 +125,7 @@ export default function ShoppingListPage() {
                         </button>
                         <button 
                             className="p-2 px-4 col-start-4 bg-red-900 rounded-lg col-span-3 flex items-center justify-between border border-white/35"
-                            onClick={deleteSelected}
+                            onClick={toggleShowConfirmModal}
                         >
                             Delete
                             <FaCheck />
@@ -133,7 +140,9 @@ export default function ShoppingListPage() {
             </main>
 
             {/* TODO ADD modal confirm component */}
-
+            {
+                showConfirmModal && <ConfirmActionModal onClose={toggleShowConfirmModal} onConfirm={deleteSelected}/>
+            }
             {/* <div className="fixed inset-0 bg-white/30 backdrop-blur flex items-center justify-center">
                 <Card className="mx-4 bg-black/70">
                     <h2 className="col-span-6">Are you sure?</h2>
