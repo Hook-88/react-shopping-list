@@ -4,7 +4,6 @@ import Header from "../components/Header"
 import AddItemForm from "./AddItemForm"
 import { useState } from "react"
 import { groceryItems } from "../data"
-import { IoClose } from "react-icons/io5"
 import List from "../components/List/List"
 import { nanoid } from "nanoid"
 import Card from "../components/Card"
@@ -14,7 +13,6 @@ import { useStore } from "../store/store"
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
     const [shoppingList, setShoppingList] = useState(groceryItems)
-    const confirmmodal = useStore(state => state.confirmModal)
     const updateConfirmModal = useStore(state => state.updateConfirmModal)
     
     function showModal() {
@@ -26,10 +24,6 @@ export default function ShoppingListPage() {
 
     function toggleShowAddItemForm() {
         setShowAddItemForm(prev => !prev)
-    }
-
-    function toggleShowConfirmModal() {
-        setShowConfirmModal(prev => !prev)
     }
 
     function toggleCheckItem(itemId) {
@@ -148,10 +142,8 @@ export default function ShoppingListPage() {
                 {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>}
             </main>
 
-{/* TODO make global state for confirmmodal */}
-            {
-                <ConfirmActionModal confirmModalObj={confirmmodal}/>
-            }
+            <ConfirmActionModal />
+
         </>
     )
 }
