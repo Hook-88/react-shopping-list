@@ -50,7 +50,7 @@ export default function ShoppingListPage() {
         setShoppingList(prevList => prevList.filter(item => item.selected === false))
     }
 
-    function AddItem(value) {
+    async function AddItem(value) {
         const newItemObj = {
             id: nanoid(),
             name: value,
@@ -58,7 +58,9 @@ export default function ShoppingListPage() {
             quantity: 1
         }
 
-        setShoppingList([...shoppingList, newItemObj])
+        await updateDoc(generalListDocRef, {items: [...shoppingList.items, newItemObj]})
+
+        // setShoppingList([...shoppingList, newItemObj])
 
     }
 
