@@ -9,12 +9,20 @@ import List from "../components/List/List"
 import { nanoid } from "nanoid"
 import Card from "../components/Card"
 import ConfirmActionModal from "../components/ConfirmActionModal"
+import { useStore } from "../store/store"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
-    const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [shoppingList, setShoppingList] = useState(groceryItems)
-
+    const confirmmodal = useStore(state => state.confirmModal)
+    const updateConfirmModal = useStore(state => state.updateConfirmModal)
+    
+    function showModal() {
+        updateConfirmModal({
+            confirmQuestion: "Are you sure",
+            onConfirm: deleteSelected
+        })
+    }
 
     function toggleShowAddItemForm() {
         setShowAddItemForm(prev => !prev)
@@ -126,7 +134,7 @@ export default function ShoppingListPage() {
                         </button>
                         <button 
                             className="p-2 px-4 col-start-4 bg-red-900 rounded-lg col-span-3 flex items-center justify-between border border-white/35"
-                            onClick={toggleShowConfirmModal}
+                            onClick={showModal}
                         >
                             Delete
                             <FaCheck />
@@ -142,7 +150,7 @@ export default function ShoppingListPage() {
 
 {/* TODO make global state for confirmmodal */}
             {
-                showConfirmModal && <ConfirmActionModal onClose={toggleShowConfirmModal} onConfirm={deleteSelected}/>
+                <ConfirmActionModal confirmModalObj={confirmmodal}/>
             }
         </>
     )
