@@ -41,13 +41,13 @@ export default function AddItemForm({hide, onSubmit = () => {}}) {
 
             <button 
                 type="button" 
-                className="col-start-5 bg-red-900 rounded-lg text-2xl flex items-center justify-center py-1"
+                className="col-start-5 bg-red-900 rounded-lg text-2xl flex items-center justify-center py-1 border border-white/35"
                 onClick={hide}
             >
                 <IoClose />
             </button>
 
-            <button type="submit" className="bg-green-900 rounded-lg py-2">
+            <button type="submit" className="bg-green-900 rounded-lg py-2 border border-white/35">
                 Add
             </button>
         </Form>

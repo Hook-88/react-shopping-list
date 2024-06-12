@@ -49,7 +49,6 @@ export default function ShoppingListPage() {
         const newListArray = shoppingList.items.filter(item => item.selected === false)
         
         await updateDoc(generalListDocRef, {items: newListArray})
-
     }
 
     async function AddItem(value) {
@@ -170,3 +169,5 @@ export default function ShoppingListPage() {
         </>
     )
 }
+
+// TODO add navlink
