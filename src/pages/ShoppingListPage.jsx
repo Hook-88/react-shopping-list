@@ -7,6 +7,7 @@ import { groceryItems } from "../data"
 import { IoClose } from "react-icons/io5"
 import List from "../components/List/List"
 import { nanoid } from "nanoid"
+import Card from "../components/Card"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
@@ -49,7 +50,7 @@ export default function ShoppingListPage() {
             <Header>
                 <h1 className="col-span-4 col-start-2 text-center self-center font-bold">SHOPPING</h1>
                 <button 
-                    className="flex items-center justify-end pr-5 py-2"
+                    className="flex items-center justify-end pr-5 py-3"
                     onClick={toggleShowAddItemForm}
                 >
                     {
@@ -57,10 +58,9 @@ export default function ShoppingListPage() {
                     }
                 </button>
             </Header>
-            <main className="px-4 flex flex-col gap-4">
+            <main className="px-4 flex flex-col gap-4 pb-40 mt-12">
 
                 <List 
-                    title="general"
                 >
                     {
                         shoppingList.map(item => ( item.selected ? 
@@ -70,6 +70,7 @@ export default function ShoppingListPage() {
                                 onClick={() => toggleCheckItem(item.id)}
                             >
                                 {item.name}
+                                {item.quantity > 1 &&` (${item.quantity}x)`}
                             </List.ItemSelected> :
 
                             <List.Item
@@ -107,7 +108,7 @@ export default function ShoppingListPage() {
 
                 {
                     shoppingList.some(item => item.selected === true) && !showAddItemForm &&
-                    <div className="grid grid-cols-6 p-4 gap-4 border border-white/35 rounded-lg">
+                    <Card className="fixed inset-x-0 bottom-3 mx-4">
                         <button 
                             className="bg-green-900 rounded-lg col-span-3 flex items-center justify-between p-2 px-4 border border-white/35"
                             onClick={sortListOnSelected}
@@ -123,13 +124,36 @@ export default function ShoppingListPage() {
                             <FaCheck />
                         </button>
 
-                    </div>
+                    </Card>
 
                 }
 
 
                 {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>}
             </main>
+
+            {/* TODO ADD modal confirm component */}
+
+            {/* <div className="fixed inset-0 bg-white/30 backdrop-blur flex items-center justify-center">
+                <Card className="mx-4 bg-black/70">
+                    <h2 className="col-span-6">Are you sure?</h2>
+                    <button 
+                        className="bg-red-900 rounded-lg col-span-3 flex items-center justify-between p-2 px-4 border border-white/35"
+                        onClick={sortListOnSelected}
+                    >
+                        No
+                        <IoClose />
+                    </button>
+                    <button 
+                        className="p-2 px-4 col-start-4 bg-green-900 rounded-lg col-span-3 flex items-center justify-between border border-white/35"
+                        onClick={deleteSelected}
+                    >
+                        Yes &nbsp;
+                        <FaCheck />
+                    </button>
+                </Card>
+
+            </div> */}
         </>
     )
 }
