@@ -42,8 +42,10 @@ export default function ShoppingListPage() {
         await updateDoc(generalListDocRef, {items: newListArray})
     }
 
-    function sortListOnSelected() {
-        setShoppingList([...shoppingList].sort((a, b) => a.selected - b.selected))
+    async function sortListOnSelected() {
+        const sortedList = [...shoppingList.items].sort((a, b) => a.selected - b.selected)
+        
+        await updateDoc(generalListDocRef, {items: sortedList})
     }
 
     function deleteSelected() {
@@ -59,9 +61,6 @@ export default function ShoppingListPage() {
         }
 
         await updateDoc(generalListDocRef, {items: [...shoppingList.items, newItemObj]})
-
-        // setShoppingList([...shoppingList, newItemObj])
-
     }
 
     useEffect(() => {
