@@ -2,7 +2,7 @@ import { IoClose } from "react-icons/io5"
 import { FaCheck } from "react-icons/fa6"
 import Card from "./Card"
 
-export default function ConfirmActionModal({onClose, onConfirm}) {
+export default function ConfirmActionModal({onClose, onConfirm, confirmQuestion = "Are you sure?"}) {
 
     function handleDeclineButton(event) {
         event.stopPropagation()
@@ -15,7 +15,7 @@ export default function ConfirmActionModal({onClose, onConfirm}) {
             onClick={onClose}
         >
             <Card className="mx-4 bg-black/70">
-                <h2 className="col-span-6">Are you sure?</h2>
+                <h2 className="col-span-6">{confirmQuestion}</h2>
                 <button 
                     className="bg-red-900 rounded-lg col-span-3 flex items-center justify-between p-2 px-4 border border-white/35"
                     onClick={handleDeclineButton}
