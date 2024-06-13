@@ -9,6 +9,8 @@ import ConfirmActionModal from "../components/ConfirmActionModal"
 import { useStore } from "../store/store"
 import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
+import getCapString from "../utility/getCapString"
+import ShoppingListPageHeader from "./ShoppingListPageHeader"
 
 export default function ShoppingListPage() {
     const [showAddItemForm, setShowAddItemForm] = useState(false)
@@ -54,7 +56,7 @@ export default function ShoppingListPage() {
     async function AddItem(value) {
         const newItemObj = {
             id: nanoid(),
-            name: value,
+            name: value.trim().toLowerCase(),
             selected: false,
             quantity: 1
         }
@@ -73,7 +75,7 @@ export default function ShoppingListPage() {
     
     return (
         <>
-            <Header>
+            {/* <Header>
                 <h1 className="col-span-4 col-start-2 text-center self-center font-bold">SHOPPING</h1>
                 <button 
                     className="flex items-center justify-end pr-5 py-3"
@@ -83,8 +85,8 @@ export default function ShoppingListPage() {
                         showAddItemForm ? <FaCheck /> : <FaPlus />
                     }
                 </button>
-            </Header>
-            
+            </Header> */}
+            <ShoppingListPageHeader />
             <main className="px-4 flex flex-col gap-4 pb-40 mt-12">
 
                 {
@@ -99,7 +101,7 @@ export default function ShoppingListPage() {
                                 key={item.id}
                                 onClick={() => toggleCheckItem(item.id)}
                             >
-                                {item.name}
+                                {getCapString(item.name)}
                                 {item.quantity > 1 &&` (${item.quantity}x)`}
                             </List.ItemSelected> :
 
@@ -107,7 +109,7 @@ export default function ShoppingListPage() {
                                 key={item.id}
                                 onClick={() => toggleCheckItem(item.id)}
                             >   
-                                {item.name}
+                                {getCapString(item.name)}
                                 {item.quantity > 1 &&` (${item.quantity}x)`}
                                 {
                                     item.quantity > 1 && 

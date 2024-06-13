@@ -12,3 +12,13 @@ export const useStore = create(set => ({
     updateConfirmModal: (obj) => set({ confirmModal: obj}),
     closeModal: () => set({ confirmModal: null })
 }))
+
+
+// export function showModal(onConfirm, confirmQuestion = "Are you sure") {
+//     const updateConfirmModal = useStore(state => state.updateConfirmModal)
+    
+//     updateConfirmModal({
+//         confirmQuestion,
+//         onConfirm
+//     })
+// }
