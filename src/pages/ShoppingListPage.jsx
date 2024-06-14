@@ -1,5 +1,4 @@
 import { FaCheck, FaMinus, FaPlus } from "react-icons/fa6"
-import Header from "../components/Header"
 import AddItemForm from "./AddItemForm"
 import { useEffect, useState } from "react"
 import List from "../components/List/List"
@@ -11,12 +10,16 @@ import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import getCapString from "../utility/getCapString"
 import ShoppingListPageHeader from "./ShoppingListPageHeader"
+import addItemAtom from "./AddItemForm"
+import { useSetAtom } from "jotai"
 
-export default function ShoppingListPage() {
-    const [showAddItemForm, setShowAddItemForm] = useState(false)
+
+
+export default function ShoppingListPage() {  
     const [shoppingList, setShoppingList] = useState(null)
     const updateConfirmModal = useStore(state => state.updateConfirmModal)
     const generalListDocRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
+    const setOpenAddItem = useSetAtom(addItemAtom)
     
     function showModal() {
         updateConfirmModal({
@@ -75,17 +78,6 @@ export default function ShoppingListPage() {
     
     return (
         <>
-            {/* <Header>
-                <h1 className="col-span-4 col-start-2 text-center self-center font-bold">SHOPPING</h1>
-                <button 
-                    className="flex items-center justify-end pr-5 py-3"
-                    onClick={toggleShowAddItemForm}
-                >
-                    {
-                        showAddItemForm ? <FaCheck /> : <FaPlus />
-                    }
-                </button>
-            </Header> */}
             <ShoppingListPageHeader />
             <main className="px-4 flex flex-col gap-4 pb-40 mt-12">
 
@@ -163,7 +155,9 @@ export default function ShoppingListPage() {
 
                 }
 
-                {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>}
+                {/* {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>} */}
+                <AddItemForm onSubmit={AddItem}/>
+
             </main>
 
             <ConfirmActionModal />
