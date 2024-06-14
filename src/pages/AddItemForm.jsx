@@ -3,7 +3,7 @@ import Form from "../components/Form"
 import { IoClose } from "react-icons/io5"
 import { atom, useAtom } from "jotai"
 
-export const addItemAtom = atom(true)
+export const addItemAtom = atom(false)
 
 export default function AddItemForm({onSubmit = () => {}}) {
     const [formData, setFormData] = useState({})

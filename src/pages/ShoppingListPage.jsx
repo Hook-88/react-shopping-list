@@ -11,26 +11,23 @@ import { db } from "../firebase/firebase"
 import getCapString from "../utility/getCapString"
 import ShoppingListPageHeader from "./ShoppingListPageHeader"
 import addItemAtom from "./AddItemForm"
-import { useSetAtom } from "jotai"
+import { atom, useSetAtom, useAtom } from "jotai"
+import ActionButtonsEl from "./ActionButtonsEl"
 
+export const shoppingListAtom = atom(null)
 
 
 export default function ShoppingListPage() {  
-    const [shoppingList, setShoppingList] = useState(null)
+    const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
     const updateConfirmModal = useStore(state => state.updateConfirmModal)
     const generalListDocRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
-    const setOpenAddItem = useSetAtom(addItemAtom)
     
-    function showModal() {
-        updateConfirmModal({
-            confirmQuestion: "Are you sure",
-            onConfirm: deleteSelected
-        })
-    }
-
-    function toggleShowAddItemForm() {
-        setShowAddItemForm(prev => !prev)
-    }
+    // function showModal() {
+    //     updateConfirmModal({
+    //         confirmQuestion: "Are you sure",
+    //         onConfirm: deleteSelected
+    //     })
+    // }
 
     async function toggleCheckItem(itemId) {
         const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
@@ -130,32 +127,7 @@ export default function ShoppingListPage() {
 
                 </List> : null 
                 }
-
-                
-
-                {
-                    shoppingList && shoppingList.items.some(item => item.selected === true) && !showAddItemForm &&
-                    <Card className="fixed inset-x-0 bottom-3 mx-4">
-                        <button 
-                            className="bg-green-900 rounded-lg col-span-3 flex items-center justify-between p-2 px-4 border border-white/35"
-                            onClick={sortListOnSelected}
-                        >
-                            Sort
-                            <FaCheck />
-                        </button>
-                        <button 
-                            className="p-2 px-4 col-start-4 bg-red-900 rounded-lg col-span-3 flex items-center justify-between border border-white/35"
-                            onClick={showModal}
-                        >
-                            Delete
-                            <FaCheck />
-                        </button>
-
-                    </Card>
-
-                }
-
-                {/* {showAddItemForm && <AddItemForm hide={toggleShowAddItemForm} onSubmit={AddItem}/>} */}
+                <ActionButtonsEl />
                 <AddItemForm onSubmit={AddItem}/>
 
             </main>
