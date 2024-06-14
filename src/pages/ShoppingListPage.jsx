@@ -2,16 +2,21 @@ import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
 import { useAtom } from "jotai"
 import { shoppingListAtom } from "../atom"
 import { useEffect } from "react"
-import { doc, onSnapshot } from "firebase/firestore"
-import {db} from "./../firebase/firebase"
+import { doc, onSnapshot, updateDoc } from "firebase/firestore"
+import { db } from "./../firebase/firebase"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
+    const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
 
-    
+    function toggleSelect(itemId) {
+        const newArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected}: item)
+
+        updateDoc(docRef, {items: newArray})
+    }
 
     useEffect(() => {
-        const unsub = onSnapshot(doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS"), snapshot => {
+        const unsub = onSnapshot(docRef, snapshot => {
             //sync up with local state
             setShoppingList(snapshot.data())
 
@@ -43,10 +48,13 @@ export default function ShoppingListPage() {
                             <li 
                                 key={item.id}
                                 className={liClassname}
+                                onClick={() => toggleSelect(item.id)}
                             >
+                                <p className="border border-white/0">
                                 {item.name}
                                 &nbsp;
                                 { item.quantity > 1 && `(${item.quantity}x)` }
+                                </p>
 
                                 {
                                     !item.selected &&
