@@ -1,16 +1,22 @@
+import { twMerge } from 'tailwind-merge'
 import { useSetAtom } from 'jotai'
-import { openAtom } from "./Menu"
+import { menuOpenAtom } from "./Menu"
 
-export default function MenuButton({children}) {
-    const setOpen = useSetAtom(openAtom)
+
+export default function MenuButton({children, className}) {
+    const setOpen = useSetAtom(menuOpenAtom)
+    const MenuButtonClassName = twMerge(
+        "w-full h-full flex items-center justify-center",
+        className
+    )
 
     function toggle() {
         setOpen(prevOpen => !prevOpen)
     }
     
     return (
-        <div onClick={toggle}>
+        <button onClick={toggle} className={MenuButtonClassName}>
             {children}
-        </div>
+        </button>
     )
 }

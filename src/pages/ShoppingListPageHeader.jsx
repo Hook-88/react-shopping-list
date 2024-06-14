@@ -1,5 +1,5 @@
 import Header from "../components/Header"
-import { FaEllipsis, FaPlus } from "react-icons/fa6"
+import { FaEllipsis } from "react-icons/fa6"
 import Menu from "../components/Menu/Menu"
 
 export default function ShoppingListPageHeader() {
@@ -7,12 +7,8 @@ export default function ShoppingListPageHeader() {
     return (
         <Header>
             <h1 className="col-span-4 col-start-2 text-center self-center font-bold">SHOPPING</h1>
-            <button 
-                className="flex items-center justify-end pr-5 py-3"
-                // onClick={toggleShowAddItemForm}
-            >
-                <Menu>
-                    <Menu.Button>
+                <Menu className="flex items-center justify-end">
+                    <Menu.Button className="py-3 justify-end pr-5">
                         <FaEllipsis />
                     </Menu.Button>
                     <Menu.Dropdown>
@@ -21,7 +17,6 @@ export default function ShoppingListPageHeader() {
                         <Menu.Item>Add List</Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
-            </button>
         </Header>
     )
 }
