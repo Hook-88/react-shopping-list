@@ -1,13 +1,21 @@
 import { useState } from "react"
 import Form from "../components/Form"
 import { IoClose } from "react-icons/io5"
-import { atom, useAtom } from "jotai"
+import { atom, useAtom, useAtomValue } from "jotai"
+import { shoppingListAtom } from "./ShoppingListPage"
 
 export const addItemAtom = atom(false)
+
+export const derivedAddItemAtom = atom(get => {
+    const shoppingList = get(shoppingListAtom)
+    
+    return shoppingList?.items.length === 0
+})
 
 export default function AddItemForm({onSubmit = () => {}}) {
     const [formData, setFormData] = useState({})
     const [open, setOpen] = useAtom(addItemAtom)
+    const shoppingListLength = useAtomValue(derivedAddItemAtom)
 
     function handleChange(event) {
         const {name, value} = event.target
@@ -18,6 +26,8 @@ export default function AddItemForm({onSubmit = () => {}}) {
                 [name]: value
             }
         })
+
+        setOpen(true)
     }
 
     function handleSubmit() {
@@ -26,7 +36,7 @@ export default function AddItemForm({onSubmit = () => {}}) {
     }
     
     return (
-        open ?
+        open || shoppingListLength ?
         <Form onSubmit={handleSubmit}>
             <input 
                 type="text" 

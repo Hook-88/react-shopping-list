@@ -10,17 +10,18 @@ import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import getCapString from "../utility/getCapString"
 import ShoppingListPageHeader from "./ShoppingListPageHeader"
-import addItemAtom from "./AddItemForm"
 import { atom, useSetAtom, useAtom } from "jotai"
 import ActionButtonsEl from "./ActionButtonsEl"
+import { addItemAtom } from "./AddItemForm"
 
 export const shoppingListAtom = atom(null)
 
 
 export default function ShoppingListPage() {  
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
-    const updateConfirmModal = useStore(state => state.updateConfirmModal)
+    // const updateConfirmModal = useStore(state => state.updateConfirmModal)
     const generalListDocRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
+    const setShowAddItem = useSetAtom(addItemAtom)
     
     // function showModal() {
     //     updateConfirmModal({
@@ -68,11 +69,18 @@ export default function ShoppingListPage() {
         const unsub = onSnapshot(generalListDocRef, snapshot => {
             //sync up with local state
             setShoppingList(snapshot.data())
+
         })
 
         return unsub
     }, [])
-    
+
+
+    // if (shoppingList?.items.length === 0) {
+    //     console.log("empty list")
+    //     setShowAddItem(true)
+    // }
+
     return (
         <>
             <ShoppingListPageHeader />
