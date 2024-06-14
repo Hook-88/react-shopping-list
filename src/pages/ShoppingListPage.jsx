@@ -75,12 +75,6 @@ export default function ShoppingListPage() {
         return unsub
     }, [])
 
-
-    // if (shoppingList?.items.length === 0) {
-    //     console.log("empty list")
-    //     setShowAddItem(true)
-    // }
-
     return (
         <>
             <ShoppingListPageHeader />
