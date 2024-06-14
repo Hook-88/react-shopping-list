@@ -1,29 +1,20 @@
 import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { shoppingListAtom } from "../atom"
 import { useEffect } from "react"
 import { doc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "./../firebase/firebase"
-import AddButton from "../components/Buttons/AddButton"
-import SubtractButton from "../components/Buttons/SubtractButton"
-import List from "../components/List/List"
 import Menu from "../components/Menu/Menu"
+import ShoppingListEl from "./ShoppingListEl"
+import Card from "../components/Card"
+import Button from "../components/Buttons/Button"
+import Form from "../components/Form"
+import AddItemCard from "./AddItemCard"
+import HeaderMenu from "./HeaderMenu"
 
 export default function ShoppingListPage() {
-    const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
+    const setShoppingList = useSetAtom(shoppingListAtom)
     const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
-
-    async function toggleSelect(itemId) {
-        const newArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
-
-        updateDoc(docRef, {items: newArray})
-    }
-
-    async function modifyQuantity(itemId, num) {
-        const newArray = shoppingList.items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
-
-        updateDoc(docRef, {items: newArray})
-    }
 
     useEffect(() => {
         const unsub = onSnapshot(docRef, snapshot => {
@@ -39,59 +30,12 @@ export default function ShoppingListPage() {
         <>
         <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/40 backdrop-blur">
             <h1 className="col-start-2 col-span-7 text-center">Shopping</h1>
-            <Menu>
-                <Menu.Button className="col-start-9 flex items-center justify-end pr-5">
-                    <FaEllipsis />
-                </Menu.Button>
-
-                <Menu.Dropdown>
-                    <Menu.Item>Add Item</Menu.Item>
-                    <Menu.Item>Add List</Menu.Item>
-                    <Menu.Item>Edit Item</Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+            <HeaderMenu />
         </header>
 
-        <main className="px-4 mt-12">
-            <List>
-                {
-                    shoppingList?.items && shoppingList.items.map(item => (
-                        <List.Item 
-                            key={item.id}
-                            onClick={() => toggleSelect(item.id)}
-                            itemObj={item}
-                        >
-                            <p className="border border-white/0">
-                            {item.name}
-                            &nbsp;
-                            { item.quantity > 1 && `(${item.quantity}x)` }
-                            </p>
-
-                            {
-                                !item.selected &&
-                                <div className="flex gap-2 ml-auto">
-                                    {
-                                        item.quantity > 1 &&
-                                        <SubtractButton 
-                                            onClick={e => {
-                                                e.stopPropagation()
-                                                modifyQuantity(item.id, -1)
-                                            }}
-                                        />
-                                    }
-                                    <AddButton 
-                                        onClick={e => {
-                                            e.stopPropagation()
-                                            modifyQuantity(item.id, 1)
-                                        }}
-                                    />       
-                                </div>
-                            }
-
-                        </List.Item>
-                    ))
-                }
-            </List>
+        <main className="px-4 mt-12 flex flex-col gap-4">
+            <ShoppingListEl />
+            <AddItemCard />
         </main>
         </>
     )
