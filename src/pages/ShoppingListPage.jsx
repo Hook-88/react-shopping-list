@@ -7,6 +7,7 @@ import { db } from "./../firebase/firebase"
 import AddButton from "../components/Buttons/AddButton"
 import SubtractButton from "../components/Buttons/SubtractButton"
 import List from "../components/List/List"
+import Menu from "../components/Menu/Menu"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
@@ -38,9 +39,17 @@ export default function ShoppingListPage() {
         <>
         <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/40 backdrop-blur">
             <h1 className="col-start-2 col-span-7 text-center">Shopping</h1>
-            <button className="col-start-9">
-                <FaEllipsis />
-            </button>
+            <Menu>
+                <Menu.Button className="col-start-9 flex items-center justify-end pr-5">
+                    <FaEllipsis />
+                </Menu.Button>
+
+                <Menu.Dropdown>
+                    <Menu.Item>Add Item</Menu.Item>
+                    <Menu.Item>Add List</Menu.Item>
+                    <Menu.Item>Edit Item</Menu.Item>
+                </Menu.Dropdown>
+            </Menu>
         </header>
 
         <main className="px-4 mt-12">
