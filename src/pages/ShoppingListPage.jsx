@@ -11,9 +11,10 @@ import Button from "../components/Buttons/Button"
 import Form from "../components/Form"
 import AddItemCard from "./AddItemCard"
 import HeaderMenu from "./HeaderMenu"
+import { nanoid } from "nanoid"
 
 export default function ShoppingListPage() {
-    const setShoppingList = useSetAtom(shoppingListAtom)
+    const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
     const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
 
     useEffect(() => {
@@ -26,6 +27,18 @@ export default function ShoppingListPage() {
         return unsub
     }, [])
 
+    function AddItemToShoppingList(value) {
+        const itemObj = {
+            id: nanoid(),
+            name: value,
+            selected: false, 
+            quantity: 1
+        }
+        const newArray = [...shoppingList.items, itemObj]
+
+        updateDoc(docRef, {items: newArray})
+    }
+
     return (
         <>
         <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/40 backdrop-blur">
@@ -35,7 +48,7 @@ export default function ShoppingListPage() {
 
         <main className="px-4 mt-12 flex flex-col gap-4">
             <ShoppingListEl />
-            <AddItemCard />
+            <AddItemCard onSubmit={AddItemToShoppingList}/>
         </main>
         </>
     )

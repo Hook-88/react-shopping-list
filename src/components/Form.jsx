@@ -1,4 +1,4 @@
-export default function Form({children, className, onSubmit}) {
+export default function Form({children, className, onSubmit = () => {}}) {
     
     function handleSubmit(event) {
         event.preventDefault()
