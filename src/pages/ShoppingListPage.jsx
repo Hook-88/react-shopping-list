@@ -1,9 +1,24 @@
 import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
 import { useAtom } from "jotai"
 import { shoppingListAtom } from "../atom"
+import { useEffect } from "react"
+import { doc, onSnapshot } from "firebase/firestore"
+import {db} from "./../firebase/firebase"
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
+
+    
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS"), snapshot => {
+            //sync up with local state
+            setShoppingList(snapshot.data())
+
+        })
+
+        return unsub
+    }, [])
 
     return (
         <>
@@ -17,7 +32,7 @@ export default function ShoppingListPage() {
         <main className="px-4">
             <ul className="space-y-2">
                 {
-                    shoppingList.map(item => {
+                    shoppingList?.items && shoppingList.items.map(item => {
                         let liClassname = "py-2 px-4 border border-white/30 rounded-lg cursor-pointer flex"
                         
                         if (item.selected) {
