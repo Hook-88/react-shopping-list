@@ -13,7 +13,6 @@ export const ActionButtonsElAtom = atom(get => {
     const shoppingList = get(shoppingListAtom)
 
     return shoppingList?.items.some(item => item.selected === true) && !addItem
-    
 })
 
 export default function ActionButtonsEl() {
