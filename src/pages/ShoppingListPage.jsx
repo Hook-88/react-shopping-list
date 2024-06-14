@@ -9,11 +9,27 @@ export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
     const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
 
-    function toggleSelect(itemId) {
-        const newArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected}: item)
+    async function toggleSelect(itemId) {
+        const newArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
 
         updateDoc(docRef, {items: newArray})
     }
+
+    async function modifyQuantity(itemId, num) {
+        const newArray = shoppingList.items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
+
+        updateDoc(docRef, {items: newArray})
+    }
+
+    // function handleClickQuantitySubtract(event, itemId) {
+    //     event.stopPropagation()
+    //     modifyQuantity(itemId, -1)
+    // }
+
+    // function handleClickQuantityAdd(event, itemId) {
+    //     event.stopPropagation()
+    //     modifyQuantity(itemId, 1)
+    // }
 
     useEffect(() => {
         const unsub = onSnapshot(docRef, snapshot => {
@@ -59,10 +75,25 @@ export default function ShoppingListPage() {
                                 {
                                     !item.selected &&
                                     <div className="flex gap-2 ml-auto">
-                                        <button className="border border-white/30 rounded-lg p-1 bg-red-900">
-                                            <FaMinus />
-                                        </button>
-                                        <button className="border border-white/30 rounded-lg p-1 bg-sky-900">
+                                        {
+                                            item.quantity > 1 &&
+                                            <button 
+                                                className="border border-white/30 rounded-lg p-1 bg-red-900"
+                                                onClick={e => {
+                                                    e.stopPropagation()
+                                                    modifyQuantity(item.id, -1)
+                                                }}
+                                            >
+                                                <FaMinus />
+                                            </button>
+                                        }
+                                        <button 
+                                            className="border border-white/30 rounded-lg p-1 bg-sky-900"
+                                            onClick={e => {
+                                                e.stopPropagation()
+                                                modifyQuantity(item.id, 1)
+                                            }}
+                                        >
                                             <FaPlus />
                                         </button>
                                     </div>
