@@ -5,6 +5,7 @@ import SubtractButton from "../components/Buttons/SubtractButton"
 import AddButton from "../components/Buttons/AddButton"
 import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
+import { FaCheck } from "react-icons/fa6"
 
 export default function ShoppingListEl() {
     const shoppingList = useAtomValue(shoppingListAtom)
@@ -38,7 +39,7 @@ export default function ShoppingListEl() {
                         </p>
 
                         {
-                            !item.selected &&
+                            !item.selected ?
                             <div className="flex gap-2 ml-auto">
                                 {
                                     item.quantity > 1 &&
@@ -55,7 +56,10 @@ export default function ShoppingListEl() {
                                         modifyQuantity(item.id, 1)
                                     }}
                                 />       
-                            </div>
+                            </div> :
+                            <span className="ml-auto flex items-center justify-center p-1">
+                                <FaCheck />
+                            </span>
                         }
 
                     </List.Item>
