@@ -8,13 +8,14 @@ import Menu from "../components/Menu/Menu"
 import ShoppingListEl from "./ShoppingListEl"
 import Card from "../components/Card"
 import HeaderMenu from "./HeaderMenu"
-import AddItemCard from "./AddItemCard"
+import AddItemCard, { AddItemCardAtom } from "./AddItemCard"
 import Button from "../components/Buttons/Button"
 import { nanoid } from "nanoid"
 
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
+    const openAddItemCard = useAtomValue(AddItemCardAtom)
     const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
 
     async function deleteSelectedItems() {
@@ -57,6 +58,7 @@ export default function ShoppingListPage() {
                 onSubmit={AddItemToShoppingList}
             />
             {   
+                !openAddItemCard &&
                 <Card className="grid fixed bottom-2 inset-x-0 mx-4 bg-black/40 backdrop-blur">
                     <Button 
                         className="bg-red-900 disabled:bg-red-900/50 disabled:text-white/50"
