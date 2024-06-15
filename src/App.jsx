@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import ShoppingListPage from "./pages/ShoppingListPage"
 
-
 export default function App() {
     
     return (

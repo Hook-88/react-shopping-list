@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge"
 
 export default function Card({children, className}) {
     const CardClassName = twMerge(
-        "backdrop-blur-md bg-black/10 grid grid-cols-6 p-4 gap-4 border border-white/35 rounded-lg",
+        "p-4 border border-white/30 rounded-lg",
         className
     )
 

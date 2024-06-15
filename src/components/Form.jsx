@@ -1,16 +1,12 @@
-export default function Form({children, onSubmit = () => {}, ...rest}) {
-
+export default function Form({children, className, onSubmit = () => {}}) {
+    
     function handleSubmit(event) {
         event.preventDefault()
         onSubmit()
     }
-    
+
     return (
-        <form
-            {...rest} 
-            className="grid grid-cols-6 p-4 gap-2 border border-white/35 rounded-lg"
-            onSubmit={handleSubmit}
-        >
+        <form className={className} onSubmit={handleSubmit}>
             {children}
         </form>
     )
