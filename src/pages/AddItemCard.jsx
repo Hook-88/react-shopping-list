@@ -3,8 +3,9 @@ import Form from "../components/Form"
 import Button from "../components/Buttons/Button"
 import { atom, useAtom } from "jotai"
 import { useState } from "react"
+import { IoClose } from "react-icons/io5"
 
-export const AddItemCardAtom = atom(false)
+export const AddItemCardAtom = atom(true)
 
 export default function AddItemCard({onSubmit = () => {}}) {
     const [open, setOpen] = useAtom(AddItemCardAtom)
@@ -42,13 +43,15 @@ export default function AddItemCard({onSubmit = () => {}}) {
                     value={formData?.itemName ? formData.itemName : ""}
                 />
                 <Button 
-                    className="bg-red-900 col-span-3"
+                    className="bg-red-900 col-span-1 text-2xl flex items-center justify-center"
                     type="button"
                     onClick={handleClickCancel}
                 >
-                    Cancel
+                    <span>
+                        <IoClose />
+                    </span>
                 </Button>
-                <Button className="bg-green-900 col-span-3">
+                <Button className="bg-green-900 col-span-5 col-start-2">
                     Add
                 </Button>
             </Form>
