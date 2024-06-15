@@ -39,6 +39,12 @@ export default function ShoppingListPage() {
         updateDoc(docRef, {items: newArray})
     }
 
+    function deleteSelectedItems() {
+        const newArray = shoppingList.items.filter(item => item.selected === false)
+
+        updateDoc(docRef, {items: newArray})
+    }
+
     return (
         <>
         <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/40 backdrop-blur">
@@ -49,6 +55,14 @@ export default function ShoppingListPage() {
         <main className="px-4 mt-12 flex flex-col gap-4">
             <ShoppingListEl />
             <AddItemCard onSubmit={AddItemToShoppingList}/>
+            <Card className="grid">
+                <Button 
+                    className="bg-red-900"
+                    onClick={deleteSelectedItems}
+                >
+                    Delete checked
+                </Button>
+            </Card>
         </main>
         </>
     )
