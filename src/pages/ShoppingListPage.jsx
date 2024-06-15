@@ -45,7 +45,6 @@ export default function ShoppingListPage() {
         return unsub
     }, [])
 
-    console.log(shoppingList)
     
     return (
         <>

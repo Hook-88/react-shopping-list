@@ -6,6 +6,7 @@ import AddButton from "../components/Buttons/AddButton"
 import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import { FaCheck } from "react-icons/fa6"
+import CheckIcon from "../components/Icons/CheckIcon"
 
 export default function ShoppingListEl() {
     const shoppingList = useAtomValue(shoppingListAtom)
@@ -30,7 +31,7 @@ export default function ShoppingListEl() {
                     <List.Item 
                         key={item.id}
                         onClick={() => toggleSelect(item.id)}
-                        itemObj={item}
+                        className={item.selected ? "bg-green-900" : ""}
                     >
                         <p className="border border-white/0">
                         {item.name}
@@ -57,9 +58,7 @@ export default function ShoppingListEl() {
                                     }}
                                 />       
                             </div> :
-                            <span className="ml-auto flex items-center justify-center p-1">
-                                <FaCheck />
-                            </span>
+                            <CheckIcon className="ml-auto flex items-center justify-center p-1"/>
                         }
 
                     </List.Item>
