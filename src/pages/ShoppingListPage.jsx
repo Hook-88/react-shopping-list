@@ -16,31 +16,6 @@ import { nanoid } from "nanoid"
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
     const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
-    
-    // function showModal() {
-    //     updateConfirmModal({
-    //         confirmQuestion: "Are you sure",
-    //         onConfirm: deleteSelected
-    //     })
-    // }
-
-    // async function toggleCheckItem(itemId) {
-    //     const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
-        
-    //     await updateDoc(generalListDocRef, {items: newListArray})
-    // }
-
-    // async function changeQuantity(itemId, num) {
-    //     const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
-        
-    //     await updateDoc(generalListDocRef, {items: newListArray})
-    // }
-
-    // async function sortListOnSelected() {
-    //     const sortedList = [...shoppingList.items].sort((a, b) => a.selected - b.selected)
-
-    //     await updateDoc(generalListDocRef, {items: sortedList})
-    // }
 
     async function deleteSelectedItems() {
         const newArray = shoppingList.items.filter(item => item.selected === false)
