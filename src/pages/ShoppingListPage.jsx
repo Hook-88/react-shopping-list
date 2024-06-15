@@ -7,23 +7,15 @@ import { db } from "./../firebase/firebase"
 import Menu from "../components/Menu/Menu"
 import ShoppingListEl from "./ShoppingListEl"
 import Card from "../components/Card"
-import ConfirmActionModal from "../components/ConfirmActionModal"
-import { useStore } from "../store/store"
-import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
-import { db } from "../firebase/firebase"
-import getCapString from "../utility/getCapString"
-import ShoppingListPageHeader from "./ShoppingListPageHeader"
-import addItemAtom from "./AddItemForm"
-import { atom, useSetAtom, useAtom } from "jotai"
-import ActionButtonsEl from "./ActionButtonsEl"
-
-export const shoppingListAtom = atom(null)
+import HeaderMenu from "./HeaderMenu"
+import AddItemCard from "./AddItemCard"
+import Button from "../components/Buttons/Button"
+import { nanoid } from "nanoid"
 
 
 export default function ShoppingListPage() {
     const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
-    const updateConfirmModal = useStore(state => state.updateConfirmModal)
-    const generalListDocRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
+    const docRef = doc(db, "shoppingList", "DhAnx7FUB4kZNnEgPRWS")
     
     // function showModal() {
     //     updateConfirmModal({
@@ -32,31 +24,31 @@ export default function ShoppingListPage() {
     //     })
     // }
 
-    async function toggleCheckItem(itemId) {
-        const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
+    // async function toggleCheckItem(itemId) {
+    //     const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, selected: !item.selected} : item)
         
-        await updateDoc(generalListDocRef, {items: newListArray})
-    }
+    //     await updateDoc(generalListDocRef, {items: newListArray})
+    // }
 
-    async function changeQuantity(itemId, num) {
-        const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
+    // async function changeQuantity(itemId, num) {
+    //     const newListArray = shoppingList.items.map(item => item.id === itemId ? {...item, quantity: item.quantity + num} : item)
         
-        await updateDoc(generalListDocRef, {items: newListArray})
-    }
+    //     await updateDoc(generalListDocRef, {items: newListArray})
+    // }
 
-    async function sortListOnSelected() {
-        const sortedList = [...shoppingList.items].sort((a, b) => a.selected - b.selected)
+    // async function sortListOnSelected() {
+    //     const sortedList = [...shoppingList.items].sort((a, b) => a.selected - b.selected)
 
-        await updateDoc(generalListDocRef, {items: sortedList})
-    }
+    //     await updateDoc(generalListDocRef, {items: sortedList})
+    // }
 
-    async function deleteSelected() {
-        const newListArray = shoppingList.items.filter(item => item.selected === false)
+    async function deleteSelectedItems() {
+        const newArray = shoppingList.items.filter(item => item.selected === false)
         
-        await updateDoc(generalListDocRef, {items: newListArray})
+        await updateDoc(docRef, {items: newArray})
     }
 
-    async function AddItem(value) {
+    async function AddItemToShoppingList(value) {
         const newItemObj = {
             id: nanoid(),
             name: value.trim().toLowerCase(),
@@ -64,7 +56,7 @@ export default function ShoppingListPage() {
             quantity: 1
         }
 
-        await updateDoc(generalListDocRef, {items: [...shoppingList.items, newItemObj]})
+        await updateDoc(docRef, {items: [...shoppingList.items, newItemObj]})
     }
 
     useEffect(() => {
@@ -86,9 +78,10 @@ export default function ShoppingListPage() {
 
         <main className="px-4 mt-12 flex flex-col gap-4">
             <ShoppingListEl />
-            <AddItemCard onSubmit={AddItemToShoppingList}/>
-            {
-                !AddItemCardAtomOpen &&
+            <AddItemCard 
+                onSubmit={AddItemToShoppingList}
+            />
+            {   
                 <Card className="grid fixed bottom-2 inset-x-0 mx-4 bg-black/40 backdrop-blur">
                     <Button 
                         className="bg-red-900 disabled:bg-red-900/50 disabled:text-white/50"

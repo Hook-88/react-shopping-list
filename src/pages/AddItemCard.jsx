@@ -5,7 +5,7 @@ import { atom, useAtom } from "jotai"
 import { useState } from "react"
 import { IoClose } from "react-icons/io5"
 
-export const AddItemCardAtom = atom(true)
+export const AddItemCardAtom = atom(false)
 
 export default function AddItemCard({onSubmit = () => {}}) {
     const [open, setOpen] = useAtom(AddItemCardAtom)
