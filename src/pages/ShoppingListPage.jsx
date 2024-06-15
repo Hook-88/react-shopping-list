@@ -44,6 +44,8 @@ export default function ShoppingListPage() {
 
         return unsub
     }, [])
+
+    console.log(shoppingList)
     
     return (
         <>
@@ -63,7 +65,7 @@ export default function ShoppingListPage() {
                     <Button 
                         className="bg-red-900 disabled:bg-red-900/50 disabled:text-white/50"
                         onClick={deleteSelectedItems}
-                        disabled={!shoppingList?.items.some(item => item.selected === true)}
+                        // disabled={shoppingList && !shoppingList?.items.some(item => item.selected === true)}
                     >
                         Delete checked
                     </Button>
