@@ -45,12 +45,14 @@ export default function ShoppingListListItem({itemObj}) {
                 </>
             }
             <div className="ml-auto flex gap-2">
-                <SubtractButton 
-                    onClick={e => {
-                        e.stopPropagation()
-                        modifyQuantity(-1)
-                    }}
-                />
+                {
+                    itemObj.quantity > 1 &&
+                    <SubtractButton 
+                        onClick={e => {
+                            e.stopPropagation()
+                            modifyQuantity(-1)
+                        }}
+                />}
                 <AddButton 
                     onClick={e => {
                         e.stopPropagation()
