@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
 import List from "../components/List/List"
 import ShoppingListListItem from "./ShoppingListListItem"
-import { collection, onSnapshot } from "firebase/firestore"
+import { collection, doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
-import AddButton from "../components/Buttons/AddButton"
-import SubtractButton from "../components/Buttons/SubtractButton"
 
 export default function ShoppingListList({listNameObj}) {
     const [items, setItems] = useState([])
@@ -25,23 +23,26 @@ export default function ShoppingListList({listNameObj}) {
 
         return unsub
     }, [])
+
+    async function ToggleCheckItem(itemId) {
+        const docRef = doc(db, `shoppingList/${listNameObj.id}/items`, itemId)
+        const docSnap = await getDoc(docRef)
+
+        await updateDoc(docRef, { selected: !docSnap.data().selected})
+
+    }
     
     return (
         items ?
         <List listObj={listNameObj}>
             { items.map(item => {
 
-                return (
-                    <List.Item key={item.id}>
-                        {item.name}
-                        &nbsp;
-                        {`(${item.quantity}x)`}
-                        <div className="ml-auto flex gap-2">
-                            <SubtractButton />
-                            <AddButton />
-                        </div>
-                    </List.Item>
-                )
+                if (item.selected) {
+
+                    return <ShoppingListListItem.Checked key={item.id} itemObj={item} onClick={() => ToggleCheckItem(item.id)}/>
+                }
+
+                return <ShoppingListListItem key={item.id} itemObj={{...item, listId: listNameObj.id}} onClick={() => ToggleCheckItem(item.id)}/>
             }) }
         </List> : null
     )
