@@ -15,6 +15,7 @@ export default function ShoppingListPage() {
         const unsub = onSnapshot(collection(db, "shoppingList"), snapshot => {
             //sync up with local state)
             const newArray = snapshot.docs.map(doc => {
+
                 return {
                     ...doc.data(),
                     id: doc.id
@@ -26,7 +27,6 @@ export default function ShoppingListPage() {
 
         return unsub
     }, [])
-
     
     return (
         <>
