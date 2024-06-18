@@ -41,9 +41,7 @@ export default function ShoppingListPage() {
                 shoppingListsNames.map(list => {
 
                     return (
-                        <ShoppingListList key={list.id} listNameObj={list}>
-                            <List.Item>test</List.Item>
-                        </ShoppingListList>
+                        <ShoppingListList key={list.id} listObj={list}/>
                     )
                 }) : null
             }

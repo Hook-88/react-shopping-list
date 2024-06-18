@@ -10,8 +10,6 @@ export default function Menu({children}) {
     const menuRef = useRef()
     const setOpen = useSetAtom(menuOpenAtom)
 
-    // console.log(open)
-
     useEffect(() => {
         function handler(event) {
             if (!menuRef?.current.contains(event.target)) {

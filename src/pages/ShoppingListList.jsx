@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import { collection, onSnapshot } from "firebase/firestore"
 import List from "../components/List/List"
-import ShoppingListListItem from "./ShoppingListListItem"
-import { collection, doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../firebase/firebase"
+import { useEffect, useState } from "react"
+import ShoppingListListItem from "./ShoppingListListItem"
 
-export default function ShoppingListList({listNameObj}) {
-    const [items, setItems] = useState([])
+export default function ShoppingListList({listObj}) {
+    const collectionRef = collection(db, `shoppingList/${listObj.id}/items`)
+    const [listItems, setListItems] = useState(null)
 
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, `shoppingList/${listNameObj.id}/items`), snapshot => {
-            //sync up
+        const unsub = onSnapshot(collectionRef, snapshot => {
             const newArray = snapshot.docs.map(doc => {
 
                 return {
@@ -18,32 +18,31 @@ export default function ShoppingListList({listNameObj}) {
                 }
             })
 
-            setItems(newArray)
+            setListItems(newArray)
         })
 
         return unsub
     }, [])
 
-    async function ToggleCheckItem(itemId) {
-        const docRef = doc(db, `shoppingList/${listNameObj.id}/items`, itemId)
-        const docSnap = await getDoc(docRef)
-
-        await updateDoc(docRef, { selected: !docSnap.data().selected})
-
-    }
-    
     return (
-        items ?
-        <List listObj={listNameObj}>
-            { items.map(item => {
+        listItems ?
+        <div>
+            <small className="ml-4">{listObj.name.toUpperCase()}</small>
+            <List>
+                {
+                    listItems.map(item => {
 
-                if (item.selected) {
-
-                    return <ShoppingListListItem.Checked key={item.id} itemObj={item} onClick={() => ToggleCheckItem(item.id)}/>
+                        return (
+                            <ShoppingListList.Item 
+                                key={item.id} 
+                                itemObj={{...item, listId: listObj.id}} 
+                            />
+                        )
+                    })
                 }
-
-                return <ShoppingListListItem key={item.id} itemObj={{...item, listId: listNameObj.id}} onClick={() => ToggleCheckItem(item.id)}/>
-            }) }
-        </List> : null
+            </List>
+        </div> : null
     )
 }
+
+ShoppingListList.Item = ShoppingListListItem
