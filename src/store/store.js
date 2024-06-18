@@ -11,6 +11,7 @@ export const useStore = create(set => ({
     confirmModal: null,
     updateConfirmModal: (obj) => set({ confirmModal: obj}),
     closeModal: () => set({ confirmModal: null })
+    
 }))
 
 
