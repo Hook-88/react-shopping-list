@@ -6,7 +6,7 @@ export default function MenuDropdown({children}) {
 
     return (
         open ?
-        <ul className="border border-white/30 cursor-pointer absolute right-0 rounded-lg bg-black/50 backdrop-blur">
+        <ul className="border border-white/30 cursor-pointer absolute right-0 rounded-lg bg-black/50 backdrop-filter backdrop-blur">
             {children}
         </ul> : null
     )
