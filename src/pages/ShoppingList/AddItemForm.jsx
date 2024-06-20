@@ -30,7 +30,9 @@ export default function AddItemForm({onSubmit = () => {}}) {
 
     function handleSubmit() {
         onSubmit(formData)
-        console.log("submitted")
+        setFormData({
+            listId: lists[0].id
+        })
 
     }
 
@@ -94,7 +96,6 @@ export default function AddItemForm({onSubmit = () => {}}) {
                     onClick={closeForm}
                 >
                     Canc
-
                 </Button>
                 <Button className="bg-green-900">Add</Button>
             </Form>
