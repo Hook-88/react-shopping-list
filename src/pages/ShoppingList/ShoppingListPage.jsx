@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import IconMore from "../../components/Icons/IconMore"
 import { addDoc, collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
@@ -9,13 +9,16 @@ import Form from "../../components/Form"
 import Button from "../../components/Buttons/Button"
 import AddItemForm from "./AddItemForm"
 import { useAtom, useAtomValue } from "jotai"
-import { addNewItemAtom } from "../../store/store"
+import { addNewItemAtom, hideCheckedItemsAtom } from "../../store/store"
 import HeaderMenu from "./HeaderMenu"
+import ListShoppingFiltered from "./ListShoppingFiltered"
 
 
 export default function ShoppingListPage() {
     const [shoppingLists, setShoppingLists] = useState([])
     const [addNewItemOn, setAddNewItemOn] = useAtom(addNewItemAtom)
+    // const [hideChecked, setHideChecked] = useState(false)
+    const hideChecked = useAtomValue(hideCheckedItemsAtom)
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "shoppingList"), snapshot => {
@@ -27,7 +30,8 @@ export default function ShoppingListPage() {
                 }
             ))
 
-            setShoppingLists(newArr)            
+            setShoppingLists(newArr)
+
         })
 
         return unsub
@@ -55,6 +59,11 @@ export default function ShoppingListPage() {
         <main className="px-4 mt-12 flex flex-col gap-4">
             {
                 shoppingLists.map(list => {
+
+                    if (hideChecked) {
+
+                        return <ListShoppingFiltered key={list.id} listObj={list} />
+                    }
 
                     return (
                         <ListShopping key={list.id} listObj={list} />

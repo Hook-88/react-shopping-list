@@ -33,7 +33,6 @@ export default function AddItemForm({onSubmit = () => {}}) {
         setFormData({
             listId: lists[0].id
         })
-
     }
 
     useEffect(() => {

@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import List from "../../components/List/List"
-import { collection, onSnapshot, doc, getDoc, updateDoc } from "firebase/firestore"
+import { collection, onSnapshot, doc, getDoc, updateDoc, query, where } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import AddButton from "../../components/Buttons/AddButton"
 import SubtractButton from "../../components/Buttons/SubtractButton"
 import ListShoppingItem from "./ListShoppingItem"
 import ListShoppingItemChecked from "./ListShoppingItemChecked"
 
-export default function ListShopping({listObj}) {
+export default function ListShoppingFiltered({listObj}) {
     const [list, setList] = useState([])
+    const originalListLengthRef = useRef(0)
 
     useEffect(() => {
+        // const q = query(collection(db, `shoppingList/${listObj.id}/items`), where("selected", "==", false)); 
+
         const unsub = onSnapshot(collection(db, `shoppingList/${listObj.id}/items`), snapshot => {
             // sync up with local state
             const newArr = snapshot.docs.map(doc => (
@@ -19,8 +22,8 @@ export default function ListShopping({listObj}) {
                     id: doc.id
                 }
             ))
-
-            setList(newArr)
+            setList(newArr.filter(item => item.selected === false))
+            originalListLengthRef.current = newArr.length
         })
 
         return unsub
@@ -38,7 +41,7 @@ export default function ListShopping({listObj}) {
             <small>
                 {listObj.name.toUpperCase()}
                 &nbsp;
-                {`(${list.filter(item => item.selected === false).length}/${list.length})`}
+                {`(${list.length}/${originalListLengthRef.current})`}
             </small>
             <List>
                 {
