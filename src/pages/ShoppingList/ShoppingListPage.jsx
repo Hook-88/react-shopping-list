@@ -4,9 +4,17 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import List from "../../components/List/List"
 import ListShopping from "./ListShopping"
+import Card from "../../components/Card"
+import Form from "../../components/Form"
+import Button from "../../components/Buttons/Button"
+import AddItemForm from "./AddItemForm"
+import { useAtom, useAtomValue } from "jotai"
+import { addNewItemAtom } from "../../store/store"
+
 
 export default function ShoppingListPage() {
     const [shoppingLists, setShoppingLists] = useState([])
+    const [addNewItemOn, setAddNewItemOn] = useAtom(addNewItemAtom)
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "shoppingList"), snapshot => {
@@ -39,6 +47,9 @@ export default function ShoppingListPage() {
                         <ListShopping key={list.id} listObj={list} />
                     )
                 })
+            }
+            {
+                addNewItemOn && <AddItemForm />
             }
         </main>
         </>
