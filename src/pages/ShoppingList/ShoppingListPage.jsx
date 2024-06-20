@@ -1,6 +1,29 @@
+import { useEffect, useState } from "react"
 import IconMore from "../../components/Icons/IconMore"
+import { collection, onSnapshot } from "firebase/firestore"
+import { db } from "../../firebase/firebase"
+import List from "../../components/List/List"
 
 export default function ShoppingListPage() {
+    const [shoppingLists, setShoppingLists] = useState([])
+
+    useEffect(() => {
+        const unsub = onSnapshot(collection(db, "shoppingList"), snapshot => {
+            //sync with local state
+            const newArr = snapshot.docs.map(doc => (
+                {
+                    ...doc.data(),
+                    id: doc.id
+                }
+            ))
+
+            setShoppingLists(newArr)            
+        })
+
+        return unsub
+    }, [])
+
+    console.log(shoppingLists)
     
     return (
         <>
@@ -10,7 +33,17 @@ export default function ShoppingListPage() {
         </header>
 
         <main className="px-4 mt-12 flex flex-col gap-4">
-            <h1>Here it comes</h1>
+            {
+                shoppingLists.map(list => {
+
+                    return (
+                        <div key={list.id}>
+                            <small>{list.name.toUpperCase()}</small>
+
+                        </div>
+                    )
+                })
+            }
         </main>
         </>
     )
