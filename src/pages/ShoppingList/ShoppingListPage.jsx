@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import IconMore from "../../components/Icons/IconMore"
-import { collection, onSnapshot } from "firebase/firestore"
+import { addDoc, collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import List from "../../components/List/List"
 import ListShopping from "./ListShopping"
@@ -32,6 +32,18 @@ export default function ShoppingListPage() {
 
         return unsub
     }, [])
+
+    async function addItemToList(data) {
+
+        const itemObj = {
+            name: data.itemName.trim().toLowerCase(),
+            quantity: 1,
+            selected: false
+        }
+
+        await addDoc(collection(db, `shoppingList/${data.listId}/items`), itemObj)
+        
+    }
     
     return (
         <>
@@ -50,7 +62,7 @@ export default function ShoppingListPage() {
                 })
             }
             {
-                addNewItemOn && <AddItemForm />
+                addNewItemOn && <AddItemForm onSubmit={addItemToList}/>
             }
         </main>
         </>
