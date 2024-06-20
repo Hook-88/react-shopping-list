@@ -3,6 +3,7 @@ import IconMore from "../../components/Icons/IconMore"
 import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import List from "../../components/List/List"
+import ListShopping from "./ListShopping"
 
 export default function ShoppingListPage() {
     const [shoppingLists, setShoppingLists] = useState([])
@@ -22,8 +23,6 @@ export default function ShoppingListPage() {
 
         return unsub
     }, [])
-
-    console.log(shoppingLists)
     
     return (
         <>
@@ -37,10 +36,7 @@ export default function ShoppingListPage() {
                 shoppingLists.map(list => {
 
                     return (
-                        <div key={list.id}>
-                            <small>{list.name.toUpperCase()}</small>
-
-                        </div>
+                        <ListShopping key={list.id} listObj={list} />
                     )
                 })
             }
