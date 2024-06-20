@@ -1,8 +1,8 @@
-import Menu from "../components/Menu/Menu"
-import IconMore from "../components/Icons/IconMore"
+import Menu from "../../components/Menu/Menu"
+import IconMore from "../../components/Icons/IconMore"
 import { useSetAtom, useAtom } from "jotai"
 import { editListOnAtom } from "./ShoppingListPage"
-import { menuOpenAtom } from "../components/Menu/Menu"
+import { menuOpenAtom } from "../../components/Menu/Menu"
 
 export default function HeaderMenu() {
     const [editListOn, setEditListOn] = useAtom(editListOnAtom)

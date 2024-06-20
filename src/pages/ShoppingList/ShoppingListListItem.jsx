@@ -1,9 +1,9 @@
-import List from "../components/List/List"
-import IconCheck from "../components/Icons/IconCheck"
-import AddButton from "../components/Buttons/AddButton"
-import SubtractButton from "../components/Buttons/SubtractButton"
+import List from "../../components/List/List"
+import IconCheck from "../../components/Icons/IconCheck"
+import AddButton from "../../components/Buttons/AddButton"
+import SubtractButton from "../../components/Buttons/SubtractButton"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
-import { db } from "../firebase/firebase"
+import { db } from "../../firebase/firebase"
 
 export default function ShoppingListListItem({itemObj}) {
     const docRef = doc(db, `shoppingList/${itemObj.listId}/items`, itemObj.id)

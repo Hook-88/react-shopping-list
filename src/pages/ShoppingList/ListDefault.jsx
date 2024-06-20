@@ -1,4 +1,4 @@
-import List from "../components/List/List"
+import List from "../../components/List/List"
 import ShoppingListListItem from "./ShoppingListListItem"
 
 export default function ListDefault({listObj, itemsArr}) {

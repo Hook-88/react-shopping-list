@@ -1,6 +1,6 @@
 import { collection, onSnapshot } from "firebase/firestore"
-import List from "../components/List/List"
-import { db } from "../firebase/firebase"
+import List from "../../components/List/List"
+import { db } from "../../firebase/firebase"
 import { useEffect, useState } from "react"
 import { editListOnAtom } from "./ShoppingListPage"
 import { useAtomValue } from "jotai"

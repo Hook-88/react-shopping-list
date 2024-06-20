@@ -1,24 +1,26 @@
-import List from "../components/List/List"
-import IconCheck from "../components/Icons/IconCheck"
-import AddButton from "../components/Buttons/AddButton"
-import SubtractButton from "../components/Buttons/SubtractButton"
+import List from "../../components/List/List"
+import IconCheck from "../../components/Icons/IconCheck"
+import AddButton from "../../components/Buttons/AddButton"
+import SubtractButton from "../../components/Buttons/SubtractButton"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
-import { db } from "../firebase/firebase"
-import { useState } from "react"
+import { db } from "../../firebase/firebase"
+import { useContext, useState } from "react"
+import { ListEditContext } from "./ListEdit"
 
 export default function ShoppingListListItemEdit({itemObj}) {
     const docRef = doc(db, `shoppingList/${itemObj.listId}/items`, itemObj.id)
-    const [selectForEdit, setSelectForEdit]= useState(false)
+    const { selectItem } = useContext(ListEditContext)
 
-    function toggleSelectForEdit() {
-        setSelectForEdit(prev => !prev)
+    function handleClick() {
+        // setSelectForEdit(prev => !prev)
+        selectItem(itemObj.id)
     }
     
     return (
-        selectForEdit ?
+        itemObj.selectForEdit ?
         <List.Item 
             className="bg-blue-900"
-            onClick={toggleSelectForEdit}
+            onClick={handleClick}
         
         >
             {itemObj.name}
@@ -31,7 +33,7 @@ export default function ShoppingListListItemEdit({itemObj}) {
             }
             <IconCheck className="p-1 border border-transparent text-transparent"/>
         </List.Item> : 
-        <List.Item onClick={toggleSelectForEdit}>
+        <List.Item onClick={handleClick}>
             {itemObj.name}
             {
                 itemObj.quantity > 1 &&
