@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import List from "../../components/List/List"
-import { collection, onSnapshot } from "firebase/firestore"
+import { collection, onSnapshot, doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import AddButton from "../../components/Buttons/AddButton"
 import SubtractButton from "../../components/Buttons/SubtractButton"
+import ListShoppingItem from "./ListShoppingItem"
+import ListShoppingItemChecked from "./ListShoppingItemChecked"
 
 export default function ListShopping({listObj}) {
     const [list, setList] = useState([])
@@ -23,6 +25,13 @@ export default function ListShopping({listObj}) {
 
         return unsub
     }, [])
+
+    async function toggleChecked(itemId) {
+        const docRef = doc(db, `shoppingList/${listObj.id}/items`, itemId)
+        const docSnap = await getDoc(docRef)
+        
+        await updateDoc(docRef, {selected: !docSnap.data().selected})
+    }
     
     return (
         <div>
@@ -31,25 +40,21 @@ export default function ListShopping({listObj}) {
                 {
                     list.map(item => {
 
-                        return (
-                            <List.Item
+                        return item.selected ?
+                            <ListShoppingItemChecked 
                                 key={item.id}
-                            >
-                                {item.name}
-                                {
-                                    item.quantity > 1 &&
-                                    <>
-                                        &nbsp;
-                                        {`(${item.quantity}x)`}
-                                    </>
-                                }
-                                
-                                <div className="ml-auto flex gap-2">
-                                    <SubtractButton />
-                                    <AddButton />
-                                </div>
-                            </List.Item>
-                        )
+                                itemObj={item}
+                                collectionUrl={`shoppingList/${listObj.id}/items`}
+                                toggleChecked={toggleChecked}
+                            /> :
+                        
+                            <ListShoppingItem
+                                key={item.id}
+                                itemObj={item}
+                                collectionUrl={`shoppingList/${listObj.id}/items`}
+                                toggleChecked={toggleChecked}
+                            />
+                        
                     })
                 }
             </List>
