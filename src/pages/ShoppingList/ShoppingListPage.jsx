@@ -1,22 +1,8 @@
 import ShoppingList from "./ShoppingList"
 import HeaderMenu from "./HeaderMenu"
-import AddItem from "./AddItem"
-import { useStore } from "../../store/store"
-import { addDoc, collection } from "firebase/firestore"
-import { db } from "../../firebase/firebase"
+import AddItemToShoppingList from "./AddItemToShoppingList"
 
 export default function ShoppingListPage() {
-    const formData = useStore(state => state.formData)
-
-    async function addNewItemToShoppingList() {
-        const itemObj = {
-            name: formData.itemName,
-            quantity: 1,
-            selected: false
-        }
-
-        await addDoc(collection(db, "shoppingList"), itemObj)
-    }
     
     return (
         <>
@@ -27,7 +13,7 @@ export default function ShoppingListPage() {
 
         <main className="px-4 mt-12 flex flex-col gap-4">
             <ShoppingList />
-            <AddItem onSubmit={addNewItemToShoppingList}/>
+            <AddItemToShoppingList />
         </main>
         </>
     )
