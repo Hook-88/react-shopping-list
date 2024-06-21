@@ -1,10 +1,9 @@
 import List from "../../components/List/List"
-import { useAtomValue } from "jotai"
-import { shoppingListAtom } from "../../store/store"
 import ShoppingListItem from "./ShoppingListItem"
+import { useStore } from "../../store/store"
 
 export default function ShoppingList() {
-    const items = useAtomValue(shoppingListAtom)
+    const items = useStore(state => state.shoppingList)
     
     return (
         items.length > 0 ?

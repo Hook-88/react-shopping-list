@@ -1,17 +1,18 @@
-import List from "../../components/List/List"
 import IconCheck from "../../components/Icons/IconCheck"
 import getCapString from "../../utility/getCapString"
+import { useStore } from "../../store/store"
 
-export default function ItemChecked({itemObj}) {
+export default function ItemChecked({itemId}) {
+    const item = useStore(state => state.shoppingList.find(item => item.id === itemId))
 
     return (
         <div className="py-2 px-4 border border-white/30 rounded-lg cursor-pointer flex bg-green-700/50">
-            {getCapString(itemObj.name)}
+            {getCapString(item.name)}
             {
-                itemObj.quantity > 1 &&
+                item.quantity > 1 &&
                 <>
                     &nbsp;
-                    {`(${itemObj.quantity}x)`}
+                    {`(${item.quantity}x)`}
                 </>
             }
             <IconCheck className="ml-auto p-1 border border-transparent"/>
