@@ -1,10 +1,9 @@
-import { atom, useAtomValue, useSetAtom } from "jotai"
+import { useSetAtom } from "jotai"
 import MenuButton from "./MenuButton"
 import MenuDropdown from "./MenuDropdown"
 import MenuItem from "./MenuItem"
 import { useEffect, useRef } from "react"
-
-export const menuOpenAtom = atom(false)
+import { menuOpenAtom } from "../../store/store"
 
 export default function Menu({children}) {
     const menuRef = useRef()

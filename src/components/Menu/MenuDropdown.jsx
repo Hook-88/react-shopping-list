@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai"
-import { menuOpenAtom } from "./Menu"
+import { menuOpenAtom } from "./../../store/store"
 
 export default function MenuDropdown({children}) {
     const open = useAtomValue(menuOpenAtom)

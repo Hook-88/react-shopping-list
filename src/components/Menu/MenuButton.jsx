@@ -1,5 +1,5 @@
 import { useSetAtom } from "jotai"
-import { menuOpenAtom } from "./Menu"
+import { menuOpenAtom } from "../../store/store"
 import { twMerge } from "tailwind-merge"
 
 export default function MenuButton({children, className}) {

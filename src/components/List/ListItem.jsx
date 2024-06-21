@@ -7,11 +7,11 @@ export default function ListItem({children, className, ...rest}) {
     )
     
     return (
-        <li 
+        <div 
             className={ListItemClassName}
             {...rest}
         >
             {children}
-        </li>
+        </div>
     )
 }
