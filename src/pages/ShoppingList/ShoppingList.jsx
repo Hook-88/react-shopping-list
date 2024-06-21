@@ -1,6 +1,7 @@
 import List from "../../components/List/List"
 import AddButton from "../../components/Buttons/AddButton"
 import SubtractButton from "../../components/Buttons/SubtractButton"
+import getCapString from "../../utility/getCapString"
 
 export default function ShoppingList({listArr}) {
     
@@ -9,7 +10,7 @@ export default function ShoppingList({listArr}) {
             {
                 listArr.map(item => (
                     <List.Item key={item.id}>
-                        {item.name}
+                        {getCapString(item.name)}
                         {
                             item.quantity > 1 &&
                             <>
