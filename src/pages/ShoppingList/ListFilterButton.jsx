@@ -2,6 +2,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
 import { useStore } from "../../store/store"
 
 export default function ListFilterButton() {
+    const hasCheckedItems = !useStore(state => state.shoppingList.some(item => item.selected === true))
     const filters = useStore(state => state.filters)
     const addFilter = useStore(state => state.addFilter)
     const removeFilter = useStore(state => state.removeFilter)
@@ -16,8 +17,9 @@ export default function ListFilterButton() {
 
     return (
         <button 
-            className="col-start-4 flex justify-end items-center mr-5 col-span-3 text-sm"
+            className="col-start-4 flex justify-end items-center mr-5 col-span-3 text-sm disabled:text-white/30"
             onClick={handleClickFilterSelected}
+            disabled={hasCheckedItems}
         >
             {
                 filters.some(filter => filter === "selected") ?
@@ -32,7 +34,6 @@ export default function ListFilterButton() {
                     &nbsp; 
                     <FaRegEyeSlash />
                 </> 
-                
             }
         </button>
     )
