@@ -26,7 +26,7 @@ export default function ItemDefault({itemId}) {
     }
 
     return (
-        <div className="py-2 px-4 border border-white/30 rounded-lg cursor-pointer flex bg-white/5">
+        <div className="py-2 px-4 border border-white/30 rounded-lg cursor-pointer flex bg-white/5 select-none">
             {getCapString(item.name)}
             {
                 item.quantity > 1 &&
