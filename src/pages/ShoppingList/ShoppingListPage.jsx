@@ -14,7 +14,7 @@ export default function ShoppingListPage() {
             <HeaderMenu />
         </header>
 
-        <main className="px-4 mt-12 flex flex-col gap-4">
+        <main className="px-4 mt-12 flex flex-col gap-4 pb-5">
             <ShoppingList />
             {
                 formData ? 
