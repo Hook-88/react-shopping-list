@@ -1,4 +1,4 @@
-import AddItem from "./AddItem"
+import AddItem from "../../components/AddItem"
 import { useStore } from "../../store/store"
 import { addDoc, collection } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
