@@ -2,9 +2,6 @@ import ShoppingList from "./ShoppingList"
 import HeaderMenu from "./HeaderMenu"
 import AddItemToShoppingList from "./AddItemToShoppingList"
 import { useStore } from "../../store/store"
-import { Link } from "react-router-dom"
-import Card from "../../components/Card"
-import { FaAngleRight } from "react-icons/fa6"
 import LinkNav from "../../components/LinkNav"
 
 export default function ShoppingListPage() {

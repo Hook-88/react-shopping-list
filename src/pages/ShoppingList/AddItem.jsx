@@ -36,6 +36,7 @@ export default function AddItem({onSubmit = () => {}}) {
                     name="itemName"
                     value={formData.itemName ? formData.itemName : ""}
                     required
+                    autoFocus
                 />
                 <Button className="bg-green-900">
                     Add
