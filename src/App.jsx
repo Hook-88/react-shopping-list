@@ -6,6 +6,7 @@ import { useStore } from "./store/store"
 
 import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
 import RecipesPage from "./pages/Recipes/RecipesPage"
+import RecipePage from "./pages/Recipe/RecipePage"
 
 export default function App() {
     const setShoppingList = useStore((state) => state.updateShoppingList)
@@ -28,6 +29,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<ShoppingListPage />}/>
                 <Route path="/recipes" element={<RecipesPage />}/>
+                <Route path="/recipes/:recipeId" element={<RecipePage />}/>
             </Routes>
         </BrowserRouter>
     )
