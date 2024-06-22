@@ -4,12 +4,11 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import LinkNav from "../../components/Links/LinkNav"
 import getCapString from "../../utility/getCapString"
-import { Link } from "react-router-dom"
-import { FaAngleLeft } from "react-icons/fa6"
 import { useStore } from "../../store/store"
 import ShowAddRecipeFormButton from "./ShowAddRecipeFormButton"
 import AddRecipeToFirebase from "./AddRecipeToFirebase"
 import LinkNavBack from "../../components/Links/LinkNavBack"
+import PageHeader from "../../components/PageHeader/PageHeader"
 
 
 export default function RecipesPage() {
@@ -31,11 +30,11 @@ export default function RecipesPage() {
     
     return (
         <>
-        <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/80">
+        <PageHeader>
             <LinkNavBack className="col-span-2" />
-            <h1 className="col-start-3 col-span-5 text-center">Recipes</h1>
+            <PageHeader.Title className="col-start-3 col-span-5">Recipes</PageHeader.Title>
             <ShowAddRecipeFormButton />
-        </header>
+        </PageHeader>
 
         <main className="px-4 mt-12 flex flex-col gap-4 pb-5">
             <List>
