@@ -2,7 +2,7 @@ import ShoppingList from "./ShoppingList"
 import HeaderMenu from "./HeaderMenu"
 import AddItemToShoppingList from "./AddItemToShoppingList"
 import { useStore } from "../../store/store"
-import LinkNav from "../../components/LinkNav"
+import LinkNav from "../../components/Links/LinkNav"
 
 export default function ShoppingListPage() {
     const formData = useStore(state => state.formData)
