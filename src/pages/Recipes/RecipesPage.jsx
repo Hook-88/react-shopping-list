@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import IconAdd from "../../components/Icons/IconAdd"
 import List from "../../components/List/List"
-import { collection, onSnapshot } from "firebase/firestore"
+import { addDoc, collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import LinkNav from "../../components/LinkNav"
 import getCapString from "../../utility/getCapString"
@@ -19,6 +19,15 @@ export default function RecipesPage() {
 
     function handleClickAddButton() {
         setFormOpen(true)
+    }
+
+    async function addRecipeToFirebase() {
+        const collectionRef = collection(db, "recipes")
+        const recipeObj = {
+            name: formData.itemName
+        }
+
+        await addDoc(collectionRef, recipeObj)
     }
 
     useEffect(() => {
@@ -60,7 +69,7 @@ export default function RecipesPage() {
                 }
             </List>
             {
-                formData && <AddItem />
+                formData && <AddItem onSubmit={addRecipeToFirebase}/>
             }
         </main>
         </>
