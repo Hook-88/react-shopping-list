@@ -20,6 +20,10 @@ export default function AddItem({onSubmit = () => {}}) {
         setFormData({})
         onSubmit()
     }
+
+    function handleClickClose() {
+        setFormData(null)
+    }
     
     return (
         <Form onSubmit={handleSubmit}>
@@ -33,10 +37,14 @@ export default function AddItem({onSubmit = () => {}}) {
                     value={formData.itemName ? formData.itemName : ""}
                     required
                 />
-                <Button className="bg-sky-900">
+                <Button className="bg-green-900">
                     Add
                 </Button>
-                <Button className="col-span-6 bg-green-900" type="button">
+                <Button 
+                    className="col-span-6 bg-sky-900" 
+                    type="button"
+                    onClick={handleClickClose}
+                >
                     I'm done adding items
                 </Button>
             </Card>

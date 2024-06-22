@@ -9,7 +9,7 @@ import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
 
 export default function App() {
 
-    const setShoppingListZus = useStore((state) => state.updateShoppingList)
+    const setShoppingList = useStore((state) => state.updateShoppingList)
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "shoppingList"), snapshot => {
@@ -18,7 +18,7 @@ export default function App() {
                 id: doc.id
             }))
 
-            setShoppingListZus(newArr)
+            setShoppingList(newArr)
         })
 
         return unsub

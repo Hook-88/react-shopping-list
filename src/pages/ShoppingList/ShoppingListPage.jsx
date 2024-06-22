@@ -1,8 +1,10 @@
 import ShoppingList from "./ShoppingList"
 import HeaderMenu from "./HeaderMenu"
 import AddItemToShoppingList from "./AddItemToShoppingList"
+import { useStore } from "../../store/store"
 
 export default function ShoppingListPage() {
+    const formData = useStore(state => state.formData)
     
     return (
         <>
@@ -13,7 +15,9 @@ export default function ShoppingListPage() {
 
         <main className="px-4 mt-12 flex flex-col gap-4">
             <ShoppingList />
-            <AddItemToShoppingList />
+            {
+                formData && <AddItemToShoppingList />
+            }
         </main>
         </>
     )

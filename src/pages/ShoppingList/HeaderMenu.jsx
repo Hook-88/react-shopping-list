@@ -1,5 +1,7 @@
 import IconMore from "../../components/Icons/IconMore"
 import Menu from "../../components/Menu/Menu"
+import MenuItemAddItem from "./MenuItemAddItem"
+import MenuItemDeleteItems from "./MenuItemDeleteItems"
 
 export default function HeaderMenu() {
     
@@ -10,7 +12,8 @@ export default function HeaderMenu() {
             </Menu.Button>
 
             <Menu.Dropdown>
-                <Menu.Item>Add item</Menu.Item>
+                <MenuItemAddItem />
+                <MenuItemDeleteItems />
             </Menu.Dropdown>
         </Menu>
     )
