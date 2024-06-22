@@ -1,14 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { useSetAtom } from "jotai"
 import { onSnapshot, collection } from "firebase/firestore"
 import { db } from "./firebase/firebase"
 import { useEffect } from "react"
 import { useStore } from "./store/store"
 
 import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
+import RecipesPage from "./pages/Recipes/RecipesPage"
 
 export default function App() {
-
     const setShoppingList = useStore((state) => state.updateShoppingList)
 
     useEffect(() => {
@@ -28,6 +27,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<ShoppingListPage />}/>
+                <Route path="/recipes" element={<RecipesPage />}/>
             </Routes>
         </BrowserRouter>
     )
