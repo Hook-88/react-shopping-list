@@ -21,15 +21,9 @@ export const useStore = create(set => ({
     setRecipeIngredients: recipeIngredients => set({ ingredients: recipeIngredients.map(ingredient => ({ ...ingredient, selected: false}))
     }),
     clearIngredients: () => set({ ingredients: [] }),
-
     toggleIngredientSelected: ingredientId => 
         set(state => ({ ingredients: state.ingredients
             .map(ingredient => ingredient.id === ingredientId ? {...ingredient, selected: !ingredient.selected} : ingredient)})),
-    
-    // toggleIngredientSelected: ingredientId => 
-    //     set(state => ({ ingredients: state.ingredients
-    //         .map(ingredient => ingredient.id === ingredientId ? {...ingredient, selected: !ingredient.selected} : ingredient)})),
-
 
     formData: null,
     updateFormData: newData => set({ formData: newData }),
