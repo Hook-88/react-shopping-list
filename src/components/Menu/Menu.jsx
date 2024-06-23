@@ -4,10 +4,15 @@ import MenuDropdown from "./MenuDropdown"
 import MenuItem from "./MenuItem"
 import { useEffect, useRef } from "react"
 import { menuOpenAtom } from "../../store/store"
+import { twMerge } from "tailwind-merge"
 
-export default function Menu({children}) {
+export default function Menu({children, className}) {
     const menuRef = useRef()
     const setOpen = useSetAtom(menuOpenAtom)
+    const MenuClassName = twMerge(
+        "relative",
+        className
+    )
 
     useEffect(() => {
         function handler(event) {
@@ -24,7 +29,7 @@ export default function Menu({children}) {
     }, [])
     
     return (
-        <div className="relative" ref={menuRef}>
+        <div className={MenuClassName} ref={menuRef}>
             {children}
         </div>
     )
