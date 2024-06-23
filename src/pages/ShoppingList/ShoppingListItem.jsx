@@ -15,7 +15,7 @@ export default function ShoppingListItem({itemId}) {
     }
 
     return (
-        <li onClick={toggleChecked}>
+        <li onClick={toggleChecked} >
             {
                 selected ? 
                 <ItemChecked itemId={itemId}/> : 

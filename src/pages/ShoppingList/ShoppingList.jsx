@@ -1,7 +1,7 @@
 import { useStore } from "../../store/store"
 import ShoppingListDefault from "./ShoppingListDefault"
 import ShoppingListFilter from "./ShoppingListFilter"
-import ListHeader from "./ListHeader"
+import ListHeader from "./ShoppingListHeader"
 
 
 export default function ShoppingList() {
