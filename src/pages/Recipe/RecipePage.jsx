@@ -8,22 +8,13 @@ import { db } from "../../firebase/firebase"
 import IngredientsListDefault from "./IngredientsListDefault"
 import RecipesPageHeader from "./RecipePageHeader"
 import AddItem from "../../components/AddItem"
+import AddIngredientToFirebase from "./AddIngredientToFirebase"
 
 export default function RecipesPage() {
     const { recipeId } = useParams()
     const ingredients = useStore(state => state.ingredients)
     const setIngredients = useStore(state => state.setRecipeIngredients)
     const formData = useStore(state => state.formData)
-
-    async function addIngredientToFirebase() {
-        const collectionRef = collection(db, `recipes/${recipeId}/ingredients`)
-        const obj = {
-            name: formData.itemName,
-            optional: false
-        }
-        
-        await addDoc(collectionRef, obj)
-    }
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, `recipes/${recipeId}/ingredients`), snapshot => {
@@ -43,11 +34,10 @@ export default function RecipesPage() {
         <RecipesPageHeader />
         <main className="px-4 mt-12 flex flex-col gap-4 pb-5">
             {
-                ingredients &&
-                <IngredientsListDefault />
+                ingredients && <IngredientsListDefault />
             }
             {
-                formData && <AddItem onSubmit={addIngredientToFirebase}/>
+                formData && <AddIngredientToFirebase />
             }
             
         </main>
