@@ -3,7 +3,7 @@ import LinkNavBack from "../../components/Links/LinkNavBack"
 import PageHeader from "../../components/PageHeader/PageHeader"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { collection, doc, onSnapshot } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import IngredientsListDefault from "./IngredientsListDefault"
 import RecipesPageHeader from "./RecipePageHeader"
@@ -14,6 +14,16 @@ export default function RecipesPage() {
     const ingredients = useStore(state => state.ingredients)
     const setIngredients = useStore(state => state.setRecipeIngredients)
     const formData = useStore(state => state.formData)
+
+    async function addIngredientToFirebase() {
+        const collectionRef = collection(db, `recipes/${recipeId}/ingredients`)
+        const obj = {
+            name: formData.itemName,
+            optional: false
+        }
+        
+        await addDoc(collectionRef, obj)
+    }
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, `recipes/${recipeId}/ingredients`), snapshot => {
@@ -37,7 +47,7 @@ export default function RecipesPage() {
                 <IngredientsListDefault />
             }
             {
-                formData && <AddItem />
+                formData && <AddItem onSubmit={addIngredientToFirebase}/>
             }
             
         </main>
