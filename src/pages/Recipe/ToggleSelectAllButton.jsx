@@ -19,7 +19,7 @@ export default function IngredientsListDefault() {
 
     return (        
         <button 
-            className="text-sm col-span-2 col-start-5 justify-end items-center pr-4 flex gap-1"
+            className="text-sm col-span-3 col-start-4 justify-end items-center pr-4 flex gap-1"
             onClick={toggleSelectAll}
         >
             {
