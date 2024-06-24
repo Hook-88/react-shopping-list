@@ -7,7 +7,7 @@ export default function IngredientSelected({ingredientObj}) {
 
     return (
         <li key={ingredientObj.id}>
-            <List.Item className="flex items-center justify-between gap-4 border-green-900 border-2 font-bold">
+            <List.Item className="flex items-center justify-between gap-4 border-green-900 border-2 font-bold bg-white/5">
                 {getCapString(ingredientObj.name)}
                 <IconCheck />
             </List.Item>

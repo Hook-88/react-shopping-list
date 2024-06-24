@@ -1,14 +1,15 @@
 import { useStore } from "../../store/store"
-import LinkNavBack from "../../components/Links/LinkNavBack"
-import PageHeader from "../../components/PageHeader/PageHeader"
 import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { addDoc, collection, doc, onSnapshot } from "firebase/firestore"
+import { useEffect } from "react"
+import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import IngredientsListDefault from "./IngredientsListDefault"
 import RecipesPageHeader from "./RecipePageHeader"
 import AddItem from "../../components/AddItem"
 import AddIngredientToFirebase from "./AddIngredientToFirebase"
+import Card from "../../components/Card"
+import Button from "../../components/Buttons/Button"
+import AddSelectionToShoppingList from "./AddSelectionToShoppingList"
 
 export default function RecipesPage() {
     const { recipeId } = useParams()
@@ -39,7 +40,7 @@ export default function RecipesPage() {
             {
                 formData && <AddIngredientToFirebase />
             }
-            
+            <AddSelectionToShoppingList />           
         </main>
         </>
     )
