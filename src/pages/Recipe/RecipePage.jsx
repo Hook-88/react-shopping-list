@@ -5,10 +5,7 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import IngredientsListDefault from "./IngredientsListDefault"
 import RecipesPageHeader from "./RecipePageHeader"
-import AddItem from "../../components/AddItem"
 import AddIngredientToFirebase from "./AddIngredientToFirebase"
-import Card from "../../components/Card"
-import Button from "../../components/Buttons/Button"
 import AddSelectionToShoppingList from "./AddSelectionToShoppingList"
 
 export default function RecipesPage() {

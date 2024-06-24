@@ -3,6 +3,7 @@ import Menu from "../../components/Menu/Menu"
 import { useStore } from "../../store/store"
 import { useSetAtom } from "jotai"
 import { menuOpenAtom } from "../../store/store"
+import { Link } from "react-router-dom"
 
 export default function HeaderMenu() {
     const openAddIngredient = useStore(state => state.updateFormData)
@@ -21,7 +22,11 @@ export default function HeaderMenu() {
 
             <Menu.Dropdown>
                 <Menu.Item onClick={handleClickAdd}>Add</Menu.Item>
-                <Menu.Item>Edit</Menu.Item>
+                <Menu.Item>
+                    <Link to="edit">
+                        Edit
+                    </Link>
+                </Menu.Item>
             </Menu.Dropdown>
         </Menu>
     )
