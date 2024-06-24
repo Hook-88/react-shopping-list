@@ -18,6 +18,7 @@ export const useStore = create(set => ({
     }})),
 
     ingredients: [],
+    setIngredients: ingredients => set({ ingredients: ingredients }),
     setRecipeIngredients: recipeIngredients => set({ ingredients: recipeIngredients.map(ingredient => ({ ...ingredient, selected: false}))
     }),
     clearIngredients: () => set({ ingredients: [] }),
