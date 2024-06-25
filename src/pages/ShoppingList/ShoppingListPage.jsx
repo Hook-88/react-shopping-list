@@ -1,6 +1,9 @@
 import { useAtomValue } from "jotai"
 import { shoppingListAtom } from "../../store/store"
 import PageHeader from "../../components/PageHeader/PageHeader"
+import Card from "../../components/Card"
+import ButtonAdd from "../../components/Buttons/ButtonAdd"
+import ButtonSubtract from "../../components/Buttons/ButtonSubtract"
 
 export default function ShoppingListPage() {
     const shoppingList = useAtomValue(shoppingListAtom)  
@@ -13,15 +16,20 @@ export default function ShoppingListPage() {
                 <PageHeader.Title className="col-start-3 col-span-5">Shopping List</PageHeader.Title>
             </PageHeader>
             <main className="mt-12 px-4">
-                <ul>
+                <ul className="space-y-2">
                     {
                         shoppingList.map(
                             item => (
                                 <li 
                                     key={item.id}
-                                    className="py-2 px-4 border border-white/30 rounded-lg cursor-pointer flex"
-                                >
-                                    {item.name}
+                                >   
+                                    <Card className="flex items-center justify-between">
+                                        {item.name}
+                                        <div className="flex gap-2">
+                                            <ButtonSubtract />
+                                            <ButtonAdd />
+                                        </div>
+                                    </Card>
                                 </li>
                             )
                         
