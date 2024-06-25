@@ -1,28 +1,34 @@
-import ShoppingList from "./ShoppingList"
-import HeaderMenu from "./HeaderMenu"
-import AddItemToShoppingList from "./AddItemToShoppingList"
-import { useStore } from "../../store/store"
-import LinkNav from "../../components/Links/LinkNav"
+import { useAtomValue } from "jotai"
+import { shoppingListAtom } from "../../store/store"
+import PageHeader from "../../components/PageHeader/PageHeader"
 
 export default function ShoppingListPage() {
-    const formData = useStore(state => state.formData)
+    const shoppingList = useAtomValue(shoppingListAtom)  
+    
+    console.log(shoppingList)
     
     return (
         <>
-        <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/80">
-            <h1 className="col-start-2 col-span-7 text-center">Shopping</h1>
-            <HeaderMenu />
-        </header>
-
-        <main className="px-4 mt-12 flex flex-col gap-4 pb-5">
-            <ShoppingList />
-            {
-                formData ? 
-                <AddItemToShoppingList /> : 
-                <LinkNav to="/recipes">Recipes</LinkNav>
-            }
-        </main>
+            <PageHeader>
+                <PageHeader.Title className="col-start-3 col-span-5">Shopping List</PageHeader.Title>
+            </PageHeader>
+            <main className="mt-12 px-4">
+                <ul>
+                    {
+                        shoppingList.map(
+                            item => (
+                                <li 
+                                    key={item.id}
+                                    className="py-2 px-4 border border-white/30 rounded-lg cursor-pointer flex"
+                                >
+                                    {item.name}
+                                </li>
+                            )
+                        
+                        )
+                    }
+                </ul>
+            </main>
         </>
     )
-    
 }
