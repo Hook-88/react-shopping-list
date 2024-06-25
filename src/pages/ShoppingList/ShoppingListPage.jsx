@@ -8,8 +8,6 @@ import ButtonSubtract from "../../components/Buttons/ButtonSubtract"
 export default function ShoppingListPage() {
     const shoppingList = useAtomValue(shoppingListAtom)  
     
-    console.log(shoppingList)
-    
     return (
         <>
             <PageHeader>
@@ -25,8 +23,15 @@ export default function ShoppingListPage() {
                                 >   
                                     <Card className="flex items-center justify-between">
                                         {item.name}
+                                        &nbsp;
+                                        {   
+                                            item.quantity > 1 &&
+                                            `(${item.quantity}x)`
+                                        }
                                         <div className="flex gap-2">
-                                            <ButtonSubtract />
+                                            {
+                                                item.quantity > 1 && <ButtonSubtract />
+                                            }
                                             <ButtonAdd />
                                         </div>
                                     </Card>
