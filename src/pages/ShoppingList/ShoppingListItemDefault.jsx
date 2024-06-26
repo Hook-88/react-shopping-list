@@ -3,6 +3,7 @@ import ButtonAdd from "../../components/Buttons/ButtonAdd"
 import ButtonSubtract from "../../components/Buttons/ButtonSubtract"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
+import getCapString from "../../utility/getCapString"
 
 export default function ShoppingListItemDefault({item}) {
     
@@ -25,7 +26,7 @@ export default function ShoppingListItemDefault({item}) {
     
     return ( 
         <Card className="flex items-center justify-between">
-            {item.name}
+            {getCapString(item.name)}
             &nbsp;
             {   
                 item.quantity > 1 &&
