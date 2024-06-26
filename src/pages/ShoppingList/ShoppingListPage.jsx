@@ -2,23 +2,14 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import ShoppingListEl from "./ShoppingListEl"
 import ShoppingListMenu from "./ShoppingListMenu"
 import AddItemForm from "./AddItemForm"
-import { useAtom, useAtomValue } from "jotai"
+import { useAtomValue } from "jotai"
 import { confirmDialogAtom, formDataAtom } from "../../store/store"
 import LinkNav from "../../components/Links/LinkNav"
-import Card from "../../components/Card"
-import Button from "../../components/Buttons/Button"
-import { useRef } from "react"
 import ConfirmDialog from "../../components/ConfirmDialog"
 
 export default function ShoppingListPage() {
     const formData = useAtomValue(formDataAtom)
-    const [dialogObj, setDialogObj] = useAtom(confirmDialogAtom) 
-    
-    function showDialogConfirm() {
-        setDialogObj({
-            question: "Delete checked items?",
-        })
-    }
+    const dialogObj = useAtomValue(confirmDialogAtom) 
 
     return (
         <>
