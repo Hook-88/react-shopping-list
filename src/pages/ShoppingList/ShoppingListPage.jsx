@@ -1,15 +1,10 @@
 import PageHeader from "../../components/PageHeader/PageHeader"
 import ShoppingListEl from "./ShoppingListEl"
-import Menu from "./../../components/Menu/Menu"
-import IconMore from "../../components/Icons/IconMore"
 import ShoppingListMenu from "./ShoppingListMenu"
-import Form from "../../components/Form"
-import Card from "../../components/Card"
-import Button from "../../components/Buttons/Button"
-import AddItemCard from "../../components/AddItemCard"
 import AddItemForm from "./AddItemForm"
 import { useAtomValue } from "jotai"
 import { formDataAtom } from "../../store/store"
+import LinkNav from "../../components/Links/LinkNav"
 
 export default function ShoppingListPage() {
     const formData = useAtomValue(formDataAtom)
@@ -25,7 +20,7 @@ export default function ShoppingListPage() {
                 {
                     formData && <AddItemForm />
                 }
-
+                <LinkNav>Recipes</LinkNav>
             </main>
         </>
     )
