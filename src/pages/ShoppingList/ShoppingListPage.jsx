@@ -18,9 +18,8 @@ export default function ShoppingListPage() {
             <main className="mt-12 px-4 flex flex-col gap-4">
                 <ShoppingListEl />
                 {
-                    formData && <AddItemForm />
+                    formData ? <AddItemForm /> : <LinkNav to="recipes">Recipes</LinkNav>
                 }
-                <LinkNav>Recipes</LinkNav>
             </main>
         </>
     )

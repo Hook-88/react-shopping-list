@@ -1,13 +1,12 @@
 import Card from "../../components/Card"
 import IconCheck from "../../components/Icons/IconCheck"
-import ButtonAdd from "../../components/Buttons/ButtonAdd"
-import ButtonSubtract from "../../components/Buttons/ButtonSubtract"
+import getCapString from "../../utility/getCapString"
 
 export default function ShoppingListItemSelected({item}) {
     
     return (
         <Card className="flex items-center justify-between bg-green-900">
-            {item.name}
+            {getCapString(item.name)}
             &nbsp;
             {   
                 item.quantity > 1 &&

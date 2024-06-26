@@ -1,8 +1,15 @@
-export default function ListProgress({totalLength, currentLength}) {
+import { ListContext } from "./List"
+import { useContext } from "react"
+
+export default function ListProgress() {
+    const { listArr }  = useContext(ListContext)
+    const listArrFilteredSelected = listArr.filter(item => item.selected === true)
+    // const shoppingList = useAtomValue(shoppingListAtom)
+
     
     return (
-        <small className="ml-4">
-            {`(${currentLength}/${totalLength})`}
+        <small>
+            {`(${listArrFilteredSelected.length}/${listArr.length})`}
         </small>
     )
 }

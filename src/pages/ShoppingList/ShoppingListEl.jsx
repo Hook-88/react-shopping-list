@@ -2,19 +2,21 @@ import ShoppingListHeader from "./ShoppingListHeader"
 import ShoppingListDefault from "./ShoppingListDefault"
 import ShoppingListFilterNotSelected from "./ShoppingListFilterNotSelected"
 import { useAtomValue } from "jotai"
-import { listFiltersAtom } from "../../store/store"
+import { listFiltersAtom, shoppingListAtom } from "../../store/store"
+import List from "../../components/List/List"
 
 export default function ShoppingListEl() {
+    const shoppingList = useAtomValue(shoppingListAtom)
     const filters = useAtomValue(listFiltersAtom)
     
     return (
-        <div>
+        <List listArr={shoppingList}>
             <ShoppingListHeader />
             {
-                filters.length > 0 ? <ShoppingListFilterNotSelected /> : <ShoppingListDefault />
+                filters.length > 0 ? 
+                    <ShoppingListFilterNotSelected /> : <ShoppingListDefault />
             }
-            
-        </div>
+        </List>
 
     )
 }

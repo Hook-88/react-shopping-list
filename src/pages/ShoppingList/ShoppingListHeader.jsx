@@ -1,12 +1,19 @@
+import ShoppingListHeader from "./ShoppingListHeader"
+import ShoppingListDefault from "./ShoppingListDefault"
+import ShoppingListFilterNotSelected from "./ShoppingListFilterNotSelected"
+import { useAtomValue } from "jotai"
+import { listFiltersAtom, shoppingListAtom } from "../../store/store"
+import List from "../../components/List/List"
 import ButtonFilterShoppingList from "./ButtonFilterShoppingList"
-import ShoppingListProgress from "./ShoppingListProgress"
 
-export default function ShoppingListHeader() {
+export default function ShoppingListEl() {
+    const shoppingList = useAtomValue(shoppingListAtom)
+    const filters = useAtomValue(listFiltersAtom)
     
     return (
-        <div className="px-4 mb-1 flex">
-            <ShoppingListProgress />
+        <List.Header>
+            <List.Progress />
             <ButtonFilterShoppingList />
-        </div>
+        </List.Header>
     )
 }

@@ -1,7 +1,7 @@
 export default function ListHeader({children}) {
     
     return (
-        <div className="grid grid-cols-6">          
+        <div className="px-4 mb-1 flex">
             {children}
         </div>
     )

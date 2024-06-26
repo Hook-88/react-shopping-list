@@ -1,12 +1,10 @@
-import { useAtomValue } from "jotai"
-import { shoppingListAtom } from "../../store/store"
 import ShoppingListItemDefault from "./ShoppingListItemDefault"
 import ShoppingListItemSelected from "./ShoppingListItemSelected"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
+import List from "../../components/List/List"
 
 export default function ShoppingListDefault() {
-    const shoppingList = useAtomValue(shoppingListAtom)
     
     async function toggleSelectedInFirebase(docId) {
         const docRef = doc(db, "shoppingList", docId)
@@ -17,9 +15,9 @@ export default function ShoppingListDefault() {
     }
     
     return (    
-        <ul className="space-y-2">
+        <List.ListDefault>
             {
-                shoppingList.map(item => (
+                listArr => listArr.map(item => (
                     <li key={item.id} onClick={() => toggleSelectedInFirebase(item.id)}>
                         {
                             item.selected ? 
@@ -29,6 +27,6 @@ export default function ShoppingListDefault() {
                     </li>
                 ))
             }
-        </ul>
+        </List.ListDefault>
     )
 }

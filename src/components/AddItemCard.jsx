@@ -7,6 +7,7 @@ export default function AddItemCard({placeholder = "", name = "itemName"}) {
     const [formData, setFormData] = useAtom(formDataAtom)
 
     function handleClick() {
+        //to close form
         setFormData(null)
     }
 

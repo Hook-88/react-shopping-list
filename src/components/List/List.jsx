@@ -1,16 +1,24 @@
-import ListItem from "./ListItem"
+import { createContext } from "react"
 import ListHeader from "./ListHeader"
-import ListProgress from "./ListProgress";
+import ListProgress from "./ListProgress"
+import ListListDefault from "./ListListDefault"
 
-export default function List({children}) {
+const ListContext = createContext()
+
+export default function List({children, className, listArr}) {
+
     
     return (
-            <ul className="space-y-2">
+        <ListContext.Provider value={{ listArr }}>
+            <div className={className}>
                 {children}
-            </ul>
+            </div>
+        </ListContext.Provider>
     )
 }
 
-List.Item = ListItem
 List.Header = ListHeader
 List.Progress = ListProgress
+List.ListDefault = ListListDefault
+
+export { ListContext }

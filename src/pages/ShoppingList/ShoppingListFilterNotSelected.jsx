@@ -4,6 +4,7 @@ import ShoppingListItemDefault from "./ShoppingListItemDefault"
 import ShoppingListItemSelected from "./ShoppingListItemSelected"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
+import List from "../../components/List/List"
 
 export default function ShoppingListFilterNotSelected() {
     const shoppingList = useAtomValue(shoppingListAtom)
@@ -16,20 +17,36 @@ export default function ShoppingListFilterNotSelected() {
 
     }
     
-    return (    
-        <ul className="space-y-2">
+    return (
+        <List.ListDefault>
             {
-                shoppingList.filter(item => item.selected === false)
-                .map(item => (
-                    <li key={item.id} onClick={() => toggleSelectedInFirebase(item.id)}>
-                        {
-                            item.selected ? 
-                            <ShoppingListItemSelected item={item}/> :
-                            <ShoppingListItemDefault item={item} />
-                        }
-                    </li>
+                listArr => listArr
+                    .filter(item => item.selected === false)
+                    .map(item => (
+                        <li key={item.id} onClick={() => toggleSelectedInFirebase(item.id)}>
+                            {
+                                item.selected ? 
+                                <ShoppingListItemSelected item={item}/> :
+                                <ShoppingListItemDefault item={item} />
+                            }
+                        </li>
                 ))
             }
-        </ul>
+        </List.ListDefault>
+            
+        // <ul className="space-y-2">
+        //     {
+        //         shoppingList.filter(item => item.selected === false)
+        //         .map(item => (
+        //             <li key={item.id} onClick={() => toggleSelectedInFirebase(item.id)}>
+        //                 {
+        //                     item.selected ? 
+        //                     <ShoppingListItemSelected item={item}/> :
+        //                     <ShoppingListItemDefault item={item} />
+        //                 }
+        //             </li>
+        //         ))
+        //     }
+        // </ul>
     )
 }
