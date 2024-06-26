@@ -1,13 +1,10 @@
+import Menu from "./../../components/Menu/Menu"
 import { useAtomValue, useSetAtom } from "jotai"
 import { shoppingListAtom, confirmDialogAtom } from "../../store/store"
-import List from "../../components/List/List"
-import ButtonFilterShoppingList from "./ButtonFilterShoppingList"
 import { deleteDocFromFirebaseCollection } from "../../firebase/firebaseFn"
 
-
-export default function ShoppingListHeader() {
-    const shoppingList = useAtomValue(shoppingListAtom)
-
+export default function MenuItemDeleteSelectionButton() {
+    const selectedItems = useAtomValue(shoppingListAtom).filter(item => item.selected === true)
     const setDialogObj = useSetAtom(confirmDialogAtom) 
     
     function showDialogConfirm() {
@@ -15,17 +12,14 @@ export default function ShoppingListHeader() {
             question: "Delete checked items?",
             onConfirmCallbackFn: () => deleteSelectionsFromFirebase()
         })
-    } 
+    }
 
     function deleteSelectionsFromFirebase() {
-        shoppingList.filter(item => item.selected === true)
-            .forEach(item => deleteDocFromFirebaseCollection("shoppingList", item.id))
+        selectedItems.forEach(item => deleteDocFromFirebaseCollection("shoppingList", item.id))
     }
+
     
     return (
-        <List.Header>
-            <List.Progress onClick={showDialogConfirm}/>
-            <ButtonFilterShoppingList />
-        </List.Header>
+        <Menu.Item onClick={showDialogConfirm}>Delete selection</Menu.Item>
     )
 }

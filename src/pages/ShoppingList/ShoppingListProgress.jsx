@@ -1,14 +1,14 @@
-import { useStore } from "../../store/store"
-import ListProgress from "../../components/List/ListProgress"
+import { useAtomValue, useAtom } from "jotai"
+import { listFiltersAtom, shoppingListAtom } from "../../store/store"
 
 export default function ShoppingListProgress() {
-    const items = useStore(state => state.shoppingList)
-    const itemsChecked = items.filter(item => item.selected === false)
+    const shoppingList = useAtomValue(shoppingListAtom)
+    const shoppingListFilteredSelected = shoppingList.filter(item => item.selected === true)
+
     
     return (
-        <ListProgress 
-            totalLength={items.length}
-            currentLength={itemsChecked.length}
-        />
+        <small>
+            {`(${shoppingListFilteredSelected.length}/${shoppingList.length})`}
+        </small>
     )
 }

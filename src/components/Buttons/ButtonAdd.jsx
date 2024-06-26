@@ -1,6 +1,6 @@
 import { FaPlus } from "react-icons/fa6"
 
-export default function AddButton({onClick}) {
+export default function ButtonAdd({onClick}) {
     
     return (
         <button 

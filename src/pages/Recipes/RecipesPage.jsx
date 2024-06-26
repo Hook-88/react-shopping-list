@@ -1,28 +1,19 @@
-import { useStore } from "../../store/store"
-import ShowAddRecipeFormButton from "./ShowAddRecipeFormButton"
-import AddRecipeToFirebase from "./AddRecipeToFirebase"
-import LinkNavBack from "../../components/Links/LinkNavBack"
 import PageHeader from "../../components/PageHeader/PageHeader"
-import RecipesList from "./RecipesList"
-
+import { useAtomValue } from "jotai"
+import { formDataAtom } from "../../store/store"
+import LinkNav from "../../components/Links/LinkNav"
 
 export default function RecipesPage() {
-    const formData = useStore(state => state.formData)
-
+    const formData = useAtomValue(formDataAtom)
+    
     return (
         <>
-        <PageHeader>
-            <LinkNavBack className="col-span-2" />
-            <PageHeader.Title className="col-start-3 col-span-5">Recipes</PageHeader.Title>
-            <ShowAddRecipeFormButton />
-        </PageHeader>
+            <PageHeader>
+                <PageHeader.Title className="col-start-3 col-span-5">Recipes</PageHeader.Title>
+            </PageHeader>
+            <main className="mt-12 px-4 flex flex-col gap-4">
 
-        <main className="px-4 mt-12 flex flex-col gap-4 pb-5">
-            <RecipesList />
-            { formData && <AddRecipeToFirebase /> }
-        </main>
+            </main>
         </>
     )
-    
-
 }

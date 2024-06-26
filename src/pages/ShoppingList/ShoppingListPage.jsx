@@ -1,28 +1,34 @@
-import ShoppingList from "./ShoppingList"
-import HeaderMenu from "./HeaderMenu"
-import AddItemToShoppingList from "./AddItemToShoppingList"
-import { useStore } from "../../store/store"
+import PageHeader from "../../components/PageHeader/PageHeader"
+import ShoppingListEl from "./ShoppingListEl"
+import ShoppingListMenu from "./ShoppingListMenu"
+import AddItemForm from "./AddItemForm"
+import { useAtomValue } from "jotai"
+import { confirmDialogAtom, formDataAtom } from "../../store/store"
 import LinkNav from "../../components/Links/LinkNav"
+import ConfirmDialog from "../../components/ConfirmDialog"
 
 export default function ShoppingListPage() {
-    const formData = useStore(state => state.formData)
-    
+    const formData = useAtomValue(formDataAtom)
+    const dialogObj = useAtomValue(confirmDialogAtom) 
+
     return (
         <>
-        <header className="py-2 px-4 grid grid-cols-9 font-bold text-lg fixed inset-x-0 top-0 bg-black/80">
-            <h1 className="col-start-2 col-span-7 text-center">Shopping</h1>
-            <HeaderMenu />
-        </header>
+            <PageHeader>
+                <PageHeader.Title className="col-start-3 col-span-5">Shopping List</PageHeader.Title>
+                <ShoppingListMenu />
+            </PageHeader>
+            <main className="mt-12 px-4 flex flex-col gap-4">
+                <ShoppingListEl />
+                {
+                    formData ? <AddItemForm /> : <LinkNav to="recipes">Recipes</LinkNav>
+                }
+            </main>
 
-        <main className="px-4 mt-12 flex flex-col gap-4 pb-5">
-            <ShoppingList />
             {
-                formData ? 
-                <AddItemToShoppingList /> : 
-                <LinkNav to="/recipes">Recipes</LinkNav>
+                dialogObj && <ConfirmDialog />
             }
-        </main>
+
+            
         </>
     )
-    
 }
