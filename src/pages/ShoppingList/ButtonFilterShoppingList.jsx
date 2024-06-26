@@ -28,20 +28,20 @@ export default function ButtonFilterShoppingList() {
     
     return (
         <button 
-            className="text-sm ml-auto flex items-center gap-1 disabled:text-white/50"
+            className="ml-auto disabled:text-white/50"
             disabled={!someChecked}
             onClick={toggleFilter}
         >
             {
                 filters.length > 0 ?
-                <>
-                    show all
+                <small className="flex items-center gap-1"> 
+                    Show all
                     <FaEye />
-                </> :
-                <>
-                    hide selected
+                </small> :
+                <small className="flex items-center gap-1">
+                    Hide selected
                     <FaEyeSlash />
-                </>
+                </small>
             }
         </button>
     )
