@@ -5,7 +5,6 @@ import { useEffect } from "react"
 import { shoppingListAtom } from "./store/store"
 import { useSetAtom } from "jotai"
 import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
-import RecipesPage from "./pages/Recipes/RecipesPage"
 
 export default function App() {
     const setShoppingList = useSetAtom(shoppingListAtom)
@@ -27,7 +26,6 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<ShoppingListPage />}/>
-                <Route path="/recipes" element={<RecipesPage />}/>
             </Routes>
         </BrowserRouter>
     )
