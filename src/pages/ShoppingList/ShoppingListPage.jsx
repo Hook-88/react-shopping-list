@@ -7,7 +7,6 @@ import { confirmDialogAtom, formDataAtom, shoppingListAtom } from "../../store/s
 import LinkNav from "../../components/Links/LinkNav"
 import ConfirmDialog from "../../components/ConfirmDialog"
 import Button from "../../components/Buttons/Button"
-import PopularItemsList from "./popularItemsList"
 
 export default function ShoppingListPage() {
     const [formData, setFormData] = useAtom(formDataAtom)
@@ -37,7 +36,6 @@ export default function ShoppingListPage() {
                         // <AddItemForm />
                 }
                 {/* TODO add populair list */}
-                    {/* <PopularItemsList /> */}
                 {
                     formData ? <AddItemForm /> : 
                         <LinkNav to="recipes">Recipes</LinkNav>
