@@ -5,7 +5,7 @@ import ListItemCardDefault from "./ListItemCardDefault"
 import ListItemCardSelected from "./ListItemCardSelected"
 
 export default function ListShoppingListEl() {
-    const { shoppingList } = useContext(ShoppingListContext)
+    const { shoppingList, toggleItemSelectedInFirebase } = useContext(ShoppingListContext)
     
     return (
         <List listArr={shoppingList}>
@@ -15,8 +15,15 @@ export default function ListShoppingListEl() {
             <List.ListDefault>
                 {
                     arr => arr.map(item => (
-                        <li key={item.id}>
-                            <ListItemCardSelected item={item}/>
+                        <li 
+                            key={item.id}
+                            onClick={() => toggleItemSelectedInFirebase(item.id)}
+                        >
+                            {
+                                item.selected ?
+                                <ListItemCardSelected item={item}/> :
+                                <ListItemCardDefault item={item}/>
+                            }
                         </li>
                     ))
                 }

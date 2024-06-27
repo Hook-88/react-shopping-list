@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from "firebase/firestore"
+import { collection, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
 import { createContext, useEffect, useState } from "react"
 import { db } from "../../firebase/firebase"
 
@@ -20,9 +20,23 @@ export default function ShoppingListContextComponent({children}) {
 
         return unsub
     }, [])
+
+    async function toggleItemSelectedInFirebase(itemId) {
+        const docRef = doc(db, "shoppingList", itemId)
+        const docSnap = await getDoc(docRef)
+
+        await updateDoc(docRef, { selected: !docSnap.data().selected})
+    }
     
     return (
-        <ShoppingListContext.Provider value={{shoppingList}}>
+        <ShoppingListContext.Provider 
+            value={
+                {
+                    shoppingList, 
+                    toggleItemSelectedInFirebase
+                }
+            }
+        >
             {children}
         </ShoppingListContext.Provider>
     )
