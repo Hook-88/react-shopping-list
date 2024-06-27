@@ -1,9 +1,15 @@
 import Form from "../../components/Form"
 import AddItemCard from "../../components/AddItemCard"
-import { addDoc, collection, doc, getDoc, getDocs, updateDoc, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, updateDoc, query, where, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import { useAtom } from "jotai"
 import { formDataAtom } from "../../store/store"
+import ListPopularItems from "./ListPopularItems"
+import ListPopularItemsInline from "./ListPopularItemsInline"
+import Card from "../../components/Card"
+import Button from "../../components/Buttons/Button"
+import { useState, useEffect } from "react"
+import AddItemFormCard from "./AddItemFormCard"
 
 export default function AddItemForm() {
     const [formData, setFormData] = useAtom(formDataAtom)
@@ -17,10 +23,10 @@ export default function AddItemForm() {
     async function addItemToFirebase() {
         const collectionRef = collection(db, "shoppingList")
         const itemObj = {
-            name: formData.itemName.trim().toLowerCase(),
-            quantity: 1,
-            selected: false
-        }
+                name: formData.itemName.trim().toLowerCase(),
+                quantity: 1,
+                selected: false
+            }
 
         await addDoc(collectionRef, itemObj)
     }
@@ -61,7 +67,7 @@ export default function AddItemForm() {
     
     return (
         <Form onSubmit={handleSubmit}>
-            <AddItemCard placeholder="Item..." name="itemName"/>
+            <AddItemFormCard />
         </Form>
     )
 }

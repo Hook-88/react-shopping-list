@@ -6,16 +6,16 @@ export default function ListProgress({onClick = () => {}}) {
     const listArrFilteredSelected = listArr.filter(item => item.selected === true)
 
     function handleClick() {
-        if (listArrFilteredSelected.length === (listArr.length - 1) && listArr.length > 0) {
+        if (listArrFilteredSelected.length === (listArr.length) && listArr.length > 0) {
             onClick()
         }
     }
 
     return (
         <small onClick={handleClick}>
-            {`(${listArrFilteredSelected.length}/${(listArr.length - 1)})`}
+            {`(${listArrFilteredSelected.length}/${(listArr.length)})`}
             {
-                listArrFilteredSelected.length === (listArr.length - 1) &&
+                listArrFilteredSelected.length === (listArr.length) &&
                 " - Completed"
             }
         </small>

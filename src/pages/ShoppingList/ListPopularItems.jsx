@@ -5,7 +5,7 @@ import { db } from "../../firebase/firebase"
 import List from "../../components/List/List"
 import Card from "../../components/Card"
 
-export default function AddItemEl() {
+export default function ListPopularItems() {
     const [popularItemsArr, setPopularItemsArr] = useState(null)
 
     useEffect(() => {
@@ -22,8 +22,23 @@ export default function AddItemEl() {
     }, [])
     
     return (
-        <>
-            <AddItemForm />
-        </>
+        <List listArr={popularItemsArr}>
+            <List.Header>
+                <small>
+                    Top 5 Shopping list items 
+                </small>
+            </List.Header>
+            <List.ListDefault>
+            {
+                arr => arr ? arr.map(item => (
+                    <li key={item.id}>
+                        <Card>
+                            {item.name}
+                        </Card>
+                    </li>
+                )) : null
+            }
+        </List.ListDefault>
+        </List>
     )
 }

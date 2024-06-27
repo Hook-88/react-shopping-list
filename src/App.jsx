@@ -17,7 +17,7 @@ export default function App() {
                 id: doc.id
             }))
 
-            setShoppingList(newArr)
+            setShoppingList(newArr.filter(item => item.id !== "history"))
         })
 
         return unsub
