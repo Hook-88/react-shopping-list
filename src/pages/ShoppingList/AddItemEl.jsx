@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import AddItemForm from "./AddItemForm"
 import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
+import List from "../../components/List/List"
+import Card from "../../components/Card"
 
 export default function AddItemEl() {
     const [popularItemsArr, setPopularItemsArr] = useState(null)
@@ -11,7 +13,7 @@ export default function AddItemEl() {
             const arr = snapshot.docs
                 .map(doc => ({...doc.data(), id: doc.id}))
                 .sort((a, b) => b.quantity - a.quantity)
-            const topItems = arr.slice(0, 10)
+            const topItems = arr.slice(0, 5)
 
             setPopularItemsArr(topItems)
         })
@@ -24,10 +26,24 @@ export default function AddItemEl() {
     return (
         <>
             <AddItemForm />
-            {
-                popularItemsArr ?
-                popularItemsArr.map(item => <p key={item.id}>{item.name}</p>) : null
-            }
+            <List listArr={popularItemsArr}>
+                <List.Header>
+                    <small>
+                        Top 5 Shopping list items 
+                    </small>
+                </List.Header>
+                <List.ListDefault>
+                {
+                    arr => arr ? arr.map(item => (
+                        <li key={item.id}>
+                            <Card>
+                                {item.name}
+                            </Card>
+                        </li>
+                    )) : null
+                }
+            </List.ListDefault>
+            </List>
         </>
     )
 }
