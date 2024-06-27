@@ -1,8 +1,10 @@
 import { useAtomValue } from "jotai"
 import { menuOpenAtom } from "./../../store/store"
+import { useContext } from "react"
+import { MenuContext } from "./Menu"
 
 export default function MenuDropdown({children, onClick}) {
-    const open = useAtomValue(menuOpenAtom)
+    const { open } = useContext(MenuContext)
 
     return (
         open ?
