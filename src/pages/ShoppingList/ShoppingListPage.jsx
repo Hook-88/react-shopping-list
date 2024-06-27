@@ -3,10 +3,13 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import { ShoppingListContext } from "./ShoppingListContextComponent"
 import ListShoppingListEl from "./ListShoppingListEl"
 import ShoppingListMenu from "./ShoppingListMenu"
+import AddItemToShoppingListEl from "./AddItemToShoppingListEl"
+import { FormContext } from "../../Context/FormContextComponent"
 
 
 export default function ShoppingListPage() {
     const { shoppingList } = useContext(ShoppingListContext)
+    const { formData } = useContext( FormContext )
 
     return (
         <>
@@ -18,7 +21,11 @@ export default function ShoppingListPage() {
                 {
                     shoppingList && <ListShoppingListEl />
                 }
+                { formData && <AddItemToShoppingListEl /> }
+                
+
             </main>
+
 
             
         </>

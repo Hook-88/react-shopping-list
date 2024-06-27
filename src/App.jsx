@@ -1,11 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { onSnapshot, collection } from "firebase/firestore"
 import { db } from "./firebase/firebase"
 import { useEffect } from "react"
 import { shoppingListAtom } from "./store/store"
 import { useSetAtom } from "jotai"
-import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
 import ShoppingListContextComponent from "./pages/ShoppingList/ShoppingListContextComponent"
+import FormContextComponent from "./Context/FormContextComponent"
+import AppBrowserRouter from "./AppBrowserRouter"
 
 export default function App() {
     const setShoppingList = useSetAtom(shoppingListAtom)
@@ -25,11 +25,9 @@ export default function App() {
 
     return (
         <ShoppingListContextComponent>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<ShoppingListPage />}/>
-                </Routes>
-            </BrowserRouter>
+            <FormContextComponent>
+                <AppBrowserRouter />
+            </FormContextComponent>
         </ShoppingListContextComponent>
     )
   }
