@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import { shoppingListAtom } from "./store/store"
 import { useSetAtom } from "jotai"
 import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
+import ShoppingListContextComponent from "./pages/ShoppingList/ShoppingListContextComponent"
 
 export default function App() {
     const setShoppingList = useSetAtom(shoppingListAtom)
@@ -23,10 +24,12 @@ export default function App() {
     }, [])
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<ShoppingListPage />}/>
-            </Routes>
-        </BrowserRouter>
+        <ShoppingListContextComponent>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<ShoppingListPage />}/>
+                </Routes>
+            </BrowserRouter>
+        </ShoppingListContextComponent>
     )
   }

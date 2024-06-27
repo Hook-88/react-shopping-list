@@ -1,7 +1,5 @@
 import { useContext } from "react"
 import { ListContext } from "./List"
-import ShoppingListItemDefault from "../../pages/ShoppingList/ShoppingListItemDefault"
-import ShoppingListItemSelected from "../../pages/ShoppingList/ShoppingListItemSelected"
 import { doc, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 
