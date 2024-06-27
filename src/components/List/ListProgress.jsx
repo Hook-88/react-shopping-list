@@ -13,9 +13,9 @@ export default function ListProgress({onClick = () => {}}) {
 
     return (
         <small onClick={handleClick}>
-            {`(${listArrFilteredSelected.length}/${listArr.length})`}
+            {`(${listArrFilteredSelected.length}/${(listArr.length - 1)})`}
             {
-                listArrFilteredSelected.length === listArr.length &&
+                listArrFilteredSelected.length === (listArr.length - 1) &&
                 " - Completed"
             }
         </small>

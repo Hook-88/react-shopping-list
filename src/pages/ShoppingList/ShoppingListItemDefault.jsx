@@ -24,7 +24,8 @@ export default function ShoppingListItemDefault({item}) {
         await updateDoc(docRef, {quantity: docSnap.data().quantity + num})
     }
     
-    return ( 
+    return (
+        item?.name ? 
         <Card className="flex items-center justify-between">
             {getCapString(item.name)}
             &nbsp;
@@ -38,6 +39,6 @@ export default function ShoppingListItemDefault({item}) {
                 }
                 <ButtonAdd onClick={handleClickAdd}/>
             </div>
-        </Card>
+        </Card> : null
     )
 }

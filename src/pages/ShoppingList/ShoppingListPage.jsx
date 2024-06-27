@@ -2,14 +2,21 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import ShoppingListEl from "./ShoppingListEl"
 import ShoppingListMenu from "./ShoppingListMenu"
 import AddItemForm from "./AddItemForm"
-import { useAtomValue } from "jotai"
-import { confirmDialogAtom, formDataAtom } from "../../store/store"
+import { useAtomValue, useAtom } from "jotai"
+import { confirmDialogAtom, formDataAtom, shoppingListAtom } from "../../store/store"
 import LinkNav from "../../components/Links/LinkNav"
 import ConfirmDialog from "../../components/ConfirmDialog"
+import Button from "../../components/Buttons/Button"
 
 export default function ShoppingListPage() {
-    const formData = useAtomValue(formDataAtom)
+    const [formData, setFormData] = useAtom(formDataAtom)
     const dialogObj = useAtomValue(confirmDialogAtom) 
+    const shoppingListLength = useAtomValue(shoppingListAtom)?.length - 1
+
+    function handleClickStartAddingItems() {
+        setFormData(true)
+    }
+
 
     return (
         <>
@@ -18,9 +25,19 @@ export default function ShoppingListPage() {
                 <ShoppingListMenu />
             </PageHeader>
             <main className="mt-12 px-4 flex flex-col gap-4">
-                <ShoppingListEl />
                 {
-                    formData ? <AddItemForm /> : <LinkNav to="recipes">Recipes</LinkNav>
+                    shoppingListLength > 0 && <ShoppingListEl />
+                }
+                {
+                    !formData && shoppingListLength === 0 && 
+                        <Button className="py-4 bg-green-900" onClick={handleClickStartAddingItems}>
+                            Click to start adding items
+                        </Button>
+                        // <AddItemForm />
+                }
+                {
+                    formData ? <AddItemForm /> : 
+                        <LinkNav to="recipes">Recipes</LinkNav>
                 }
             </main>
 
