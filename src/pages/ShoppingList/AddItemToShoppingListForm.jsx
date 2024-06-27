@@ -3,9 +3,11 @@ import Button from "../../components/Buttons/Button"
 import Form from "../../components/Form"
 import { useContext } from "react"
 import { FormContext } from "./../../Context/FormContextComponent"
+import { ShoppingListContext } from "./ShoppingListContextComponent"
 
 export default function AddItemToShoppingListForm() {
-    const { formData, handleChange, clearFormData } = useContext(FormContext)
+    const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)
+    const { addItemToShoppingListInFirebase } = useContext(ShoppingListContext)
 
     function handleOnChange(event) {
         handleChange(event)
@@ -14,9 +16,14 @@ export default function AddItemToShoppingListForm() {
     function handleClick() {
         clearFormData()
     }
+
+    function handleSubmit() {
+        addItemToShoppingListInFirebase(formData.itemName)
+        openForm()
+    }
     
     return (         
-        <Form className="grid grid-col-6 gap-3">
+        <Form className="grid grid-col-6 gap-3" onSubmit={handleSubmit}>
             <input 
                 type="text" 
                 placeholder="items.."

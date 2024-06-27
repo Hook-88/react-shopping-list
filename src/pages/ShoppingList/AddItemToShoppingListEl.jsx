@@ -5,6 +5,7 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import { ShoppingListContext } from "./ShoppingListContextComponent"
 import getCapString from "./../../utility/getCapString"
+import ListInlinePopularItems from "./ListInlinePopularItems"
 
 export default function AddItemToShoppingListEl() {
     const [ popularItems, setPopularItems ] = useState(null)
@@ -33,22 +34,10 @@ export default function AddItemToShoppingListEl() {
     }
     
     return (
+        popularItems ? 
         <Card className="px-2">
-            {
-                popularItems ? 
-                <ul className="flex flex-wrap-reverse gap-2 mb-3">
-                    {
-                        popularItems.map(item => (
-                            <li key={item.id} className="flex-grow">
-                                <Card className="text-center">
-                                    {getCapString(item.name)}
-                                </Card>
-                            </li>
-                        ))
-                    }
-                </ul> : null
-            }
+            <ListInlinePopularItems /> 
             <AddItemToShoppingListForm />
-        </Card>
+        </Card> : null
     )
 }
