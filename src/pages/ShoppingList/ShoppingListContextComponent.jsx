@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, query, where, getDocs } from "firebase/firestore"
 import { createContext, useEffect, useState } from "react"
 import { db } from "../../firebase/firebase"
 
@@ -60,6 +60,42 @@ export default function ShoppingListContextComponent({children}) {
         }
 
         await addDoc(collectionRef, itemObj)
+        // addNewHistoryItem(itemName)
+        updateHistoryLog(itemName)
+    }
+
+    async function updateHistoryLog(itemName) {
+        const collectionRef = collection(db, "shoppingList/history/items")
+        const q = query(collectionRef, where("name", "==", itemName))
+        const querySnapshot = await getDocs(q)
+        const itemIdArr = []
+        querySnapshot.forEach(doc => itemIdArr.push(doc.id))
+
+        if (itemIdArr.length === 0) {
+            addNewHistoryItem(itemName)
+
+            return
+        }
+
+        incrementQuantityFirebaseHistoryItem(itemIdArr[0])
+        
+    }
+
+    async function addNewHistoryItem(itemName) {
+        const collectionRef = collection(db, "shoppingList/history/items")
+        const itemObj = {
+            name: itemName,
+            quantity: 1
+        }
+
+        await addDoc(collectionRef, itemObj)
+    }
+
+    async function incrementQuantityFirebaseHistoryItem(historyItemId) {
+        const docRef = doc(db, "shoppingList/history/items", historyItemId)
+        const docSnap = await getDoc(docRef)
+
+        await updateDoc(docRef, { quantity: docSnap.data().quantity + 1})
     }
     
     return (
