@@ -10,7 +10,7 @@ import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfi
 export default function ListShoppingListEl() {
     const { shoppingList, deleteSelectioninFirebase } = useContext(ShoppingListContext)
     const { filters, setFilters, clearFilters } = useContext(FilterContext)
-    const { dialogObj, setDialogObj } = useContext(DialogConfirmContext)
+    const { setDialogObj } = useContext(DialogConfirmContext)
 
     function toggleFilterSelected() {
         filters ? clearFilters() : setFilters('selected')
@@ -36,20 +36,17 @@ export default function ListShoppingListEl() {
                 >
                     {
                         filters ?
-                        <>
                             <small className="flex items-center">
                                 Show checked
                                 &nbsp;
                                 <FaEye />
-                            </small>
-                        </>  : 
-                        <>
+                            </small> : 
+                            
                             <small className="flex items-center">
                                 Hide checked
                                 &nbsp;
                                 <FaEyeSlash />
                             </small>
-                        </>
                     }
                 </button>
             </List.Header>

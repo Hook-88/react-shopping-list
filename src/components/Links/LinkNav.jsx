@@ -6,11 +6,11 @@ export default function LinkNav({children, to, onClick}) {
     
     return (
         <Link to={to} onClick={onClick}>
-            <Card className="flex items-center justify-between text-blue-500 border-blue-500">
+            <Card className="flex p-2 items-center justify-between text-blue-500 border-blue-500">
                 <span className="ml-2">
                     {children}
                 </span>
-                <span className="mr-3">
+                <span className="mr-2.5 p-1">
                     <FaAngleRight />
                 </span>
             </Card>
