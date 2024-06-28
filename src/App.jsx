@@ -7,6 +7,7 @@ import ShoppingListContextComponent from "./pages/ShoppingList/ShoppingListConte
 import FormContextComponent from "./Context/FormContextComponent"
 import FilterContextComponent from "./Context/FilterContextComponent"
 import AppBrowserRouter from "./AppBrowserRouter"
+import DialogConfirm from "./components/DialogConfirm/DialogConfirm"
 
 export default function App() {
     const setShoppingList = useSetAtom(shoppingListAtom)
@@ -27,9 +28,11 @@ export default function App() {
     return (
         <FormContextComponent>
             <FilterContextComponent>
-                <ShoppingListContextComponent>
-                    <AppBrowserRouter />
-                </ShoppingListContextComponent>
+                <DialogConfirm>
+                    <ShoppingListContextComponent>
+                        <AppBrowserRouter />
+                    </ShoppingListContextComponent>
+                </DialogConfirm>
             </FilterContextComponent>
         </FormContextComponent>
     )

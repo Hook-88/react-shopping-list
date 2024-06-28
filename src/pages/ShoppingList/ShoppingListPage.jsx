@@ -5,11 +5,15 @@ import ListShoppingListEl from "./ListShoppingListEl"
 import ShoppingListMenu from "./ShoppingListMenu"
 import AddItemToShoppingListEl from "./AddItemToShoppingListEl"
 import { FormContext } from "../../Context/FormContextComponent"
+import DialogConfirmEl from "../../components/DialogConfirm/DialogConfirmEl"
+import DialogConfirm from "../../components/DialogConfirm/DialogConfirm"
+import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
 
 
 export default function ShoppingListPage() {
     const { shoppingList } = useContext(ShoppingListContext)
     const { formData } = useContext( FormContext )
+    const { dialogObj } = useContext(DialogConfirmContext)
 
     return (
         <>
@@ -23,8 +27,10 @@ export default function ShoppingListPage() {
                 }
                 { (formData|| shoppingList?.length === 0) && <AddItemToShoppingListEl /> }
             </main>
-
-
+                {
+                    dialogObj && <DialogConfirmEl />
+                }
+            
             
         </>
     )

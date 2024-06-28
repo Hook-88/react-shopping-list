@@ -5,8 +5,8 @@ import ListItemCardDefault from "./ListItemCardDefault"
 import ListItemCardSelected from "./ListItemCardSelected"
 
 export default function ListShoppingListFilter({filter}) {
-    const { shoppingList, toggleItemSelectedInFirebase, deleteSelectioninFirebase } = useContext(ShoppingListContext)
-    
+    const { toggleItemSelectedInFirebase } = useContext(ShoppingListContext)
+
     return (
         <List.List>
             {

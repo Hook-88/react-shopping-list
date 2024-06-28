@@ -3,13 +3,22 @@ import IconMore from "../../components/Icons/IconMore"
 import { useContext } from "react"
 import { FormContext } from "../../Context/FormContextComponent"
 import { ShoppingListContext } from "./ShoppingListContextComponent"
+import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
 
 export default function ShoppingListMenu() {
     const { openForm } = useContext(FormContext)
     const { deleteSelectioninFirebase } = useContext(ShoppingListContext)
+    const { setDialogObj } = useContext(DialogConfirmContext)
 
     function handleClickAdd() {
         openForm()
+    }
+
+    function handleClickDelete() {
+        setDialogObj({
+            question: "Do you want to delete?",
+            confirmCallbackFn: () => deleteSelectioninFirebase()
+        })
     }
     
     return (
@@ -19,7 +28,7 @@ export default function ShoppingListMenu() {
             </Menu.Button>
             <Menu.Dropdown>
                 <Menu.Item onClick={handleClickAdd}>Add Item</Menu.Item>
-                <Menu.Item onClick={deleteSelectioninFirebase}>Delete Selection</Menu.Item>
+                <Menu.Item onClick={handleClickDelete}>Delete Selection</Menu.Item>
             </Menu.Dropdown>
         </Menu>
     )
