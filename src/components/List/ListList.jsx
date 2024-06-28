@@ -3,17 +3,9 @@ import { ListContext } from "./List"
 import { doc, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 
-export default function ListListDefault({children}) {
+export default function ListList({children}) {
     const { listArr } = useContext(ListContext)
 
-    async function toggleSelectedInFirebase(docId) {
-        const docRef = doc(db, "shoppingList", docId)
-        const docSnap = await getDoc(docRef)
-
-        await updateDoc(docRef, {selected: !docSnap.data().selected})
-
-    }
-    
     return (    
         <ul className="space-y-2">
             {

@@ -5,6 +5,7 @@ import { shoppingListAtom } from "./store/store"
 import { useSetAtom } from "jotai"
 import ShoppingListContextComponent from "./pages/ShoppingList/ShoppingListContextComponent"
 import FormContextComponent from "./Context/FormContextComponent"
+import FilterContextComponent from "./Context/FilterContextComponent"
 import AppBrowserRouter from "./AppBrowserRouter"
 
 export default function App() {
@@ -25,9 +26,11 @@ export default function App() {
 
     return (
         <FormContextComponent>
-            <ShoppingListContextComponent>
-                <AppBrowserRouter />
-            </ShoppingListContextComponent>
+            <FilterContextComponent>
+                <ShoppingListContextComponent>
+                    <AppBrowserRouter />
+                </ShoppingListContextComponent>
+            </FilterContextComponent>
         </FormContextComponent>
     )
   }

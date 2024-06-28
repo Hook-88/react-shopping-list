@@ -1,13 +1,12 @@
 import { createContext } from "react"
 import ListHeader from "./ListHeader"
 import ListProgress from "./ListProgress"
-import ListListDefault from "./ListListDefault"
+import ListList from "./ListList"
 
 const ListContext = createContext()
 
 export default function List({children, className, listArr}) {
 
-    
     return (
         <ListContext.Provider value={{ listArr }}>
             <div className={className}>
@@ -19,6 +18,6 @@ export default function List({children, className, listArr}) {
 
 List.Header = ListHeader
 List.Progress = ListProgress
-List.ListDefault = ListListDefault
+List.List = ListList
 
 export { ListContext }
