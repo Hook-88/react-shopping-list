@@ -2,9 +2,11 @@ import Menu from "../../components/Menu/Menu"
 import IconMore from "../../components/Icons/IconMore"
 import { useContext } from "react"
 import { FormContext } from "../../Context/FormContextComponent"
+import { ShoppingListContext } from "./ShoppingListContextComponent"
 
 export default function ShoppingListMenu() {
     const { openForm } = useContext(FormContext)
+    const { deleteSelectioninFirebase } = useContext(ShoppingListContext)
 
     function handleClickAdd() {
         openForm()
@@ -17,7 +19,7 @@ export default function ShoppingListMenu() {
             </Menu.Button>
             <Menu.Dropdown>
                 <Menu.Item onClick={handleClickAdd}>Add Item</Menu.Item>
-                <Menu.Item>Delete Selection</Menu.Item>
+                <Menu.Item onClick={deleteSelectioninFirebase}>Delete Selection</Menu.Item>
             </Menu.Dropdown>
         </Menu>
     )

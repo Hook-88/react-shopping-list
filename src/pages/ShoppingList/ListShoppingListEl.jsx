@@ -5,12 +5,13 @@ import ListItemCardDefault from "./ListItemCardDefault"
 import ListItemCardSelected from "./ListItemCardSelected"
 
 export default function ListShoppingListEl() {
-    const { shoppingList, toggleItemSelectedInFirebase } = useContext(ShoppingListContext)
+    const { shoppingList, toggleItemSelectedInFirebase, deleteSelectioninFirebase } = useContext(ShoppingListContext)
     
     return (
+        shoppingList.length > 0 ?
         <List listArr={shoppingList}>
             <List.Header>
-                <List.Progress />
+                <List.Progress onClick={deleteSelectioninFirebase}/>
             </List.Header>
             <List.ListDefault>
                 {
@@ -28,7 +29,6 @@ export default function ListShoppingListEl() {
                     ))
                 }
             </List.ListDefault>
-
-        </List>
+        </List> : null
     )
 }

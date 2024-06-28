@@ -2,11 +2,14 @@ import { useContext } from "react"
 import Card from "../../components/Card"
 import { ShoppingListContext } from "./ShoppingListContextComponent"
 import getCapString from "./../../utility/getCapString"
+import { FormContext } from "../../Context/FormContextComponent"
 
 export default function ListInlinePopularItems() {
     const { popularItems, addItemToShoppingListInFirebase } = useContext(ShoppingListContext)
+    const {openForm} = useContext(FormContext)
 
     function handleClick(itemName) {
+        openForm()
         addItemToShoppingListInFirebase(itemName)
     }
     

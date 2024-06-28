@@ -1,6 +1,7 @@
-import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, query, where, getDocs } from "firebase/firestore"
-import { createContext, useEffect, useState } from "react"
+import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, query, where, getDocs, deleteDoc } from "firebase/firestore"
+import { createContext, useContext, useEffect, useState } from "react"
 import { db } from "../../firebase/firebase"
+import { FormContext } from "../../Context/FormContextComponent"
 
 const ShoppingListContext = createContext()
 
@@ -68,6 +69,7 @@ export default function ShoppingListContextComponent({children}) {
         const collectionRef = collection(db, "shoppingList/history/items")
         const q = query(collectionRef, where("name", "==", itemName))
         const querySnapshot = await getDocs(q)
+        
         const itemIdArr = []
         querySnapshot.forEach(doc => itemIdArr.push(doc.id))
 
@@ -96,6 +98,18 @@ export default function ShoppingListContextComponent({children}) {
 
         await updateDoc(docRef, { quantity: docSnap.data().quantity + 1})
     }
+
+    function deleteSelectioninFirebase() {
+        shoppingList
+            .filter(item => item.selected === true)
+            .forEach(slectedItem => deleteFirebaseItemSelected(slectedItem.id))
+    }
+
+    async function deleteFirebaseItemSelected(itemId) {
+        const docRef = doc(db, "shoppingList", itemId)
+
+        await deleteDoc(docRef)
+    }
     
     return (
         <ShoppingListContext.Provider 
@@ -105,6 +119,7 @@ export default function ShoppingListContextComponent({children}) {
                     popularItems,
                     toggleItemSelectedInFirebase,
                     addItemToShoppingListInFirebase,
+                    deleteSelectioninFirebase
                 }
             }
         >

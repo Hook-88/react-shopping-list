@@ -21,9 +21,7 @@ export default function ShoppingListPage() {
                 {
                     shoppingList && <ListShoppingListEl />
                 }
-                { formData && <AddItemToShoppingListEl /> }
-                
-
+                { (formData|| shoppingList?.length === 0) && <AddItemToShoppingListEl /> }
             </main>
 
 

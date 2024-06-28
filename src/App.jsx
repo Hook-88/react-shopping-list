@@ -24,10 +24,10 @@ export default function App() {
     }, [])
 
     return (
-        <ShoppingListContextComponent>
-            <FormContextComponent>
+        <FormContextComponent>
+            <ShoppingListContextComponent>
                 <AppBrowserRouter />
-            </FormContextComponent>
-        </ShoppingListContextComponent>
+            </ShoppingListContextComponent>
+        </FormContextComponent>
     )
   }
