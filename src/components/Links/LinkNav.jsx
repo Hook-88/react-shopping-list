@@ -2,10 +2,10 @@ import { Link } from "react-router-dom"
 import Card from "../Card"
 import { FaAngleRight } from "react-icons/fa6"
 
-export default function LinkNav({children, to}) {
+export default function LinkNav({children, to, onClick}) {
     
     return (
-        <Link to={to}>
+        <Link to={to} onClick={onClick}>
             <Card className="flex items-center justify-between text-blue-500 border-blue-500">
                 <span className="ml-2">
                     {children}

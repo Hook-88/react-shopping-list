@@ -1,7 +1,6 @@
 import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, query, where, getDocs, deleteDoc } from "firebase/firestore"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { db } from "../../firebase/firebase"
-import { FormContext } from "../../Context/FormContextComponent"
 
 const ShoppingListContext = createContext()
 
