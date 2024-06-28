@@ -17,6 +17,7 @@ export default function ShoppingListMenu() {
             </Menu.Button>
             <Menu.Dropdown>
                 <Menu.Item onClick={handleClickAdd}>Add Item</Menu.Item>
+                <Menu.Item>Delete Selection</Menu.Item>
             </Menu.Dropdown>
         </Menu>
     )
