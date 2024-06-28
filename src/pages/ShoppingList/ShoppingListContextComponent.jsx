@@ -10,9 +10,10 @@ export default function ShoppingListContextComponent({children}) {
 
     useEffect(() => {
         const collectionRef = collection(db, "shoppingList/history/items")
-        const unsub = onSnapshot(collectionRef, collectionSnapshot => {
+        const q = query(collectionRef, where("quantity", ">", 1))
+        const unsub = onSnapshot(q, querySnapshot => {
             const arr = 
-                collectionSnapshot.docs
+                querySnapshot.docs
                     .map(doc => ({ ...doc.data(), id: doc.id}))
                     .sort((a, b) => b.quantity - a.quantity)
 
@@ -60,7 +61,6 @@ export default function ShoppingListContextComponent({children}) {
         }
 
         await addDoc(collectionRef, itemObj)
-        // addNewHistoryItem(itemName)
         updateHistoryLog(itemName)
     }
 
@@ -77,8 +77,7 @@ export default function ShoppingListContextComponent({children}) {
             return
         }
 
-        incrementQuantityFirebaseHistoryItem(itemIdArr[0])
-        
+        incrementQuantityFirebaseHistoryItem(itemIdArr[0]) 
     }
 
     async function addNewHistoryItem(itemName) {
