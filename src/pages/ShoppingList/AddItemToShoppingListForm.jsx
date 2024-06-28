@@ -1,4 +1,3 @@
-import Card from "../../components/Card"
 import Button from "../../components/Buttons/Button"
 import Form from "../../components/Form"
 import { useContext } from "react"
