@@ -54,10 +54,22 @@ export default function RecipeState({children}) {
         },[])
     }
 
+    function setIngredientsSelect(selectValue) {
+        setRecipeObj(prevRecipeObj => ({
+            ...prevRecipeObj,
+            ingredients: prevRecipeObj.ingredients.map(ingredient => 
+                ({
+                    ...ingredient, 
+                    selected: selectValue
+                })
+            )
+        }))
+    }
+
 
     
     return (
-        <RecipeContext.Provider value={{recipeObj, updateRecipeObj, clearRecipeObj, setRecipeObj}}>
+        <RecipeContext.Provider value={{recipeObj, updateRecipeObj, clearRecipeObj, setRecipeObj, setIngredientsSelect}}>
             {children}
         </RecipeContext.Provider>
     )

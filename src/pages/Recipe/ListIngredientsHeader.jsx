@@ -3,20 +3,8 @@ import { RecipeContext } from "./RecipeState"
 import List from "../../components/List/List"
 
 export default function ListIngredientsHeader() {
-    const {recipeObj, setRecipeObj} = useContext(RecipeContext)
+    const {recipeObj, setIngredientsSelect} = useContext(RecipeContext)
     const someNotSelected = recipeObj?.ingredients.some(ingredient => ingredient.selected === false)
-
-    function setIngredientsSelect(selectValue) {
-        setRecipeObj(prevRecipeObj => ({
-            ...prevRecipeObj,
-            ingredients: prevRecipeObj.ingredients.map(ingredient => 
-                ({
-                    ...ingredient, 
-                    selected: selectValue
-                })
-            )
-        }))
-    }
     
     return (
         <List.Header className="flex items-center justify-between mb-0.5">
