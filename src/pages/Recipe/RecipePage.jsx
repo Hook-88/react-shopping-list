@@ -1,7 +1,7 @@
 import PageHeader from "../../components/PageHeader/PageHeader"
 import LinkNavBack from "../../components/Links/LinkNavBack"
 import { useContext } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import List from "../../components/List/List"
 import Card from "../../components/Card"
 import { RecipeContext } from "./RecipeState"
@@ -12,8 +12,7 @@ import { FaCartShopping } from "react-icons/fa6"
 import { ShoppingListContext } from "../ShoppingList/ShoppingListContextComponent"
 import DialogConfirmEl from "../../components/DialogConfirm/DialogConfirmEl"
 import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
-import Menu from "../../components/Menu/Menu"
-import IconMore from "../../components/Icons/IconMore"
+import MenuRecipePage from "./MenuRecipePage"
 
 export default function RecipePage() {
     const { recipeId } = useParams()
@@ -58,20 +57,7 @@ export default function RecipePage() {
                 <PageHeader.Title className="col-start-3 col-span-5">
                     {recipeObj?.name ? recipeObj.name: "Loading..."}
                 </PageHeader.Title>
-
-                <Menu className="col-span-2">
-                    <Menu.Button className="flex items-center justify-end pr-4">
-                        <IconMore className="px-1"/>
-                    </Menu.Button>
-                    <Menu.Dropdown>
-                        <Menu.Item>
-                            <Link to="edit">
-                                Edit recipe
-                            </Link>
-
-                        </Menu.Item>
-                    </Menu.Dropdown>
-                </Menu>
+                <MenuRecipePage />
             </PageHeader>
             {
                 recipeObj?.ingredients &&
