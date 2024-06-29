@@ -8,6 +8,7 @@ import FormContextComponent from "./Context/FormContextComponent"
 import FilterContextComponent from "./Context/FilterContextComponent"
 import AppBrowserRouter from "./AppBrowserRouter"
 import DialogConfirm from "./components/DialogConfirm/DialogConfirm"
+import RecipeState from "./pages/Recipe/RecipeState"
 
 export default function App() {
     const setShoppingList = useSetAtom(shoppingListAtom)
@@ -30,7 +31,9 @@ export default function App() {
             <FilterContextComponent>
                 <DialogConfirm>
                     <ShoppingListContextComponent>
-                        <AppBrowserRouter />
+                        <RecipeState>
+                            <AppBrowserRouter />
+                        </RecipeState>
                     </ShoppingListContextComponent>
                 </DialogConfirm>
             </FilterContextComponent>

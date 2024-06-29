@@ -6,13 +6,14 @@ import { ShoppingListContext } from "./../ShoppingList/ShoppingListContextCompon
 import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
 
 export default function MenuRecipes() {
+    const {formData, handleChange, clearFormData, openForm} = useContext(FormContext)
     // const { openForm } = useContext(FormContext)
     // const { deleteSelectioninFirebase } = useContext(ShoppingListContext)
     // const { setDialogObj } = useContext(DialogConfirmContext)
 
-    // function handleClickAdd() {
-    //     openForm()
-    // }
+    function handleClickAdd() {
+        openForm()
+    }
 
     // function handleClickDelete() {
     //     setDialogObj({
@@ -27,7 +28,7 @@ export default function MenuRecipes() {
                 <IconMore className="px-1"/>
             </Menu.Button>
             <Menu.Dropdown>
-                <Menu.Item>Add recipe</Menu.Item>
+                <Menu.Item onClick={handleClickAdd}>Add recipe</Menu.Item>
                 {/* <Menu.Item onClick={handleClickDelete}>Delete Selection</Menu.Item> */}
             </Menu.Dropdown>
         </Menu>
