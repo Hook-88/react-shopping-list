@@ -6,9 +6,15 @@ export default function FormContextComponent({children}) {
     const [formData, setFormData] = useState(null)
 
     function handleChange(event) {
-        const {name, value} = event.target
+        const {name, value, checked, type} = event.target
 
-        setFormData(prevFormData => ({ ...prevFormData, [name]: value}))  
+        setFormData(prevFormData => (
+            { 
+                ...prevFormData, 
+                [name]: type === "checkbox" ? checked : value
+            }
+
+        ))  
     }
 
     function clearFormData() {
@@ -21,7 +27,7 @@ export default function FormContextComponent({children}) {
 
     
     return (
-        <FormContext.Provider value={{formData, handleChange, clearFormData, openForm}}>
+        <FormContext.Provider value={{formData, handleChange, clearFormData, openForm, setFormData}}>
             {children}
         </FormContext.Provider>
     )

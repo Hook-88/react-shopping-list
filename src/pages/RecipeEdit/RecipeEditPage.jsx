@@ -12,6 +12,7 @@ import Form from "../../components/Form"
 import Button from "../../components/Buttons/Button"
 import { FormContext } from "../../Context/FormContextComponent"
 import AddIngredientEl from "./AddIngredientEl"
+import RecipeEditMenu from "./RecipeEditMenu"
 
 export default function RecipeEditPage() {
     const {recipeId} = useParams()
@@ -36,16 +37,7 @@ export default function RecipeEditPage() {
                 {recipeObj?.name ? `Edit ${recipeObj.name}`: "Loading..."}
             </PageHeader.Title>
 
-            <Menu className="col-span-2">
-                <Menu.Button className="flex items-center justify-end pr-4">
-                    <IconMore className="px-1"/>
-                </Menu.Button>
-                <Menu.Dropdown>
-                    <Menu.Item>
-                        Add ingredient
-                    </Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+            <RecipeEditMenu />
         </PageHeader>
         {
             recipeObj?.ingredients &&
