@@ -8,9 +8,14 @@ import { useParams } from "react-router-dom"
 import getCapString from "../../utility/getCapString"
 import Menu from "../../components/Menu/Menu"
 import IconMore from "../../components/Icons/IconMore"
+import Form from "../../components/Form"
+import Button from "../../components/Buttons/Button"
+import { FormContext } from "../../Context/FormContextComponent"
+import AddIngredientEl from "./AddIngredientEl"
 
 export default function RecipeEditPage() {
     const {recipeId} = useParams()
+    const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)
     const {
         recipeObj, 
         updateRecipeObj, 
@@ -67,10 +72,10 @@ export default function RecipeEditPage() {
                             ))
                         }
                     </List.List>
-
-
                 </List>
-
+                {
+                    formData && <AddIngredientEl />
+                }
             </main>
         }
         {/* {
