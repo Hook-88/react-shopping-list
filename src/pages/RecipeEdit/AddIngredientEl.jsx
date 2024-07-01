@@ -40,8 +40,6 @@ export default function AddIngredientEl() {
         await addDoc(collectionRef, ingredientObj)
     }
 
-    // console.log(formData)
-
     
     return (
         <Card className="px-2">

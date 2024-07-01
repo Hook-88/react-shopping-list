@@ -13,19 +13,37 @@ import Button from "../../components/Buttons/Button"
 import { FormContext } from "../../Context/FormContextComponent"
 import AddIngredientEl from "./AddIngredientEl"
 import RecipeEditMenu from "./RecipeEditMenu"
+import InputCheckbox from "../../components/InputCheckbox"
+import EditIngredientEl from "./EditIngredientEl"
 
 export default function RecipeEditPage() {
     const {recipeId} = useParams()
     const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)
     const {
         recipeObj, 
-        updateRecipeObj, 
+        updateRecipeObj,
+        setRecipeObj, 
         clearRecipeObj, 
         setIngredientsSelect
     
     } = useContext(RecipeContext)
 
     updateRecipeObj(recipeId)
+
+    function selectIngredient(ingredientId) {
+        setRecipeObj(prevRecipeObj => (
+            {
+                ...prevRecipeObj,
+                ingredients: prevRecipeObj.ingredients
+                    .map(ingredient => 
+                        ingredient.id === ingredientId ? 
+                        { ...ingredient, selected: true } : 
+                        { ...ingredient, selected: false }
+                    )
+            }
+
+        ))
+    }
     
     return (
         <>
@@ -47,7 +65,7 @@ export default function RecipeEditPage() {
                     <Card>
                         {recipeObj.name}
                     </Card>
-                </div>
+                </div>      
 
                 <List listArr={recipeObj.ingredients}>
                     <List.Header>
@@ -56,10 +74,14 @@ export default function RecipeEditPage() {
                     <List.List>
                         {
                             ingredients => ingredients.map(ingredient => (
-                                <li key={ingredient.id}>
-                                    <Card>
-                                        {getCapString(ingredient.name)}
-                                    </Card>
+                                <li key={ingredient.id} onClick={() => selectIngredient(ingredient.id)}>
+                                    {
+                                        ingredient.selected ?
+                                        <EditIngredientEl ingredient={ingredient}/> :
+                                        <Card>
+                                            {getCapString(ingredient.name)}
+                                        </Card>
+                                    }
                                 </li>
                             ))
                         }

@@ -7,7 +7,7 @@ export default function Form({children, className, onSubmit = () => {}, ...rest}
         event.preventDefault()
         onSubmit()
         setTimeout(() => {
-            formRef.current.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+            formRef.current?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
         }, 200)
     }
 

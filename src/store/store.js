@@ -6,3 +6,5 @@ export const menuOpenAtom = atom(false)
 export const formDataAtom = atom(null)
 export const confirmDialogAtom = atom(null)
 
+export const editIngredientFormAtom = atom(null)
+
