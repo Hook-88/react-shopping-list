@@ -9,15 +9,6 @@ export default function ListList({children}) {
     return (    
         <ul className="space-y-2">
             {
-                // listArr.map(item => (
-                //     <li key={item.id} onClick={() => toggleSelectedInFirebase(item.id)}>
-                //         {
-                //             item.selected ? 
-                //             <ShoppingListItemSelected item={item}/> :
-                //             <ShoppingListItemDefault item={item} />
-                //         }
-                //     </li>
-                // ))
                 children(listArr)
             }
         </ul>

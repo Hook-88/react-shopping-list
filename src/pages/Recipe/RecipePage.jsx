@@ -66,6 +66,7 @@ export default function RecipePage() {
                         <ListIngredientsHeader />
                         <ListIngredientsList />
                     </List>
+                    
                     <Card className="px-2">
                         <Button 
                             className="w-full flex items-center justify-center gap-1 bg-green-900 disabled:text-white/50 disabled:bg-green-900/50"
