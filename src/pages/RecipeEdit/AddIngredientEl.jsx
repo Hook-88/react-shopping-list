@@ -13,7 +13,7 @@ import getCapString from "../../utility/getCapString"
 
 export default function AddIngredientEl() {
     const {recipeId} = useParams()
-    const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)
+    const { formData, handleChange, clearFormData, setFormData } = useContext(FormContext)
     const {
         recipeObj, 
         updateRecipeObj, 
@@ -38,6 +38,8 @@ export default function AddIngredientEl() {
         }
 
         await addDoc(collectionRef, ingredientObj)
+
+        setFormData({ingredientName: ""})
     }
 
     

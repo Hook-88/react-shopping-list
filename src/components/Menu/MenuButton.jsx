@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge"
 import { useContext } from "react"
 import { MenuContext } from "./Menu"
 
-export default function MenuButton({children, className}) {
+export default function MenuButton({children, className, type}) {
     const { toggleOpen } = useContext(MenuContext)
     const MenuButtonClassName = twMerge(
         "h-full w-full",
@@ -15,6 +15,7 @@ export default function MenuButton({children, className}) {
         <button
             className={MenuButtonClassName}
             onClick={toggleOpen}
+            type={type}
         >
             {children}
         </button>

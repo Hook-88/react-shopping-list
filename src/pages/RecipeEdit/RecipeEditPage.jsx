@@ -44,6 +44,11 @@ export default function RecipeEditPage() {
 
         ))
     }
+
+    function handleClickIngredient(ingredientId) {
+        selectIngredient(ingredientId)
+        clearFormData()
+    }
     
     return (
         <>
@@ -74,7 +79,7 @@ export default function RecipeEditPage() {
                     <List.List>
                         {
                             ingredients => ingredients.map(ingredient => (
-                                <li key={ingredient.id} onClick={() => selectIngredient(ingredient.id)}>
+                                <li key={ingredient.id} onClick={() => handleClickIngredient(ingredient.id)}>
                                     {
                                         ingredient.selected ?
                                         <EditIngredientEl ingredient={ingredient}/> :

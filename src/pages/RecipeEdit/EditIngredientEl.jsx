@@ -16,13 +16,21 @@ import RecipeEditMenu from "./RecipeEditMenu"
 import InputCheckbox from "../../components/InputCheckbox"
 import { editIngredientFormAtom } from "../../store/store"
 import { useAtom } from "jotai"
-import { doc, updateDoc } from "firebase/firestore"
+import { deleteDoc, doc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import { FaAngleDown } from "react-icons/fa6"
 
 export default function EditIngredientEl({ingredient}) {
     const [formData, setFormData] = useAtom(editIngredientFormAtom)
     const { recipeId } = useParams()
+    const {
+        recipeObj, 
+        updateRecipeObj,
+        setRecipeObj, 
+        clearRecipeObj, 
+        setIngredientsSelect
+    
+    } = useContext(RecipeContext)
 
     function handleChange(event) {
         const {name, value, type, checked} = event.target
@@ -53,13 +61,39 @@ export default function EditIngredientEl({ingredient}) {
 
     }
 
+    async function deleteFirebaseIngredient() {
+        const docRef = doc(db, `recipes/${recipeId}/ingredients`, ingredient.id)
+
+        await deleteDoc(docRef)
+    }
+
     function handleSubmit() {
         setIngredientNameInFirebase()
+        console.log("name updated")
+        setIngredientOptionalInFirebase(formData.optional)
 
-        if (formData?.optional) {
-            setIngredientOptionalInFirebase(formData.optional)
-        }
+        // if (formData?.optional) {
+        //     console.log("had optional")
+        //     setIngredientOptionalInFirebase(formData.optional)
+        // }
 
+        clearSelection()
+    }
+
+    function clearSelection() {
+        setRecipeObj(prevRecipeObj => (
+            {
+                ...prevRecipeObj,
+                ingredients: prevRecipeObj.ingredients
+                    .map(ingredient => ({ ...ingredient, selected: false }))
+            }
+
+        ))
+    }
+
+    function handleClickClose(event) {
+        event.stopPropagation()
+        clearSelection()
     }
 
     console.log(formData)
@@ -75,7 +109,7 @@ export default function EditIngredientEl({ingredient}) {
                     <input 
                         type="text" 
                         placeholder="Items..."
-                        className="bg-white/15 rounded-lg px-2 py-1 flex-grow"
+                        className="bg-white/15 rounded-lg px-2 flex-grow"
                         name="ingredientName"
                         onChange={handleChange}
                         value={formData?.ingredientName ? getCapString(formData.ingredientName) : ""}
@@ -88,7 +122,7 @@ export default function EditIngredientEl({ingredient}) {
                         Optional
                     </label>
                     <input 
-                        type="checkbox" 
+                        type="checkbox"
                         id="ingredient-optional"
                         checked={formData?.optional ?? ""} 
                         name="optional" 
@@ -105,11 +139,18 @@ export default function EditIngredientEl({ingredient}) {
                             Save
                         </Button>
                         <Menu>
-                            <Menu.Button className="bg-green-900 border border-white/30 px-1 border-l-0 rounded-none rounded-r-lg">
+                            <Menu.Button 
+                                className="bg-green-900 border border-white/30 px-1 border-l-0 rounded-none rounded-r-lg"
+                                type="button"
+                            >
                                 <FaAngleDown />
                             </Menu.Button>
                             <Menu.Dropdown>
-                                <Menu.Item className="bg-red-900 rounded-lg">
+                                <Menu.Item 
+                                    className="bg-red-900 rounded-lg"
+                                    onClick={deleteFirebaseIngredient}
+                                
+                                >
                                     Delete ingredient
                                 </Menu.Item>
                             </Menu.Dropdown>
@@ -120,6 +161,7 @@ export default function EditIngredientEl({ingredient}) {
                     <Button 
                         className="bg-red-900" 
                         type="button"
+                        onClick={handleClickClose}
                     >
                         x
                     </Button>
