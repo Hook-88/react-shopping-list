@@ -19,9 +19,12 @@ import { useAtom } from "jotai"
 import { deleteDoc, doc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import { FaAngleDown } from "react-icons/fa6"
+import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
+DialogConfirmContext
 
 export default function EditIngredientEl({ingredient}) {
     const [formData, setFormData] = useAtom(editIngredientFormAtom)
+    const { setDialogObj } = useContext(DialogConfirmContext)
     const { recipeId } = useParams()
     const {
         recipeObj, 
@@ -96,6 +99,13 @@ export default function EditIngredientEl({ingredient}) {
         clearSelection()
     }
 
+    function handleClickDelete() {
+        setDialogObj({
+            question: "Delete ingredient?",
+            confirmCallbackFn: () => deleteFirebaseIngredient()
+        })
+    }
+
     console.log(formData)
 
     const labelClassName = formData?.optional ? 
@@ -148,7 +158,7 @@ export default function EditIngredientEl({ingredient}) {
                             <Menu.Dropdown>
                                 <Menu.Item 
                                     className="bg-red-900 rounded-lg"
-                                    onClick={deleteFirebaseIngredient}
+                                    onClick={handleClickDelete}
                                 
                                 >
                                     Delete ingredient

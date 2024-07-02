@@ -15,10 +15,13 @@ import AddIngredientEl from "./AddIngredientEl"
 import RecipeEditMenu from "./RecipeEditMenu"
 import InputCheckbox from "../../components/InputCheckbox"
 import EditIngredientEl from "./EditIngredientEl"
+import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
+import DialogConfirmEl from "../../components/DialogConfirm/DialogConfirmEl"
 
 export default function RecipeEditPage() {
     const {recipeId} = useParams()
     const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)
+    const { dialogObj } = useContext(DialogConfirmContext)
     const {
         recipeObj, 
         updateRecipeObj,
@@ -97,9 +100,9 @@ export default function RecipeEditPage() {
                 }
             </main>
         }
-        {/* {
+        {
             dialogObj && <DialogConfirmEl />
-        } */}
+        }
     </>
     )
 }
