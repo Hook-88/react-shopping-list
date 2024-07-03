@@ -4,24 +4,23 @@ import { useContext } from "react"
 import { RecipeContext } from "../Recipe/RecipeState"
 import Card from "../../components/Card"
 import List from "../../components/List/List"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import getCapString from "../../utility/getCapString"
-import Menu from "../../components/Menu/Menu"
-import IconMore from "../../components/Icons/IconMore"
-import Form from "../../components/Form"
 import Button from "../../components/Buttons/Button"
 import { FormContext } from "../../Context/FormContextComponent"
 import AddIngredientEl from "./AddIngredientEl"
 import RecipeEditMenu from "./RecipeEditMenu"
-import InputCheckbox from "../../components/InputCheckbox"
 import EditIngredientEl from "./EditIngredientEl"
 import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
 import DialogConfirmEl from "../../components/DialogConfirm/DialogConfirmEl"
+import { deleteDoc, doc } from "firebase/firestore"
+import { db } from "../../firebase/firebase"
+import DeleteRecipeEl from "./DeleteRecipeEl"
 
 export default function RecipeEditPage() {
     const {recipeId} = useParams()
     const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)
-    const { dialogObj } = useContext(DialogConfirmContext)
+    const { dialogObj, setDialogObj } = useContext(DialogConfirmContext)
     const {
         recipeObj, 
         updateRecipeObj,
@@ -30,6 +29,8 @@ export default function RecipeEditPage() {
         setIngredientsSelect
     
     } = useContext(RecipeContext)
+    
+    const navigate = useNavigate()
 
     updateRecipeObj(recipeId)
 
@@ -67,7 +68,7 @@ export default function RecipeEditPage() {
         </PageHeader>
         {
             recipeObj?.ingredients &&
-            <main className="mt-12 px-4 flex flex-col gap-4">
+            <main className="my-12 px-4 flex flex-col gap-4">
                 <div>
                     <small className="ml-4">Recipe name</small>
                     <Card>
@@ -98,6 +99,7 @@ export default function RecipeEditPage() {
                 {
                     formData && <AddIngredientEl />
                 }
+                <DeleteRecipeEl />
             </main>
         }
         {

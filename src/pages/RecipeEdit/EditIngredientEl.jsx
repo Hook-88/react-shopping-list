@@ -72,14 +72,7 @@ export default function EditIngredientEl({ingredient}) {
 
     function handleSubmit() {
         setIngredientNameInFirebase()
-        console.log("name updated")
         setIngredientOptionalInFirebase(formData.optional)
-
-        // if (formData?.optional) {
-        //     console.log("had optional")
-        //     setIngredientOptionalInFirebase(formData.optional)
-        // }
-
         clearSelection()
     }
 
@@ -105,8 +98,6 @@ export default function EditIngredientEl({ingredient}) {
             confirmCallbackFn: () => deleteFirebaseIngredient()
         })
     }
-
-    console.log(formData)
 
     const labelClassName = formData?.optional ? 
         "px-4 py-1 border border-white/30 rounded-lg flex items-center justify-center bg-cyan-900" : 
