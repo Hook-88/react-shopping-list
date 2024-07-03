@@ -16,6 +16,8 @@ import DialogConfirmEl from "../../components/DialogConfirm/DialogConfirmEl"
 import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import DeleteRecipeEl from "./DeleteRecipeEl"
+import { editIngredientFormAtom } from "../../store/store"
+import { useAtom } from "jotai"
 
 export default function ListIngredientsList() {
     const { formData, handleChange, clearFormData, openForm } = useContext(FormContext)

@@ -20,7 +20,6 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import { FaAngleDown } from "react-icons/fa6"
 import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
-DialogConfirmContext
 
 export default function EditIngredientEl({ingredient}) {
     const [formData, setFormData] = useAtom(editIngredientFormAtom)
@@ -43,7 +42,6 @@ export default function EditIngredientEl({ingredient}) {
                 ...prevFormData,
                 [name] : type === "checkbox" ? checked : value
             }
-
         ))
     }
 
