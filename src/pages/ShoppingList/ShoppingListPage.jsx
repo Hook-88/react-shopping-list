@@ -1,44 +1,26 @@
-import { useContext } from "react"
-import PageHeader from "../../components/PageHeader/PageHeader"
-import { ShoppingListContext } from "./ShoppingListContextComponent"
-import ListShoppingListEl from "./ListShoppingListEl"
-import ShoppingListMenu from "./ShoppingListMenu"
-import AddItemToShoppingListEl from "./AddItemToShoppingListEl"
-import { FormContext } from "../../Context/FormContextComponent"
-import DialogConfirmEl from "../../components/DialogConfirm/DialogConfirmEl"
-import { DialogConfirmContext } from "../../components/DialogConfirm/DialogConfirm"
-import LinkNav from "../../components/Links/LinkNav"
-
+import { useAtomValue } from "jotai"
+import { shoppingListAtom } from "../../store/store"
 
 export default function ShoppingListPage() {
-    const { shoppingList } = useContext(ShoppingListContext)
-    const { formData, clearFormData } = useContext( FormContext )
-    const { dialogObj } = useContext(DialogConfirmContext)
-
-    function handleClickLink() {
-        clearFormData()
-    }
-
+    const shoppingList = useAtomValue(shoppingListAtom)
+    
     return (
         <>
-            <PageHeader>
-                <PageHeader.Title className="col-start-3 col-span-5">Shopping List</PageHeader.Title>
-                <ShoppingListMenu />
-            </PageHeader>
-            {
-                shoppingList &&
-                <main className="mt-12 px-4 flex flex-col gap-4">
-                    <ListShoppingListEl />
-                    { (formData || shoppingList.length === 0) && <AddItemToShoppingListEl /> }
-
-                    <LinkNav to="recipes" onClick={handleClickLink}>Recipes</LinkNav>
-                </main>
-            }
+            <header className="bg-white/10 py-2">
+                <h1 className="text-center text-lg font-bold">Shoping List</h1>
+            </header>
+            <main>
                 {
-                    dialogObj && <DialogConfirmEl />
+                    shoppingList &&
+                    <ul>
+                        {
+                            shoppingList.map(item => (
+                                <li key={item.id}>{item.name}</li>
+                            ))
+                        }
+                    </ul>
                 }
-            
-            
+            </main>
         </>
     )
 }
