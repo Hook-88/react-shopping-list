@@ -6,7 +6,7 @@ export default function MenuDropdown({children}) {
     
     return (
         open ?
-        <ul className="absolute">
+        <ul className="absolute top-10">
             {children}
         </ul> : null
     )
