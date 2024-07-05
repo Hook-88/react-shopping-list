@@ -19,7 +19,6 @@ export default function ShoppingListPage() {
             <main className="p-4 flex flex-col gap-4">
                 { shoppingList && <ListShoppingListEl /> }
                 { formOn && <AddItemEl /> }
-                
             </main>
             {
                 openConfirmDialog && <ConfirmDialog />

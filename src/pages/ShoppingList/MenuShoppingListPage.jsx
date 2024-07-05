@@ -40,6 +40,7 @@ export default function MenuShoppingListPage() {
                     <FaEllipsis />
                 </span>
             </Menu.Button>
+            
             <Menu.Dropdown>
                 <Menu.Item 
                     className="px-4 py-1 border-b border-white/10 text-nowrap"
