@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ShoppingListPage from "./pages/ShoppingList/ShoppingListPage"
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { shoppingListAtom } from "./store/store"
 import { useEffect } from "react"
 import { collection, onSnapshot, query, where } from "firebase/firestore"
 import { db } from "./firebase"
 
 export default function App() {
-    const [shoppingList, setShoppingList] = useAtom(shoppingListAtom)
+    const setShoppingList = useSetAtom(shoppingListAtom)
 
     useEffect(() => {
         const collectionRef = collection(db, "shoppingList")

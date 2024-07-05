@@ -1,13 +1,12 @@
-import { useAtomValue, useSetAtom } from "jotai"
-import { pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
+import { useSetAtom } from "jotai"
+import { pageFormsOpenAtom } from "../../store/store"
 import { useForm } from "react-hook-form"
 import { addDoc, collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import { logAddItem } from "../../utility/firestoreFn/logAddItem"
 import AdditemListPopularItems from "./AdditemListPopularItems"
 
-export default function AddItemEl() {
-    const shoppingList = useAtomValue(shoppingListAtom)
+export default function AddItemEl({popularitemsArr}) {
     const openForm = useSetAtom(pageFormsOpenAtom)
     
     const { register, handleSubmit, reset } = useForm({
@@ -23,7 +22,7 @@ export default function AddItemEl() {
             selected: false
         }
         addItemToFirebase(itemObj.name)
-        logAddItem(itemObj)
+        logAddItem(itemObj.name)
         reset()
     }
 
@@ -44,7 +43,7 @@ export default function AddItemEl() {
     
     return (
         <div className="bg-white/10 p-2 rounded-md">
-            <AdditemListPopularItems />
+            <AdditemListPopularItems populairItems={popularitemsArr}/>
             <form className="grid gap-2" onSubmit={handleSubmit(sendFormData)}>
                 <input 
                     type="text" 

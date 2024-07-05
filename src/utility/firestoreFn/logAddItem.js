@@ -1,9 +1,9 @@
 import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore"
 import { db } from "../../firebase"
 
-async function logAddItem(itemObj) {
+async function logAddItem(itemName) {
     const collectionRef = collection(db, "history/shoppingList/items")
-    const q = query(collectionRef, where("name", "==", itemObj.name))
+    const q = query(collectionRef, where("name", "==", itemName))
     const qDocs = await getDocs(q)
 
     if (qDocs.docs.length > 0) {
@@ -12,13 +12,13 @@ async function logAddItem(itemObj) {
         return
     }
 
-    addFirebaseHistoryShoppingListItem(itemObj)
+    addFirebaseHistoryShoppingListItem(itemName)
 }
 
-async function addFirebaseHistoryShoppingListItem(itemObj) {
+async function addFirebaseHistoryShoppingListItem(itemName) {
     const logItemObj = {
-        name: itemObj.name,
-        quantity: itemObj.quantity
+        name: itemName,
+        quantity: 1
     }
     const collectionRef = collection(db, "history/shoppingList/items")
 

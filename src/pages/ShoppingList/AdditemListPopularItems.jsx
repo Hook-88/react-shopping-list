@@ -1,41 +1,13 @@
-import { useAtomValue, useSetAtom } from "jotai"
-import { pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
-import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, orderBy, where } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore"
 import { db } from "../../firebase"
-import { useEffect, useState } from "react"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
+import { logAddItem } from "../../utility/firestoreFn/logAddItem"
 
-export default function AdditemListPopularItems() {
-    const shoppingList = useAtomValue(shoppingListAtom)
-    const [populairItems, setPopularItems] = useState(null)
+export default function AdditemListPopularItems({populairItems}) {
 
-    useEffect(() => {
-        getPopularFirebaseItems()
-
-    }, [shoppingList])
-
-    async function getPopularFirebaseItems() {
-        const collectionRef = collection(db, "history/shoppingList/items")
-        const q = query(collectionRef, where("quantity", ">", 1), orderBy("quantity", "desc"))
-        const popularItemsArr = await getDocs(q)
-        const popularUniqueItemsArr = (
-            popularItemsArr.docs
-                .filter(doc => {
-                    const itemNameArr = shoppingList.map(item => item.name)
-
-                    if (!itemNameArr.includes(doc.data().name)) {
-                        
-                        return doc
-                    }
-                })
-                .map(doc => ({...doc.data(), id: doc.id}))
-        )
-
-        setPopularItems(popularUniqueItemsArr.slice(0, 5))
-    }
-
-    function handleClick(itemName) {
+    function handleClick(itemName) {    
         addItemToFirebase(itemName)
+        logAddItem(itemName)
     }
 
     async function addItemToFirebase(itemName) {
@@ -53,7 +25,7 @@ export default function AdditemListPopularItems() {
         populairItems?.length > 0 ?
         <ul className="flex flex-wrap-reverse gap-2 mb-4">
             {
-                populairItems?.map(item => (
+                populairItems?.slice(0,5).map(item => (
                     <li 
                         key={item.id}
                         className="p-2 px-4 border border-white/30 flex-grow text-center rounded-md"

@@ -18,7 +18,7 @@ export default function ListDefault() {
     return (
         <ul>
             {
-                shoppingList.map(item => (
+                shoppingList?.map(item => (
                     <li key={item.id} onClick={() => toggleFirebaseItemSelect(item.id)}>
                         {
                             item.selected ? 
