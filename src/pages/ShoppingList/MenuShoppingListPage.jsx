@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue, useSetAtom } from "jotai"
-import { pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
+import { confirmDialogAtom, pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
 import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
 import Menu from "../../components/Menu/Menu"
 import { deleteDoc, doc } from "firebase/firestore"
@@ -8,15 +8,23 @@ import { db } from "../../firebase"
 export default function MenuShoppingListPage() {
     const shoppingList = useAtomValue(shoppingListAtom)
     const openForm = useSetAtom(pageFormsOpenAtom)
+    const openConfirmDialog = useSetAtom(confirmDialogAtom)
 
     function handleClickAdd() {
         openForm(true)
     }
 
-    function handleClickClear() {
+    function deleteCheckedItems() {
         const checkedItemArr = shoppingList.filter(item => item.selected === true)
 
         checkedItemArr.forEach(checkedItem => deleteFirebaseItem(checkedItem.id))
+    }
+
+    function handleClickClear() {
+        openConfirmDialog({
+            question: "Remove checked items?",
+            onConfirm: () => deleteCheckedItems()
+        })
     }
 
     async function deleteFirebaseItem(docId) {

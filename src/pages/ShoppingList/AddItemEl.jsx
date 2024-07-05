@@ -20,6 +20,7 @@ export default function AddItemEl() {
             selected: false
         }
         addItemToFirebase(itemObj)
+        addFirebaseHistoryShoppingListItem(itemObj)
         reset()
     }
 
@@ -31,6 +32,16 @@ export default function AddItemEl() {
         const collectionRef = collection(db, "shoppingList")
         
         await addDoc(collectionRef, newItemObj)
+    }
+
+    async function addFirebaseHistoryShoppingListItem(itemObj) {
+        const logItemObj = {
+            name: itemObj.name,
+            quantity: itemObj.quantity
+        }
+        const collectionRef = collection(db, "history/shoppingList/items")
+
+        await addDoc(collectionRef, logItemObj)
     }
     
     return (
