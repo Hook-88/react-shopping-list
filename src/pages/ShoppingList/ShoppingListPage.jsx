@@ -14,37 +14,45 @@ export default function ShoppingListPage() {
             <main className="p-4">
                 {
                     shoppingList &&
-                    <ul>
-                        {
-                            shoppingList.map(item => (
-                                <li 
-                                    key={item.id}
-                                    className="py-2 px-4 border border-transparent mb-3 rounded-md bg-white/10 flex items-center"
-                                >
-                                    {getStringFirstCharCap(item.name)}
-                                    {
-                                        item.quantity > 1 &&
-                                        <>
-                                            &nbsp;
-                                            ({item.quantity}x)
-                                        </>
-                                    }
-                                    <div className="flex gap-2 ml-auto">
+                    <>
+                        <div className="flex items-center justify-between px-4 mb-1">
+                            <small>(4/4)</small>
+                            <button className="flex items-center">
+                                <small>Hide selected</small>
+                            </button>
+                        </div>
+                        <ul>
+                            {
+                                shoppingList.map(item => (
+                                    <li 
+                                        key={item.id}
+                                        className="py-2 px-4 border border-transparent mb-3 rounded-md bg-white/10 flex items-center"
+                                    >
+                                        {getStringFirstCharCap(item.name)}
                                         {
-                                            item.quantity > 1 &&    
-                                            <button className="p-1 border rounded-md">
-                                                <FaMinus />
-                                            </button>
+                                            item.quantity > 1 &&
+                                            <>
+                                                &nbsp;
+                                                ({item.quantity}x)
+                                            </>
                                         }
-                                        <button className="p-1 border rounded-md">
-                                            <FaPlus />
-                                        </button>
+                                        <div className="flex gap-2 ml-auto">
+                                            {
+                                                item.quantity > 1 &&    
+                                                <button className="p-1 border rounded-md">
+                                                    <FaMinus />
+                                                </button>
+                                            }
+                                            <button className="p-1 border rounded-md">
+                                                <FaPlus />
+                                            </button>
 
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
+                                        </div>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </>
                 }
             </main>
         </>
