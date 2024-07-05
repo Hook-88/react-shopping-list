@@ -22,7 +22,7 @@ export default function MenuDropdown({children}) {
     return (
         open ?
         <ul 
-            className="absolute top-10 -right-2 bg-black/20 backdrop backdrop-blur rounded-md border border-white/10 text-center text-xl"
+            className="absolute top-10 -right-2 bg-black/20 backdrop backdrop-blur rounded-md border border-white/10 text-center text-lg"
             // ref={dropdownRef}
         >
             {children}

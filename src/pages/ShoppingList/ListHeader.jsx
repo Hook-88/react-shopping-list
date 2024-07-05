@@ -34,6 +34,7 @@ export default function ListHeader() {
         <div className="flex items-center justify-between px-4 mb-1">
             <small>
                 {`(${numOfCheckedItems}/${shoppingList.length})`}
+                {numOfCheckedItems === shoppingList.length && " Completed"}
             </small>
 
             <button 
