@@ -8,7 +8,7 @@ import Menu from "../../components/Menu/Menu"
 
 export default function ShoppingListPage() {
     const shoppingList = useAtomValue(shoppingListAtom)
-    
+
     return (
         <>
             <header className="bg-white/10 py-2 grid grid-cols-6 px-4">
@@ -20,8 +20,8 @@ export default function ShoppingListPage() {
                         </span>
                     </Menu.Button>
                     <Menu.Dropdown>
-                        <Menu.Item>Add</Menu.Item>
-                        <Menu.Item>Delete</Menu.Item>
+                        <Menu.Item className="px-2 py-1 border-b border-white/10">Add</Menu.Item>
+                        <Menu.Item className="px-2 py-1">Delete</Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
             </header>
