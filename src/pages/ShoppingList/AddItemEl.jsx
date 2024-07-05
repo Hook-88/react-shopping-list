@@ -1,15 +1,13 @@
 import { useAtomValue, useSetAtom } from "jotai"
 import { pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
 import { useForm } from "react-hook-form"
-import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, orderBy, where } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import { logAddItem } from "../../utility/firestoreFn/logAddItem"
-import { useEffect, useState } from "react"
-import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
+import AdditemListPopularItems from "./AdditemListPopularItems"
 
 export default function AddItemEl() {
     const shoppingList = useAtomValue(shoppingListAtom)
-    const [populairItems, setPopularItems] = useState(null)
     const openForm = useSetAtom(pageFormsOpenAtom)
     
     const { register, handleSubmit, reset } = useForm({
@@ -17,31 +15,6 @@ export default function AddItemEl() {
             itemName: ""
         }
     })
-
-    async function getPopularFirebaseItems() {
-        const collectionRef = collection(db, "history/shoppingList/items")
-        const q = query(collectionRef, where("quantity", ">", 1), orderBy("quantity", "desc"))
-        
-        const popularItemsArr = await getDocs(q)
-        const popularUniqueItemsArr = popularItemsArr.docs
-            .filter(doc => {
-            
-                const itemNameArr = shoppingList.map(item => item.name)
-
-                if (!itemNameArr.includes(doc.data().name)) {
-                    
-                    return doc
-                }
-            })
-            .map(doc => ({...doc.data(), id: doc.id}))
-
-        setPopularItems(popularUniqueItemsArr.slice(0, 5))
-    }
-
-    useEffect(() => {
-        getPopularFirebaseItems()
-
-    }, [shoppingList])
 
     function sendFormData(formData) {
         const itemObj = {
@@ -52,10 +25,6 @@ export default function AddItemEl() {
         addItemToFirebase(itemObj.name)
         logAddItem(itemObj)
         reset()
-    }
-
-    function handleClick(itemName) {
-        addItemToFirebase(itemName)
     }
 
     function closeForm() {
@@ -75,19 +44,7 @@ export default function AddItemEl() {
     
     return (
         <div className="bg-white/10 p-2 rounded-md">
-            <ul className="flex flex-wrap-reverse gap-2 mb-4">
-                {
-                    populairItems?.map(item => (
-                        <li 
-                            key={item.id}
-                            className="p-2 px-4 border border-white/30 flex-grow text-center rounded-md"
-                            onClick={() => handleClick(item.name)}
-                        >
-                            {getStringFirstCharCap(item.name)}
-                        </li>
-                    ))
-                }
-            </ul>
+            <AdditemListPopularItems />
             <form className="grid gap-2" onSubmit={handleSubmit(sendFormData)}>
                 <input 
                     type="text" 
