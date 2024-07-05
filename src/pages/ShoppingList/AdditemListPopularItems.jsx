@@ -1,24 +1,12 @@
-import { addDoc, collection } from "firebase/firestore"
-import { db } from "../../firebase"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import { logAddItem } from "../../utility/firestoreFn/logAddItem"
+import addItemToFirebase from "../../utility/firestoreFn/addFirebaseItem"
 
 export default function AdditemListPopularItems({populairItems}) {
 
     function handleClick(itemName) {    
         addItemToFirebase(itemName)
         logAddItem(itemName)
-    }
-
-    async function addItemToFirebase(itemName) {
-        const itemObj = {
-            name: itemName.trim().toLowerCase(),
-            quantity: 1,
-            selected: false
-        }
-        const collectionRef = collection(db, "shoppingList")
-        
-        await addDoc(collectionRef, itemObj)
     }
     
     return (

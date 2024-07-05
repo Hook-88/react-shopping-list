@@ -5,6 +5,8 @@ import { addDoc, collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import { logAddItem } from "../../utility/firestoreFn/logAddItem"
 import AdditemListPopularItems from "./AdditemListPopularItems"
+import addItemToFirebase from "../../utility/firestoreFn/addFirebaseItem"
+
 
 export default function AddItemEl({popularitemsArr}) {
     const openForm = useSetAtom(pageFormsOpenAtom)
@@ -28,17 +30,6 @@ export default function AddItemEl({popularitemsArr}) {
 
     function closeForm() {
         openForm(false)
-    }
-
-    async function addItemToFirebase(itemName) {
-        const itemObj = {
-            name: itemName.trim().toLowerCase(),
-            quantity: 1,
-            selected: false
-        }
-        const collectionRef = collection(db, "shoppingList")
-        
-        await addDoc(collectionRef, itemObj)
     }
     
     return (
