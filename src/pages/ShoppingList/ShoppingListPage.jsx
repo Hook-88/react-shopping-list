@@ -7,8 +7,10 @@ import ConfirmDialog from "../../components/ConfirmDialog.jsx/ConfirmDialog"
 import usePopularItems from "../../hooks/usePopularItems"
 import { useEffect } from "react"
 import useShoppingListItems from "../../hooks/useShoppingListItems"
-import { Link } from "react-router-dom"
-import { FaAngleRight } from "react-icons/fa6"
+import NavLinkTo from "../../components/Links/NavLinkTo"
+import PageHeader from "../../components/PageHeader/PageHeader"
+import PageMain from "../../components/PageMain/PageMain"
+
 
 export default function ShoppingListPage() {
     const shoppingList = useShoppingListItems()
@@ -26,26 +28,18 @@ export default function ShoppingListPage() {
 
     return (
         <>
-            <header className="bg-white/10 py-2 grid grid-cols-6 px-4">
-                <h1 className="text-center text-lg font-bold col-span-4 col-start-2">Shoping List</h1>
+            <PageHeader>
+                <PageHeader.Title>Shoping List</PageHeader.Title>
                 <MenuShoppingListPage />
-            </header>
-            <main className="p-4 flex flex-col gap-4">
+            </PageHeader>
+            <PageMain>
                 { shoppingList?.length > 0 && <ListShoppingListEl /> }
                 { formOn && <AddItemEl popularitemsArr={popularItems} /> }
-                <Link 
-                    to="recipes"
-                    className="py-2 px-4 border border-blue-600/50 text-blue-600 00 mb-3 rounded-md flex items-center justify-between gap-1"
-                >
+                <NavLinkTo to="recipes">
                     Recipes
-                    <span className="p-1 border border-transparent">
-                        <FaAngleRight />
-                    </span>
-                </Link>
-            </main>
-            {
-                openConfirmDialog && <ConfirmDialog />
-            }
+                </NavLinkTo>
+            </PageMain>
+            { openConfirmDialog && <ConfirmDialog /> }
         </>
     )
 }
