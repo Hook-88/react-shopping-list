@@ -1,12 +1,13 @@
-import { useAtom, useAtomValue, useSetAtom } from "jotai"
-import { confirmDialogAtom, pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
-import { FaEllipsis, FaMinus, FaPlus } from "react-icons/fa6"
+import { useSetAtom } from "jotai"
+import { confirmDialogAtom, pageFormsOpenAtom } from "../../store/store"
+import { FaEllipsis } from "react-icons/fa6"
 import Menu from "../../components/Menu/Menu"
 import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase"
+import useShoppingListItems from "../../hooks/useShoppingListItems"
 
 export default function MenuShoppingListPage() {
-    const shoppingList = useAtomValue(shoppingListAtom)
+    const shoppingList = useShoppingListItems()
     const openForm = useSetAtom(pageFormsOpenAtom)
     const openConfirmDialog = useSetAtom(confirmDialogAtom)
 

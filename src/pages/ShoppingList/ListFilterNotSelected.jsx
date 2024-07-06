@@ -1,12 +1,11 @@
-import { useAtomValue } from "jotai"
-import { shoppingListAtom } from "../../store/store"
 import ListItemDefault from "./ListItemDefault"
 import ListItemSelected from "./ListItemSelected"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
+import useShoppingListItems from "../../hooks/useShoppingListItems"
 
 export default function ListFilterNotSelected() {
-    const shoppingList = useAtomValue(shoppingListAtom)
+    const shoppingList = useShoppingListItems()
 
     async function toggleFirebaseItemSelect(itemId) {
         const docRef = doc(db, "shoppingList", itemId)
@@ -19,7 +18,7 @@ export default function ListFilterNotSelected() {
         <ul>
             {
                 shoppingList
-                    .filter(item => item.selected === false)
+                    ?.filter(item => item.selected === false)
                     .map(item => (
                         <li key={item.id} onClick={() => toggleFirebaseItemSelect(item.id)}>
                             {

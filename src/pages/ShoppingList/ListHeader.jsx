@@ -1,13 +1,14 @@
-import { useAtom, useAtomValue } from "jotai"
-import { listFiltersAtom, shoppingListAtom } from "../../store/store"
+import { useAtom } from "jotai"
+import { listFiltersAtom } from "../../store/store"
 import { FaEye, FaEyeSlash } from "react-icons/fa6"
 import { useSetAtom } from "jotai"
 import { confirmDialogAtom } from "../../store/store"
 import { doc, deleteDoc } from "firebase/firestore"
 import { db } from "../../firebase"
+import useShoppingListItems from "../../hooks/useShoppingListItems"
 
 export default function ListHeader() {
-    const shoppingList = useAtomValue(shoppingListAtom)
+    const shoppingList = useShoppingListItems()
     const [filter, setFilter] = useAtom(listFiltersAtom)
     const openConfirmDialog = useSetAtom(confirmDialogAtom)
 

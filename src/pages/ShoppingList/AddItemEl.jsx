@@ -1,8 +1,6 @@
 import { useSetAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
 import { useForm } from "react-hook-form"
-import { addDoc, collection } from "firebase/firestore"
-import { db } from "../../firebase"
 import { logAddItem } from "../../utility/firestoreFn/logAddItem"
 import AdditemListPopularItems from "./AdditemListPopularItems"
 import addItemToFirebase from "../../utility/firestoreFn/addFirebaseItem"

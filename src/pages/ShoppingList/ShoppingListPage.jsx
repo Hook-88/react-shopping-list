@@ -1,47 +1,28 @@
 import { useAtom, useAtomValue } from "jotai"
-import { confirmDialogAtom, pageFormsOpenAtom, shoppingListAtom } from "../../store/store"
+import { confirmDialogAtom, pageFormsOpenAtom } from "../../store/store"
 import ListShoppingListEl from "./ListShoppingListEl"
 import AddItemEl from "./AddItemEl"
 import MenuShoppingListPage from "./MenuShoppingListPage"
 import ConfirmDialog from "../../components/ConfirmDialog.jsx/ConfirmDialog"
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore"
-import { useState, useEffect } from "react"
-import { db } from "../../firebase"
+import usePopularItems from "../../hooks/usePopularItems"
+import { useEffect } from "react"
+import useShoppingListItems from "../../hooks/useShoppingListItems"
+import { Link } from "react-router-dom"
+import { FaAngleRight } from "react-icons/fa6"
 
 export default function ShoppingListPage() {
-    const shoppingList = useAtomValue(shoppingListAtom)
+    const shoppingList = useShoppingListItems()
     const [formOn, setFormOn] = useAtom(pageFormsOpenAtom)
     const openConfirmDialog = useAtomValue(confirmDialogAtom)
-    const [populairItems, setPopularItems] = useState(null)
+    const popularItems = usePopularItems()
 
     useEffect(() => {
-        getPopularFirebaseItems()
 
         if (shoppingList?.length === 0) {
             setFormOn(true)
         }
 
     }, [shoppingList])
-
-    async function getPopularFirebaseItems() {
-        const collectionRef = collection(db, "history/shoppingList/items")
-        const q = query(collectionRef, where("quantity", ">", 1), orderBy("quantity", "desc"))
-        const popularItemsArr = await getDocs(q)
-        const popularUniqueItemsArr = (
-            popularItemsArr.docs
-                .filter(doc => {
-                    const itemNameArr = shoppingList?.map(item => item.name)
-
-                    if (!itemNameArr?.includes(doc.data().name)) {
-                        
-                        return doc
-                    }
-                })
-                .map(doc => ({...doc.data(), id: doc.id}))
-        )
-
-        setPopularItems(popularUniqueItemsArr)
-    }
 
     return (
         <>
@@ -51,8 +32,16 @@ export default function ShoppingListPage() {
             </header>
             <main className="p-4 flex flex-col gap-4">
                 { shoppingList?.length > 0 && <ListShoppingListEl /> }
-                { formOn && <AddItemEl popularitemsArr={populairItems} /> }
-
+                { formOn && <AddItemEl popularitemsArr={popularItems} /> }
+                <Link 
+                    to="recipes"
+                    className="py-2 px-4 border border-blue-600/50 text-blue-600 00 mb-3 rounded-md flex items-center justify-between gap-1"
+                >
+                    Recipes
+                    <span className="p-1 border border-transparent">
+                        <FaAngleRight />
+                    </span>
+                </Link>
             </main>
             {
                 openConfirmDialog && <ConfirmDialog />
