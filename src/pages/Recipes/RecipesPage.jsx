@@ -7,9 +7,12 @@ import NavLinkTo from "../../components/Links/NavLinkTo"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import Menu from "../../components/Menu/Menu"
 import { FaEllipsis } from "react-icons/fa6"
+import { useAtom } from "jotai"
+import { pageFormsOpenAtom } from "../../store/store"
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState(null)
+    const [openForm, setOpenForm] = useAtom(pageFormsOpenAtom)
 
     useEffect(() => {
         const collectionRef = collection(db, "recipes")
@@ -21,6 +24,14 @@ export default function RecipesPage() {
 
         return unsub
     }, [])
+
+    function handleClickAdd() {
+        setOpenForm(true)
+    }
+
+    function handleClickClose() {
+        setOpenForm(false)
+    }
     
     return (
         <>
@@ -36,7 +47,7 @@ export default function RecipesPage() {
                     <Menu.Dropdown>
                         <Menu.Item 
                             className="px-4 py-1 border-b border-white/10 text-nowrap"
-                            // onClick={handleClickAdd}
+                            onClick={handleClickAdd}
                         >
                             Add Recipe
                         </Menu.Item>
@@ -59,34 +70,39 @@ export default function RecipesPage() {
                         </ul>
                     )
                 }
-                <div className="bg-white/10 p-2 rounded-md">
-                    <form className="grid gap-2" 
-                        // onSubmit={handleSubmit(sendFormData)}
-                    >
-                        <input 
-                            type="text" 
-                            className="py-1 px-2 rounded-md bg-white/10"
-                            placeholder="Item..."
-                            // {...register("itemName")}
-                            required
-                            autoFocus
-                        />
-                        <div className="flex gap-2">
-                            <button 
-                                className="flex-grow py-1 bg-green-900 rounded-md border border-white/10"
+
+                {
+                    openForm && (
+                        <div className="bg-white/10 p-2 rounded-md">
+                            <form className="grid gap-2" 
+                                // onSubmit={handleSubmit(sendFormData)}
                             >
-                                Add
-                            </button>
-                            <button 
-                                className="px-2 bg-red-900 rounded-md border border-white/10" 
-                                type="button"
-                                // onClick={closeForm}
-                            >
-                                Close
-                            </button>
+                                <input 
+                                    type="text" 
+                                    className="py-1 px-2 rounded-md bg-white/10"
+                                    placeholder="Item..."
+                                    // {...register("itemName")}
+                                    required
+                                    autoFocus
+                                />
+                                <div className="flex gap-2">
+                                    <button 
+                                        className="flex-grow py-1 bg-green-900 rounded-md border border-white/10"
+                                    >
+                                        Add
+                                    </button>
+                                    <button 
+                                        className="px-2 bg-red-900 rounded-md border border-white/10" 
+                                        type="button"
+                                        onClick={handleClickClose}
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
+                    )
+                }
             </PageMain>
         </>
     )
