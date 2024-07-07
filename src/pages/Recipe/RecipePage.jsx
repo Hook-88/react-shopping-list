@@ -9,32 +9,17 @@ import Menu from "../../components/Menu/Menu"
 import { FaEllipsis } from "react-icons/fa6"
 import { useAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
-import AddRecipeEl from "./AddRecipeEl"
+import { useParams } from "react-router-dom"
 
-export default function RecipesPage() {
-    const [recipes, setRecipes] = useState(null)
-    const [openForm, setOpenForm] = useAtom(pageFormsOpenAtom)
-
-    useEffect(() => {
-        const collectionRef = collection(db, "recipes")
-        const unsub = onSnapshot(collectionRef, collectionSnapshot => {
-            const arr = collectionSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id}))
-
-            setRecipes(arr)
-        })
-
-        return unsub
-    }, [])
-
-    function handleClickAdd() {
-        setOpenForm(true)
-    }
+export default function RecipePage() {
+    const params = useParams()
+    
     
     return (
         <>
             <PageHeader>
-                <PageHeader.Title>Recipes</PageHeader.Title>
-                <Menu className="flex items-center">
+                <PageHeader.Title>{getStringFirstCharCap(params.recipeName)}</PageHeader.Title>
+                {/* <Menu className="flex items-center">
                     <Menu.Button className="w-full h-full flex items-center justify-end">
                         <span className="p-1 border border-transparent">
                             <FaEllipsis />
@@ -49,16 +34,16 @@ export default function RecipesPage() {
                             Add Recipe
                         </Menu.Item>
                     </Menu.Dropdown>
-                </Menu>
+                </Menu> */}
             </PageHeader>
                 <PageMain>
-                {
+                {/* {
                     recipes && (
                         <ul>
                             {
                                 recipes.map(recipe => (
                                     <li key={recipe.id}>
-                                        <NavLinkTo to={`${recipe.id}/${recipe.name}`}>
+                                        <NavLinkTo to={recipe.id}>
                                             {getStringFirstCharCap(recipe.name)}
                                         </NavLinkTo>
                                     </li>
@@ -68,7 +53,7 @@ export default function RecipesPage() {
                     )
                 }
 
-                { openForm && <AddRecipeEl /> }
+                { openForm && <AddRecipeEl /> } */}
             </PageMain>
         </>
     )
