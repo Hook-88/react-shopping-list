@@ -9,6 +9,7 @@ import Menu from "../../components/Menu/Menu"
 import { FaEllipsis } from "react-icons/fa6"
 import { useAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
+import AddRecipeEl from "./AddRecipeEl"
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState(null)
@@ -27,10 +28,6 @@ export default function RecipesPage() {
 
     function handleClickAdd() {
         setOpenForm(true)
-    }
-
-    function handleClickClose() {
-        setOpenForm(false)
     }
     
     return (
@@ -71,38 +68,7 @@ export default function RecipesPage() {
                     )
                 }
 
-                {
-                    openForm && (
-                        <div className="bg-white/10 p-2 rounded-md">
-                            <form className="grid gap-2" 
-                                // onSubmit={handleSubmit(sendFormData)}
-                            >
-                                <input 
-                                    type="text" 
-                                    className="py-1 px-2 rounded-md bg-white/10"
-                                    placeholder="Item..."
-                                    // {...register("itemName")}
-                                    required
-                                    autoFocus
-                                />
-                                <div className="flex gap-2">
-                                    <button 
-                                        className="flex-grow py-1 bg-green-900 rounded-md border border-white/10"
-                                    >
-                                        Add
-                                    </button>
-                                    <button 
-                                        className="px-2 bg-red-900 rounded-md border border-white/10" 
-                                        type="button"
-                                        onClick={handleClickClose}
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    )
-                }
+                { openForm && <AddRecipeEl /> }
             </PageMain>
         </>
     )

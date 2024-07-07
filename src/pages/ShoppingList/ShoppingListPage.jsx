@@ -26,6 +26,13 @@ export default function ShoppingListPage() {
 
     }, [shoppingList])
 
+    function handleClickLink() {
+
+        if (formOn) {
+            setFormOn(false)
+        }        
+    }
+
     return (
         <>
             <PageHeader>
@@ -35,7 +42,7 @@ export default function ShoppingListPage() {
             <PageMain>
                 { shoppingList?.length > 0 && <ListShoppingListEl /> }
                 { formOn && <AddItemEl popularitemsArr={popularItems} /> }
-                <NavLinkTo to="recipes">
+                <NavLinkTo to="recipes" onClick={handleClickLink}>
                     Recipes
                 </NavLinkTo>
             </PageMain>

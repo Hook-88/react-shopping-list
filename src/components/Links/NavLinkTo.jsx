@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom"
 import { FaAngleRight } from "react-icons/fa6"
 
-export default function NavLinkTo({children, to}) {
+export default function NavLinkTo({children, to, onClick = () => {}}) {
     
     return (
         <Link 
             to={to}
+            onClick={onClick}
             className="py-2 px-4 border border-blue-600/50 text-blue-600 00 mb-3 rounded-md flex items-center justify-between gap-1"
         >
             {children}
