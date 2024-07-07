@@ -5,6 +5,8 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../../firebase"
 import NavLinkTo from "../../components/Links/NavLinkTo"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
+import Menu from "../../components/Menu/Menu"
+import { FaEllipsis } from "react-icons/fa6"
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState(null)
@@ -24,6 +26,22 @@ export default function RecipesPage() {
         <>
             <PageHeader>
                 <PageHeader.Title>Recipes</PageHeader.Title>
+                <Menu className="flex items-center">
+                    <Menu.Button className="w-full h-full flex items-center justify-end">
+                        <span className="p-1 border border-transparent">
+                            <FaEllipsis />
+                        </span>
+                    </Menu.Button>
+                    
+                    <Menu.Dropdown>
+                        <Menu.Item 
+                            className="px-4 py-1 border-b border-white/10 text-nowrap"
+                            // onClick={handleClickAdd}
+                        >
+                            Add Recipe
+                        </Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
             </PageHeader>
             {
                 recipes && (
