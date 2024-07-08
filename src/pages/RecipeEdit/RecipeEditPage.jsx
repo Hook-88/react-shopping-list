@@ -1,5 +1,5 @@
 import PageHeader from "../../components/PageHeader/PageHeader"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import PageMain from "../../components/PageMain/PageMain"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import Menu from "../../components/Menu/Menu"
@@ -13,6 +13,8 @@ import useIngredientsValue from "../../hooks/useIngredientsValue"
 import ConfirmDialog from "../../components/ConfirmDialog.jsx/ConfirmDialog"
 import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase"
+import DeleteRecipeEl from "./DeleteRecipeEl"
+import MenuRecipeEditPage from "./MenuRecipeEditPage"
 
 export default function RecipeEditPage() {
     const { recipeName, recipeId } = useParams()
@@ -20,10 +22,6 @@ export default function RecipeEditPage() {
     const [openForm, setOpenForm] = useAtom(pageFormsOpenAtom)
     const [confirmObj, setConfirmObj] = useAtom(confirmDialogAtom)
     const navigate = useNavigate()
-
-    function handleClickAdd() {
-        setOpenForm(true)
-    }
 
     function handleClickDelete() {
         setConfirmObj({
@@ -47,22 +45,7 @@ export default function RecipeEditPage() {
         <>
             <PageHeader>
                 <PageHeader.Title>Edit {getStringFirstCharCap(recipeName)}</PageHeader.Title>
-                <Menu className="flex items-center">
-                    <Menu.Button className="w-full h-full flex items-center justify-end">
-                        <span className="p-1 border border-transparent">
-                            <FaEllipsis />
-                        </span>
-                    </Menu.Button>
-                    
-                    <Menu.Dropdown>
-                        <Menu.Item 
-                            className="px-4 py-1 border-b border-white/10 text-nowrap"
-                            onClick={handleClickAdd}
-                        >
-                            Add ingredient
-                        </Menu.Item>
-                    </Menu.Dropdown>
-                </Menu>
+                <MenuRecipeEditPage />
             </PageHeader>
             <PageMain>
 
@@ -77,22 +60,13 @@ export default function RecipeEditPage() {
                 
                 { openForm && <AddIngredientEl /> }
 
-                <div className="bg-white/10 p-2 rounded-md flex">
-                    <button 
-                        className="flex-grow py-1 bg-red-900 rounded-md border border-white/10"
-                        onClick={handleClickDelete}
-                    >
-                        Delete recipe
-                    </button>
-                </div>
+                <DeleteRecipeEl onClick={handleClickDelete}/>
 
             </PageMain>
 
             {
                 confirmObj && <ConfirmDialog />
             }
-
-            
 
         </>
     )
