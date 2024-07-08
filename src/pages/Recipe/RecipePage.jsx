@@ -11,7 +11,7 @@ import { useAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
 import { useParams } from "react-router-dom"
 import useIngredientsValue from "../../hooks/useIngredientsValue"
-import ListIngredients from "./ListIngredients"
+import ListIngredientsEl from "./ListIngredientsEl"
 
 export default function RecipePage() {
     const params = useParams()
@@ -25,12 +25,16 @@ export default function RecipePage() {
     function toggleSelectIngredient(id) {
         setLocalIngredients(prevIngredients => prevIngredients.map(ingredient => ingredient.id === id ? {...ingredient, selected: !ingredient.selected} : ingredient))
     }
+
+    function selectAllIngredients(valueSelected) {
+        setLocalIngredients(prevIngredients => prevIngredients.map(ingredient => ({...ingredient, selected: valueSelected}) ))
+    }
     
     return (
         <>
             <PageHeader>
                 <PageHeader.Title>{getStringFirstCharCap(params.recipeName)}</PageHeader.Title>
-                {/* <Menu className="flex items-center">
+                <Menu className="flex items-center">
                     <Menu.Button className="w-full h-full flex items-center justify-end">
                         <span className="p-1 border border-transparent">
                             <FaEllipsis />
@@ -40,19 +44,20 @@ export default function RecipePage() {
                     <Menu.Dropdown>
                         <Menu.Item 
                             className="px-4 py-1 border-b border-white/10 text-nowrap"
-                            onClick={handleClickAdd}
+                            // onClick={handleClickAdd}
                         >
-                            Add Recipe
+                            Edit Recipe
                         </Menu.Item>
                     </Menu.Dropdown>
-                </Menu> */}
+                </Menu>
             </PageHeader>
                 <PageMain>
                 { localIngredients && (
-                    <ListIngredients 
+                    <ListIngredientsEl 
                         localIngredients={localIngredients}
                         toggleSelect={toggleSelectIngredient}
-                        
+                        selectAllIngredients={selectAllIngredients}
+
                     />
                 ) 
                 }
@@ -61,10 +66,3 @@ export default function RecipePage() {
         </>
     )
 }
-
-{/* <div 
-    className="py-2 px-4 border border-transparent mb-3 rounded-md bg-white/10 flex items-center gap-1"
->
-    <p>{getStringFirstCharCap(item.name)}</p>
-
-</div> */}
