@@ -21,6 +21,10 @@ export default function RecipePage() {
         setLocalIngredients(ingredients?.map(ingredient => ({ ...ingredient, selected: false})))
     }, [ingredients])
 
+    function toggleSelectIngredient(id) {
+        setLocalIngredients(prevIngredients => prevIngredients.map(ingredient => ingredient.id === id ? {...ingredient, selected: !ingredient.selected} : ingredient))
+    }
+
     console.log(localIngredients)
     
     return (
@@ -50,7 +54,7 @@ export default function RecipePage() {
                         <ul>
                             {
                                 localIngredients.map(ingredient => (
-                                    <li key={ingredient.id}>
+                                    <li key={ingredient.id} onClick={() => toggleSelectIngredient(ingredient.id)}>
                                         <div 
                                             className="py-2 px-4 border border-transparent mb-3 rounded-md bg-white/10 flex items-center gap-1"
                                         >
