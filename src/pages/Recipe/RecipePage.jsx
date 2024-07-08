@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react"
 import PageHeader from "../../components/PageHeader/PageHeader"
 import PageMain from "../../components/PageMain/PageMain"
-import { collection, getDocs, onSnapshot } from "firebase/firestore"
-import { db } from "../../firebase"
-import NavLinkTo from "../../components/Links/NavLinkTo"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import Menu from "../../components/Menu/Menu"
-import { FaCheck, FaEllipsis } from "react-icons/fa6"
-import { useAtom, useAtomValue } from "jotai"
-import { confirmDialogAtom, pageFormsOpenAtom } from "../../store/store"
-import { useNavigate, useParams } from "react-router-dom"
+import { FaEllipsis } from "react-icons/fa6"
+import { useAtom } from "jotai"
+import { confirmDialogAtom } from "../../store/store"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import useIngredientsValue from "../../hooks/useIngredientsValue"
 import ListIngredientsEl from "./ListIngredientsEl"
 import addItemToFirebase from "../../utility/firestoreFn/addFirebaseItem"
 import NavLinkBack from "../../components/Links/NavLinkBack"
 import ConfirmDialog from "../../components/ConfirmDialog.jsx/ConfirmDialog"
+import AddToShoppingListBtnEl from "./AddToShoppingListBtnEl"
 
 export default function RecipePage() {
     const params = useParams()
@@ -77,7 +75,9 @@ export default function RecipePage() {
                             className="px-4 py-1 border-b border-white/10 text-nowrap"
                             // onClick={handleClickAdd}
                         >
-                            Edit Recipe
+                            <Link state={ingredients} to="edit">
+                                Edit Recipe
+                            </Link>
                         </Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
@@ -89,20 +89,11 @@ export default function RecipePage() {
                             localIngredients={localIngredients}
                             toggleSelect={toggleSelectIngredient}
                             selectAllIngredients={selectAllIngredients}
-
                         />
-
-                        <div className="bg-white/10 p-2 rounded-md flex">
-
-                                    <button 
-                                        className="flex-grow py-1 bg-green-900 rounded-md border border-white/10 disabled:bg-green-900/30 disabled:text-white/30"
-                                        disabled={localIngredients?.every(ingredient => ingredient.selected === false)}
-                                        onClick={handleClickAdd}
-                                    >
-                                        Add to shopping list
-                                    </button>
-
-                        </div>
+                        <AddToShoppingListBtnEl 
+                            onClick={handleClickAdd}
+                            valueDisabled={localIngredients?.every(ingredient => ingredient.selected === false)}
+                        />
                     </>
                 ) 
                 }
