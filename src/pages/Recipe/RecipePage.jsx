@@ -7,17 +7,21 @@ import NavLinkTo from "../../components/Links/NavLinkTo"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import Menu from "../../components/Menu/Menu"
 import { FaCheck, FaEllipsis } from "react-icons/fa6"
-import { useAtom } from "jotai"
-import { pageFormsOpenAtom } from "../../store/store"
-import { useParams } from "react-router-dom"
+import { useAtom, useAtomValue } from "jotai"
+import { confirmDialogAtom, pageFormsOpenAtom } from "../../store/store"
+import { useNavigate, useParams } from "react-router-dom"
 import useIngredientsValue from "../../hooks/useIngredientsValue"
 import ListIngredientsEl from "./ListIngredientsEl"
 import addItemToFirebase from "../../utility/firestoreFn/addFirebaseItem"
+import NavLinkBack from "../../components/Links/NavLinkBack"
+import ConfirmDialog from "../../components/ConfirmDialog.jsx/ConfirmDialog"
 
 export default function RecipePage() {
     const params = useParams()
     const ingredients = useIngredientsValue(params.recipeId)
     const [localIngredients, setLocalIngredients] = useState(null)
+    const [confirmObj, setConfirmObj] = useAtom(confirmDialogAtom)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLocalIngredients(ingredients?.map(ingredient => ({ ...ingredient, selected: false})))
@@ -32,13 +36,34 @@ export default function RecipePage() {
     }
 
     function handleClickAdd() {
+        setConfirmObj({
+            question: "Add selection to shopping list?",
+            onConfirm: () => handleOnConfirm()
+        })
+        selectAllIngredients(false)
+    }
+
+    function addSelectionToShoppingList() {
         localIngredients.filter(ingredient => ingredient.selected === true)
             .forEach(filteredIngr => addItemToFirebase(filteredIngr.name))
+    }
+
+    function handleOnConfirm() {
+        addSelectionToShoppingList()
+
+        setTimeout(() => {
+            setConfirmObj({
+                question: "Go to the shopping list?",
+                onConfirm: () => navigate("/")
+            })
+        }, 110)
+
     }
     
     return (
         <>
             <PageHeader>
+                <NavLinkBack to="./../.."/>
                 <PageHeader.Title>{getStringFirstCharCap(params.recipeName)}</PageHeader.Title>
                 <Menu className="flex items-center">
                     <Menu.Button className="w-full h-full flex items-center justify-end">
@@ -66,7 +91,7 @@ export default function RecipePage() {
                             selectAllIngredients={selectAllIngredients}
 
                         />
-                        
+
                         <div className="bg-white/10 p-2 rounded-md flex">
 
                                     <button 
@@ -83,6 +108,9 @@ export default function RecipePage() {
                 }
 
             </PageMain>
+            {
+                confirmObj && <ConfirmDialog />
+            }
         </>
     )
 }

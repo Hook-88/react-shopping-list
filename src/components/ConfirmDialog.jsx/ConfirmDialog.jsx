@@ -13,7 +13,7 @@ export default function ConfirmDialog() {
     }
 
     function handleClickYes() {
-        confirmObj.onConfirm()
+        confirmObj?.onConfirm()
 
         setTimeout(() => {
             closeDialog()
@@ -27,7 +27,7 @@ export default function ConfirmDialog() {
                 onClick={closeDialog}
             >
                 <div className="p-4 bg-[#1a1a1a] rounded-md border border-white/10" onClick={handleClickCard}>
-                    <p className="text-center">{confirmObj.question}</p>
+                    <p className="text-center">{confirmObj?.question ? confirmObj.question : "Are you sure"}</p>
                     <div className="flex gap-2 mt-4">
                         <button 
                             className="bg-green-900 px-6 py-1 rounded-md border border-white/10 flex-grow"

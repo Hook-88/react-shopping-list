@@ -6,10 +6,11 @@ import { db } from "../../firebase"
 import NavLinkTo from "../../components/Links/NavLinkTo"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import Menu from "../../components/Menu/Menu"
-import { FaEllipsis } from "react-icons/fa6"
+import { FaAngleLeft, FaEllipsis } from "react-icons/fa6"
 import { useAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
 import AddRecipeEl from "./AddRecipeEl"
+import NavLinkBack from "../../components/Links/NavLinkBack"
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState(null)
@@ -33,6 +34,7 @@ export default function RecipesPage() {
     return (
         <>
             <PageHeader>
+                <NavLinkBack />
                 <PageHeader.Title>Recipes</PageHeader.Title>
                 <Menu className="flex items-center">
                     <Menu.Button className="w-full h-full flex items-center justify-end">
