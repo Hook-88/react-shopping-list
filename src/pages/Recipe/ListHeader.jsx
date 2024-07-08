@@ -24,28 +24,6 @@ export default function ListHeader({ingredients, selectAll}) {
         setFilter("!selected")
     }
 
-    // function handleClick() {
-    //     if (numOfCheckedItems === shoppingList?.length) {
-    //         openConfirmDialog({
-    //             question: "Remove checked items?",
-    //             onConfirm: () => deleteCheckedItems()
-    //         })
-    //     }
-        
-    // }
-
-    // function deleteCheckedItems() {
-    //     const checkedItemArr = shoppingList.filter(item => item.selected === true)
-
-    //     checkedItemArr.forEach(checkedItem => deleteFirebaseItem(checkedItem.id))
-    // }
-
-    // async function deleteFirebaseItem(docId) {
-    //     const docRef = doc(db, "shoppingList", docId)
-
-    //     await deleteDoc(docRef)
-    // }
-
     function handleClickToggleSelectAll() {
         selectAll(!allSelected)
     }
