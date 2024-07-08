@@ -12,6 +12,7 @@ import { pageFormsOpenAtom } from "../../store/store"
 import { useParams } from "react-router-dom"
 import useIngredientsValue from "../../hooks/useIngredientsValue"
 import ListIngredientsEl from "./ListIngredientsEl"
+import addItemToFirebase from "../../utility/firestoreFn/addFirebaseItem"
 
 export default function RecipePage() {
     const params = useParams()
@@ -28,6 +29,11 @@ export default function RecipePage() {
 
     function selectAllIngredients(valueSelected) {
         setLocalIngredients(prevIngredients => prevIngredients.map(ingredient => ({...ingredient, selected: valueSelected}) ))
+    }
+
+    function handleClickAdd() {
+        localIngredients.filter(ingredient => ingredient.selected === true)
+            .forEach(filteredIngr => addItemToFirebase(filteredIngr.name))
     }
     
     return (
@@ -53,12 +59,26 @@ export default function RecipePage() {
             </PageHeader>
                 <PageMain>
                 { localIngredients && (
-                    <ListIngredientsEl 
-                        localIngredients={localIngredients}
-                        toggleSelect={toggleSelectIngredient}
-                        selectAllIngredients={selectAllIngredients}
+                    <>
+                        <ListIngredientsEl 
+                            localIngredients={localIngredients}
+                            toggleSelect={toggleSelectIngredient}
+                            selectAllIngredients={selectAllIngredients}
 
-                    />
+                        />
+                        
+                        <div className="bg-white/10 p-2 rounded-md flex">
+
+                                    <button 
+                                        className="flex-grow py-1 bg-green-900 rounded-md border border-white/10 disabled:bg-green-900/30 disabled:text-white/30"
+                                        disabled={localIngredients?.every(ingredient => ingredient.selected === false)}
+                                        onClick={handleClickAdd}
+                                    >
+                                        Add to shopping list
+                                    </button>
+
+                        </div>
+                    </>
                 ) 
                 }
 
