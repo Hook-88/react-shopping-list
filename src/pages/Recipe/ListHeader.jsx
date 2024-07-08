@@ -1,40 +1,20 @@
-import { useAtom } from "jotai"
-import { listFiltersAtom } from "../../store/store"
-import { FaCheck, FaEye, FaEyeSlash } from "react-icons/fa6"
-import { useSetAtom } from "jotai"
-import { confirmDialogAtom } from "../../store/store"
-import { doc, deleteDoc } from "firebase/firestore"
-import { db } from "../../firebase"
-import useShoppingListItems from "../../hooks/useShoppingListItems"
+import { RecipeContext } from "./RecipePage"
+import { useContext } from "react"
 
-export default function ListHeader({ingredients, selectAll}) {
-    const [filter, setFilter] = useAtom(listFiltersAtom)
-    const openConfirmDialog = useSetAtom(confirmDialogAtom)
-
-    const numOfCheckedIngredients = ingredients?.filter(ingredient => ingredient.selected === true).length
-    const allSelected = numOfCheckedIngredients === ingredients?.length
-
-    function toggleFilterSelected() {
-        if (filter) {
-            setFilter(null)
-            
-            return
-        }
-
-        setFilter("!selected")
-    }
+export default function ListHeader() {
+    const { selectAllIngredients, localIngredients } = useContext(RecipeContext)
+    const numOfCheckedIngredients = localIngredients?.filter(ingredient => ingredient.selected === true).length
+    const allSelected = numOfCheckedIngredients === localIngredients?.length
 
     function handleClickToggleSelectAll() {
-        selectAll(!allSelected)
+        selectAllIngredients(!allSelected)
     }
     
     return (
         <div className="flex items-center justify-between px-4 mb-1">
             {/* progress */}
-            <small 
-                // onClick={handleClick}
-            >
-                { `(${numOfCheckedIngredients}/${ingredients?.length})` }
+            <small>
+                { `(${numOfCheckedIngredients}/${localIngredients?.length})` }
                 { allSelected && " All selected" }
             </small>
 
@@ -42,14 +22,12 @@ export default function ListHeader({ingredients, selectAll}) {
             <button 
                 className="flex items-center" 
                 onClick={handleClickToggleSelectAll}
-
             >
                 <small className="flex items-center gap-1">
-                    {
-                        allSelected ? "Deselect all" : "Select all"
-                    }
+                    { allSelected ? "Deselect all" : "Select all" }
                 </small>
             </button>
+
         </div>
 
     )
