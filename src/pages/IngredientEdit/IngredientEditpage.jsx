@@ -7,6 +7,7 @@ import { useAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
 import NavLinkBack from "../../components/Links/NavLinkBack"
 import useIngredientSnapshot from "../../hooks/useIngredientSnapshot"
+import EditIngredientEl from "./EditIngredientEl"
 
 export default function IngredientEditPage() {
     const params = useParams()
@@ -20,6 +21,12 @@ export default function IngredientEditPage() {
                     {ingredient?.name ? `${getStringFirstCharCap(ingredient.name)} (edit)` : "Loading..."}
                 </PageHeader.Title>
             </PageHeader>
+
+            <PageMain>
+                {
+                    ingredient && <EditIngredientEl nameValue={ingredient.name}/>
+                }
+            </PageMain>
         </>
     )
 }
