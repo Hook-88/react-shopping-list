@@ -32,7 +32,6 @@ export default function RecipeNameEditPage() {
             <PageHeader>
                 <NavLinkBack />
                 <PageHeader.Title>
-                    {/* {recipeName?.name ? `${getStringFirstCharCap(recipeName.name)} (edit)` : "Loading..."} */}
                     Recipe name
                 </PageHeader.Title>
             </PageHeader>
