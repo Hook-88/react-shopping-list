@@ -1,5 +1,5 @@
 import NavLinkTo from "../../components/Links/NavLinkTo"
-
+import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 
 export default function RecipeIngredientsEl({ingredients}) {
     
@@ -14,7 +14,7 @@ export default function RecipeIngredientsEl({ingredients}) {
                     ingredients.map(ingredient => (
                         <li key={ingredient.id}>
                             <NavLinkTo to={`ingredient/${ingredient.id}`}>
-                                {ingredient.name}
+                                {getStringFirstCharCap(ingredient.name)}
                             </NavLinkTo>
                         </li>
                     ))

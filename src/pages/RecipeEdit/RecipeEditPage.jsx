@@ -15,6 +15,7 @@ import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase"
 import DeleteRecipeEl from "./DeleteRecipeEl"
 import MenuRecipeEditPage from "./MenuRecipeEditPage"
+import NavLinkBack from "../../components/Links/NavLinkBack"
 
 export default function RecipeEditPage() {
     const { recipeName, recipeId } = useParams()
@@ -44,6 +45,7 @@ export default function RecipeEditPage() {
     return (
         <>
             <PageHeader>
+                <NavLinkBack />
                 <PageHeader.Title>Edit {getStringFirstCharCap(recipeName)}</PageHeader.Title>
                 <MenuRecipeEditPage />
             </PageHeader>
