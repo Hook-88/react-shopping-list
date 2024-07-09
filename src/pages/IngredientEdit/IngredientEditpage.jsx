@@ -3,31 +3,23 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import useRecipeNameSnapshot from "../../hooks/useRecipeNameSnapshot"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import PageMain from "../../components/PageMain/PageMain"
-import EditRecipeNameEl from "./EditRecipeNameEl"
 import { useAtom } from "jotai"
 import { pageFormsOpenAtom } from "../../store/store"
 import NavLinkBack from "../../components/Links/NavLinkBack"
+import useIngredientSnapshot from "../../hooks/useIngredientSnapshot"
 
-export default function RecipeNameEditPage() {
+export default function IngredientEditPage() {
     const params = useParams()
-    const recipeName = useRecipeNameSnapshot(params.recipeId)
+    const ingredient = useIngredientSnapshot(params.recipeId, params.ingredientId)
     
     return (
         <>
             <PageHeader>
-                <NavLinkBack />
+                <NavLinkBack to="./../.."/>
                 <PageHeader.Title>
-                    {recipeName?.name ? `${getStringFirstCharCap(recipeName.name)} (edit)` : "Loading..."}
+                    {ingredient?.name ? `${getStringFirstCharCap(ingredient.name)} (edit)` : "Loading..."}
                 </PageHeader.Title>
             </PageHeader>
-
-            {
-                recipeName && (
-                    <PageMain>
-                        <EditRecipeNameEl nameValue={recipeName.name}/>
-                    </PageMain>
-                )
-            }
         </>
     )
 }

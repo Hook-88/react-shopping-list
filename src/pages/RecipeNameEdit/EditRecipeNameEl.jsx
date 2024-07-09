@@ -5,7 +5,7 @@ import setFirebaseRecipeName from "../../utility/firestoreFn/setFirebaseRecipeNa
 
 export default function EditRecipeNameEl({nameValue}) {
     const params = useParams()
-    const {register, handleSubmit, reset} = useForm({
+    const {register, handleSubmit } = useForm({
         defaultValues: {
             recipeName: getStringFirstCharCap(nameValue)
         }
