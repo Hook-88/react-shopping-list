@@ -3,7 +3,7 @@ import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import { useForm } from "react-hook-form"
 import setFirebaseRecipeName from "../../utility/firestoreFn/setFirebaseRecipeName"
 
-export default function EditRecipeNameEl({nameValue}) {
+export default function EditRecipeNameEl({nameValue, onCancel}) {
     const params = useParams()
     const {register, handleSubmit } = useForm({
         defaultValues: {
@@ -13,6 +13,7 @@ export default function EditRecipeNameEl({nameValue}) {
 
     function onSubmit(formData) {
         setFirebaseRecipeName(params.recipeId, formData.recipeName)
+        onCancel()
     }
     
     return (
@@ -24,7 +25,7 @@ export default function EditRecipeNameEl({nameValue}) {
             >
                 <input 
                     type="text" 
-                    className="py-1 px-2 rounded-md bg-white/10 text-center"
+                    className="py-1 px-2 rounded-md bg-white/10"
                     placeholder="Recipe name..."
                     {...register("recipeName")}
                     required
@@ -36,6 +37,14 @@ export default function EditRecipeNameEl({nameValue}) {
                     >
                         Save
                     </button>
+                    <button 
+                        className="py- px-2 bg-red-900 rounded-md border border-white/10"
+                        type="button"
+                        onClick={onCancel}
+                    >
+                        Cancel
+                    </button>
+
                 </div>
             </form>
         </div>
