@@ -18,6 +18,7 @@ export default function IngredientEditPage() {
     const ingredient = useIngredientSnapshot(params.recipeId, params.ingredientId)
     const [confirmObj, setConfirmObj] = useAtom(confirmDialogAtom)
     const navigate = useNavigate()
+    const [formOn, setFormOn] = useAtom(pageFormsOpenAtom)
 
     function handleClickDelete() {
         setConfirmObj({
@@ -42,15 +43,47 @@ export default function IngredientEditPage() {
             <PageHeader>
                 <NavLinkBack to="./../.."/>
                 <PageHeader.Title>
-                    {ingredient?.name ? `${getStringFirstCharCap(ingredient.name)} (edit)` : "Loading..."}
+                    Edit ingredient
                 </PageHeader.Title>
             </PageHeader>
 
             <PageMain>
                 {
-                    ingredient && <EditIngredientEl nameValue={ingredient.name}/>
+                    ingredient && 
+                    <>
+                        {
+                            formOn ? 
+                            <EditIngredientEl nameValue={ingredient.name} onCancel={() => setFormOn(false)}/> :
+                            <div 
+                                    className="bg-white/10 px-4 py-3 rounded-md flex items-center justify-between gap-2"
+                                    onClick={() => setFormOn(true)}
+                                >
+                                    {getStringFirstCharCap(ingredient.name)}
+                                    <small className="mr-auto mt-1">
+                                        (Click to edit)
+                                    </small>
+                                    {/* <button 
+                                        className="flex items-center justify-end px-4 py-4"
+                                        // onClick={handleClick}
+                                    >
+                                        {
+                                            isFavorite ? 
+                                                <FaStar  className="text-yellow-500"/> : 
+                                                <FaRegStar />
+                                        }
+                                    </button> */}
+                                    
+
+                                </div>
+
+                        }
+                        
+                        
+                    </>
                 }
+
                 <DeleteIngredientEl onClick={handleClickDelete}/>
+
             </PageMain>
             {
                 confirmObj && <ConfirmDialog />
