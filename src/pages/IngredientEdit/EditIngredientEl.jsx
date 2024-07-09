@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom"
 import getStringFirstCharCap from "../../utility/getStringFirstCharCap"
 import { useForm } from "react-hook-form"
-import setFirebaseRecipeName from "../../utility/firestoreFn/setFirebaseRecipeName"
 import { doc } from "firebase/firestore"
 import { db } from "../../firebase"
 import setFirebaseIngredientName from "../../utility/firestoreFn/setFirebaseIngredientName"
